@@ -1,0 +1,53 @@
+__S0 800 0 ABS 0
+__S1 0 0 ABS 0
+__S3 0 0 ABS 0
+__Hconfig 2008 0 CONFIG 4
+__Lconfig 0 0 CONFIG 4
+__HresetVec 1 0 CODE 0
+__LresetVec 0 0 CODE 0
+__Hcode 2 0 ABS 0
+__Lcode 2 0 ABS 0
+__Hdata 2 0 ABS 0
+__Ldata 2 0 ABS 0
+__Hudata_bank0 2 0 ABS 0
+__Ludata_bank0 2 0 ABS 0
+__Hudata_shr 2 0 ABS 0
+__Ludata_shr 2 0 ABS 0
+__H__absolute__ 0 0 ABS 0
+__L__absolute__ 0 0 ABS 0
+__Hedata 2 0 ABS 0
+__Ledata 2 0 ABS 0
+__Hudata 2 0 ABS 0
+__Ludata 2 0 ABS 0
+__Hudata_bank1 2 0 ABS 0
+__Ludata_bank1 2 0 ABS 0
+__Hspace_0 800 0 ABS 0
+__Lspace_0 0 0 ABS 0
+__Hspace_1 0 0 ABS 0
+__Lspace_1 0 0 ABS 0
+__Hspace_3 0 0 ABS 0
+__Lspace_3 0 0 ABS 0
+__Hspace_4 400F 0 ABS 0
+__Lspace_4 0 0 ABS 0
+__Hudata_bank2 2 0 ABS 0
+__Ludata_bank2 2 0 ABS 0
+%segments
+resetVec 0 1 CODE 0 0
+code FE4 FFF CODE FE4 0
+%locals
+build/default/production/newAsmTemplate.o
+newAsmTemplate.asm
+29 7F2 0 CODE 0
+30 7F4 0 CODE 0
+31 7F5 0 CODE 0
+33 7F6 0 CODE 0
+34 7F7 0 CODE 0
+36 7F8 0 CODE 0
+37 7F9 0 CODE 0
+38 7FA 0 CODE 0
+40 7FB 0 CODE 0
+41 7FD 0 CODE 0
+43 7FE 0 CODE 0
+44 7FF 0 CODE 0
+24 0 0 CODE 0
+25 0 0 CODE 0
