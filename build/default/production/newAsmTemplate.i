@@ -958,29 +958,54 @@ auto_size SET 0
 ENDM
 # 8 "/opt/microchip/xc8/v2.50/pic/include/xc.inc" 2 3
 # 21 "newAsmTemplate.asm" 2
+ PSECT resetVec, class=CODE, delta=2
+    resetVec: ; Start address
+ PAGESEL init
+ GOTO init
 
-  PSECT resetVec, class=CODE, delta=2
-  resetVec: ; Start address
-    PAGESEL main
-    GOTO main
+    PSECT code
 
-  PSECT code
-  main:
-    BANkSEL TRISB ; Select Bank 1
-    BSF TRISB, 1 ; Configure ((PORTB) and 07Fh), 1 (RX)
-    BSF TRISB, 2 ; Configure ((PORTB) and 07Fh), 2 (TX)
+    init:
+ ; Initialize pins RX and TX, both should be set as inputs
+ BANKSEL TRISB ; Select Bank 1
+ BSF TRISB, 1
+ BSF TRISB, 2
+ ; Initialize the SPBRG register for the appropriate baud rate
+ BANKSEL TXSTA
+ BCF TXSTA, 2 ; Select low speed baud rate
+ BCF TXSTA, 4 ; Enable async mode
+ MOVLW 25 ; Load the value for SPBRG, which controls the period of a 8-bit timer
+ BANKSEL SPBRG
+ MOVWF SPBRG ; Initialize SPBRG reg for the baud rate
+ ; Enable the async serial port
+ BANKSEL RCSTA ; Select Bank 0
+ BSF RCSTA, 7 ; Set bit ((RCSTA) and 07Fh), 7 to enable serial port
+ ; Enable the transmission
+ BANKSEL TXSTA
+ BSF TXSTA, 5
 
-    BSF TXSTA, 5 ; Set bit ((TXSTA) and 07Fh), 5 to enable the transmission
-    BCF TXSTA, 4 ; Clear bit ((TXSTA) and 07Fh), 4 to enable async mode
+    ; Load data to the TXREG register (starts transmission)
+    data:
+ MOVLW 'O'
+ CALL tx
+ MOVLW 'H'
+ CALL tx
+ MOVLW 'I'
+ CALL tx
+ MOVLW 'O'
+ CALL tx
+ MOVLW 0X0D ; CR
+ CALL tx
+ MOVLW 0x0A ; LF
+ CALL tx
+ ;GOTO data
 
-    BCF TXSTA, 2 ; Prefer low speed (x64 rather x16) first
-    MOVLW 25 ; Load the value for SPBRG, which controls the period of a 8-bit timer
-    MOVWF SPBRG ; Initialize SPBRG reg for the baud rate at 9600
-
-    BANkSEL RCSTA ; Select Bank 0
-    BSF RCSTA, 7 ; Set bit ((RCSTA) and 07Fh), 7 to enable serial port
-
-    MOVLW 0xff
-    MOVWF TXREG
-# 69 "newAsmTemplate.asm"
-  END resetVec
+    tx:
+ BANKSEL TXSTA ; Select Bank 1
+ BTFSS TXSTA, 1 ; Test if ((TXSTA) and 07Fh), 1 bit is set (if TSR is empty)
+ goto $-1 ; Continue checking until success
+ BANKSEL TXREG ; Select Bank 0
+ MOVWF TXREG ; Load the transmit buffer with data, start transmission
+ RETURN
+# 91 "newAsmTemplate.asm"
+    END resetVec
