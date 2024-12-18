@@ -24,7 +24,7 @@
 	GOTO init
   
     PSECT code
- 
+    
     init:
 	; Initialize pins RX and TX, both should be set as inputs
 	BANKSEL TRISB		; Select Bank 1
@@ -42,8 +42,11 @@
 	BSF RCSTA, 7		; Set bit SPEN to enable serial port
 	; Enable the transmission
 	BANKSEL TXSTA
-	BSF TXSTA, 5
-    
+	BSF TXSTA, 5		; Set bit TXEN to enable transmission
+	; Enable the reception
+	BANKSEL RCSTA
+	BSF RCSTA, 4		; Set bit CREN to enable reception
+ 
     ; Load data to the TXREG register (starts transmission)
     data:
 	MOVLW 'O'
@@ -67,27 +70,5 @@
 	BANKSEL TXREG		; Select Bank 0
 	MOVWF TXREG		; Load the transmit buffer with data, start transmission
 	RETURN
-
-	 /*  
-	; LED light code
-	BANKSEL TRISB		; Assembly directive, replacing the directive with the assembly code. It will select the correct bank TRISB is in
-	CLRF TRISB			; Every bit in PORTB will be output
-	BANKSEL PORTB		; Select Bank 0, where PORTB is in
-
-      toggle:
-	BSF PORTB, 3
-	CALL delay
-	BCF PORTB, 3
-	CALL delay
-	GOTO toggle
-
-      delay:
-	MOVLW 0xFF
-	MOVWF 20h
-	DECFSZ 20h, F
-	RETURN
-	 */
-
-    END resetVec
 
 

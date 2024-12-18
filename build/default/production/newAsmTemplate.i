@@ -961,51 +961,103 @@ ENDM
  PSECT resetVec, class=CODE, delta=2
     resetVec: ; Start address
  PAGESEL init
- GOTO init
+ ;GOTO init
+ GOTO ds18b20_init
 
     PSECT code
 
-    init:
- ; Initialize pins RX and TX, both should be set as inputs
- BANKSEL TRISB ; Select Bank 1
- BSF TRISB, 1
- BSF TRISB, 2
- ; Initialize the SPBRG register for the appropriate baud rate
- BANKSEL TXSTA
- BCF TXSTA, 2 ; Select low speed baud rate
- BCF TXSTA, 4 ; Enable async mode
- MOVLW 25 ; Load the value for SPBRG, which controls the period of a 8-bit timer
- BANKSEL SPBRG
- MOVWF SPBRG ; Initialize SPBRG reg for the baud rate
- ; Enable the async serial port
- BANKSEL RCSTA ; Select Bank 0
- BSF RCSTA, 7 ; Set bit ((RCSTA) and 07Fh), 7 to enable serial port
- ; Enable the transmission
- BANKSEL TXSTA
- BSF TXSTA, 5
+; init:
+; ; Initialize pins RX and TX, both should be set as inputs
+; BANKSEL TRISB ; Select Bank 1
+; BSF TRISB, 1
+; BSF TRISB, 2
+; ; Initialize the SPBRG register for the appropriate baud rate
+; BANKSEL TXSTA
+; BCF TXSTA, 2 ; Select low speed baud rate
+; BCF TXSTA, 4 ; Enable async mode
+; MOVLW 25 ; Load the value for SPBRG, which controls the period of a 8-bit timer
+; BANKSEL SPBRG
+; MOVWF SPBRG ; Initialize SPBRG reg for the baud rate
+; ; Enable the async serial port
+; BANKSEL RCSTA ; Select Bank 0
+; BSF RCSTA, 7 ; Set bit ((RCSTA) and 07Fh), 7 to enable serial port
+; ; Enable the transmission
+; BANKSEL TXSTA
+; BSF TXSTA, 5 ; Set bit ((TXSTA) and 07Fh), 5 to enable transmission
+; ; Enable the reception
+; BANKSEL RCSTA
+; BSF RCSTA, 4 ; Set bit ((RCSTA) and 07Fh), 4 to enable reception
 
-    ; Load data to the TXREG register (starts transmission)
-    data:
- MOVLW 'O'
- CALL tx
- MOVLW 'H'
- CALL tx
- MOVLW 'I'
- CALL tx
- MOVLW 'O'
- CALL tx
- MOVLW 0X0D ; CR
- CALL tx
- MOVLW 0x0A ; LF
- CALL tx
- ;GOTO data
+    ds18b20_init:
+ ; Bus master transmits the reset pulse by pulling the 1-Wire bus low
+ BANKSEL TRISB
+ BCF TRISB, 1 ; Set ((PORTB) and 07Fh), 1 as output for transmission
+ BANKSEL PORTB
+ BCF PORTB, 1 ; Pull the bus low
+ CALL delay
+ ; Bus master releases the bus and goes into receive mode
+ BANKSEL TRISB
+ BSF TRISB, 1 ; Releases the bus by setting ((PORTB) and 07Fh), 1 as input
+ CALL delay
 
-    tx:
- BANKSEL TXSTA ; Select Bank 1
- BTFSS TXSTA, 1 ; Test if ((TXSTA) and 07Fh), 1 bit is set (if TSR is empty)
- goto $-1 ; Continue checking until success
- BANKSEL TXREG ; Select Bank 0
- MOVWF TXREG ; Load the transmit buffer with data, start transmission
+    ; Master issues SKip ROM command (0xCC)
+    ds18b20_ROM:
+ BCF TRISB, 1
+ BANKSEL PORTB
+ BSF PORTB, 1
+ BSF PORTB, 1
+ BCF PORTB, 1
+ BCF PORTB, 1
+ BSF PORTB, 1
+ BSF PORTB, 1
+ BCF PORTB, 1
+ BCF PORTB, 1
+
+    ; Master issues Read Scratchpad command (0xBE)
+    ds18b20_read:
+ BSF PORTB, 1
+ BCF PORTB, 1
+ BSF PORTB, 1
+ BSF PORTB, 1
+ BSF PORTB, 1
+ BSF PORTB, 1
+ BSF PORTB, 1
+ BCF PORTB, 1
+
+ BANKSEL TRISB
+ BSF TRISB, 1 ; Set ((PORTB) and 07Fh), 1 as input to read the entire scratchpad
+
+ GOTO ds18b20_init
+
+    ; During the init the reset pulse needs to pull bus low for a min of 480us
+    delay:
+ MOVLW 0xFF
+ MOVWF 0x20
+ DECFSZ 0x20, F
  RETURN
-# 91 "newAsmTemplate.asm"
+
+; ; Load data to the TXREG register (starts transmission)
+; data:
+; MOVLW 'O'
+; CALL tx
+; MOVLW 'H'
+; CALL tx
+; MOVLW 'I'
+; CALL tx
+; MOVLW 'O'
+; CALL tx
+; MOVLW 0X0D ; CR
+; CALL tx
+; MOVLW 0x0A ; LF
+; CALL tx
+; GOTO data
+;
+; tx:
+; BANKSEL TXSTA ; Select Bank 1
+; BTFSS TXSTA, 1 ; Test if ((TXSTA) and 07Fh), 1 bit is set (if TSR is empty)
+; goto $-1 ; Continue checking until success
+; BANKSEL TXREG ; Select Bank 0
+; MOVWF TXREG ; Load the transmit buffer with data, start transmission
+; RETURN
+# 143 "newAsmTemplate.asm"
     END resetVec
