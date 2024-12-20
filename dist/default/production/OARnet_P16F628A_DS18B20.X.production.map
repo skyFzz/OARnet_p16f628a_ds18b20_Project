@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=/opt/microchip/xc8/v2.50/pic/dat/20240725155939_en.msgs -cs \
   -h+dist/default/production/OARnet_P16F628A_DS18B20.X.production.sym \
   --cmf=dist/default/production/OARnet_P16F628A_DS18B20.X.production.cmf -z \
-  -Q16F628A -o/tmp/xcXNGEJGf/driver_tmp_3.o -presetVec=0 \
+  -Q16F628A -o/tmp/xcXPGcDKC/driver_tmp_3.o -presetVec=0 \
   --fixupoverflow=error -ver=XC8 PIC(R) Assembler --fixupoverflow=lstwarn \
   -Mdist/default/production/OARnet_P16F628A_DS18B20.X.production.map -E1 \
   --acfsm=1493 -ACODE=00h-07FFh -ASTRCODE=00h-07FFh -ASTRING=00h-0FFhx8 \
@@ -16,7 +16,7 @@ Linker command line:
   -ASFR2=0100h-011Fh -ASFR3=0180h-01EFh -ACONFIG=02007h-02007h -DCONFIG=2 \
   -AIDLOC=02000h-02003h -DIDLOC=2 -AEEDATA=00h-07Fh/02100h -DEEDATA=2 \
   -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 -DENTRY=2 \
-  build/default/production/newAsmTemplate.o 
+  build/default/production/main.o 
 
 Object code version is 3.11
 
@@ -25,15 +25,15 @@ Machine type is 16F628A
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-build/default/production/newAsmTemplate.o
+build/default/production/main.o
                 config                             2007     2007        1        0       4
                 resetVec                              0        0        1        0       0
-                code                                7DA      7DA       26      FB4       0
+                code                                7E9      7E9       17      FD2       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   CODE           
                 resetVec                              0        0        1         0
-                code                                7DA      7DA       26         0
+                code                                7E9      7E9       17         0
 
         CLASS   STRCODE        
 
@@ -74,7 +74,7 @@ TOTAL           Name                               Link     Load   Length     Sp
 
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
 
-                code                           0007DA  000026  000800       FB4       0  CODE        2
+                code                           0007E9  000017  000800       FD2       0  CODE        2
                 resetVec                       000000  000001  000001         0       0  CODE        2
 
 
@@ -84,11 +84,11 @@ UNUSED ADDRESS RANGES
         BANK0            0020-006F             50           1
         BANK1            00A0-00EF             50           1
         BANK2            0120-014F             30           1
-        CODE             0001-07D9            7D9           2
+        CODE             0001-07E8            7E8           2
         COMMON           0070-007F             10           1
-        CONST            0001-07D9            100           2
+        CONST            0001-07E8            100           2
         EEDATA           2100-217F             80           2
-        ENTRY            0001-07D9            100           2
+        ENTRY            0001-07E8            100           2
         IDLOC            2000-2003              4           2
         RAM              0020-006F             50           1
                          00A0-00EF             50
@@ -97,8 +97,8 @@ UNUSED ADDRESS RANGES
         SFR1             0080-009F             20           1
         SFR2             0100-011F             20           1
         SFR3             0180-01EF             70           1
-        STRCODE          0001-07D9            7D9           2
-        STRING           0001-07D9            100           2
+        STRCODE          0001-07E8            7E8           2
+        STRING           0001-07E8            100           2
 
                                   Symbol Table
 

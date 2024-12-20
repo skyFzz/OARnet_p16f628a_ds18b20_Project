@@ -11,9 +11,9 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
-$build/default/production/newAsmTemplate.o
+$build/default/production/main.o
 resetVec CODE 0 0 0 1 2 1
-code CODE 0 7DA 7DA 26 2 1
+code CODE 0 7E9 7E9 17 2 1
 config CONFIG 4 2007 2007 1 2 1
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
@@ -27,18 +27,18 @@ RAM 120-14F 1
 BANK0 20-6F 1
 BANK1 A0-EF 1
 BANK2 120-14F 1
-CONST 1-7D9 2
-ENTRY 1-7D9 2
+CONST 1-7E8 2
+ENTRY 1-7E8 2
 IDLOC 2000-2003 2
-CODE 1-7D9 2
+CODE 1-7E8 2
 SFR0 2-1F 1
 SFR1 80-9F 1
 SFR2 100-11F 1
 SFR3 180-1EF 1
 COMMON 70-7F 1
 EEDATA 2100-217F 2
-STRCODE 1-7D9 2
-STRING 1-7D9 2
+STRCODE 1-7E8 2
+STRING 1-7E8 2
 # %LINETAB Section
 # This section enumerates the file/line to address mappings.
 # The beginning of the section is indicated by %LINETAB.
@@ -52,42 +52,29 @@ STRING 1-7D9 2
 # are in ascending order of addresses.
 # All other numeric values are in decimal.
 %LINETAB
-$build/default/production/newAsmTemplate.o
-0 resetVec CODE >23:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-0 resetVec CODE >25:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7DA code CODE >53:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7DC code CODE >54:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7DD code CODE >55:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7DF code CODE >56:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7E0 code CODE >57:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7E1 code CODE >59:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7E3 code CODE >60:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7E4 code CODE >61:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7E5 code CODE >65:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7E6 code CODE >66:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7E8 code CODE >67:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7E9 code CODE >68:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7EA code CODE >69:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7EB code CODE >70:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7EC code CODE >71:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7ED code CODE >72:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7EE code CODE >73:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7EF code CODE >74:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7F0 code CODE >78:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7F1 code CODE >79:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7F2 code CODE >80:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7F3 code CODE >81:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7F4 code CODE >82:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7F5 code CODE >83:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7F6 code CODE >84:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7F7 code CODE >85:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7F8 code CODE >87:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7FA code CODE >88:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7FB code CODE >90:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7FC code CODE >94:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7FD code CODE >95:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7FE code CODE >96:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
-7FF code CODE >97:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/newAsmTemplate.asm
+$build/default/production/main.o
+0 resetVec CODE >24:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+0 resetVec CODE >25:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7E9 code CODE >31:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7EB code CODE >32:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7EC code CODE >33:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7EE code CODE >34:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7EF code CODE >35:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7F0 code CODE >38:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7F2 code CODE >39:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7F3 code CODE >40:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7F4 code CODE >41:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7F5 code CODE >44:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7F6 code CODE >45:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7F7 code CODE >46:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7F8 code CODE >47:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7F9 code CODE >50:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7FA code CODE >51:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7FB code CODE >52:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7FC code CODE >53:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7FD code CODE >54:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7FE code CODE >55:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+7FF code CODE >56:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -158,7 +145,7 @@ __Ludata_shr 2 0 ABS 0 udata_shr -
 # All other numeric quantities are in decimal.
 %SEGMENTS
 resetVec 0 0 0 1 2
-code 0 7DA FB4 26 2
+code 0 7E9 FD2 17 2
 # %NOTES Section
 # This section contains data of all the note-psects.  The beginning of the section
 # is indicated by %NOTES. The first line indicates the name and decimal
