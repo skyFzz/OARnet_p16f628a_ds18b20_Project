@@ -967,116 +967,160 @@ ENDM
     PSECT code
 
     main:
- ; Bus master transmits the reset pulse
- BANKSEL TRISB
- BCF TRISB, 1 ; Set ((PORTB) and 07Fh), 1 as output for transmission
- BANKSEL PORTB
- BCF PORTB, 1 ; Pull the bus low
- CALL delay_500us
+ ; UART Rx Tx Set Up
+ ;CALL uart_receive_init
+ ;CALL uart_transmit_init
 
- ; Bus master releases the bus and goes into receive mode
- BANKSEL TRISB
- BSF TRISB, 1 ; Releases the bus by setting ((PORTB) and 07Fh), 1
- CALL delay_500us
+ ; Temperature Conversion
+ CALL reset_pulse
+ CALL skip_rom
+ CALL convert_t
+
+ ; Temperature Read
+ CALL reset_pulse
+ CALL skip_rom
+ CALL read_scratchpad
+
  GOTO main
 
-    delay_500us:
+    ; Tansmits the reset pulse
+    reset_pulse:
+ BANKSEL TRISB
+ BCF TRISB, 1 ; Pull the bus low, in Tx mode
+ CALL delay_loop
+ BSF TRISB, 1 ; Release the bus, in Rx mode
+ CALL delay_loop
+ RETURN
+
+    ; Send CCh
+    skip_rom:
+ CALL write_0
+ CALL write_0
+ CALL write_1
+ CALL write_1
+ CALL write_0
+ CALL write_0
+ CALL write_1
+ CALL write_1
+ RETURN
+
+    ; Send 44h
+    convert_t:
+ CALL write_0
+ CALL write_0
+ CALL write_1
+ CALL write_0
+ CALL write_0
+ CALL write_0
+ CALL write_1
+ CALL write_0
+ RETURN
+
+    ; Send BEh
+    read_scratchpad:
+ CALL write_0
+ CALL write_1
+ CALL write_1
+ CALL write_1
+ CALL write_1
+ CALL write_1
+ CALL write_0
+ CALL write_1
+ RETURN
+
+    write_1:
+ BANKSEL TRISB
+ BCF TRISB, 1 ; Pull the bus low to initiate the write time slot
+ CALL delay_io_6us
+ BSF TRISB, 1 ; Release the bus
+ CALL delay_io_60us
+ RETURN
+
+    write_0:
+ BANKSEL TRISB
+ BCF TRISB, 1
+ CALL delay_io_60us ; Continue holding bus low without release
+ BSF TRISB, 1 ; Release the bus
+ CALL delay_io_6us ; 1us recovery time between slots
+ RETURN
+
+    ;
+    read:
+ BANKSEL TRISB
+ BCF TRISB, 1
+ CALL delay_io_6us
+ BSF TRISB, 1
+ BTFSS TRISB, 1
+
+    delay_io_60us:
+ MOVLW 98
+ MOVWF 0xA3
+ DECFSZ 0xA3, F
+ GOTO $-1
+ RETURN
+
+    ; 6 us delay
+    delay_io_6us:
+ MOVLW 10
+ MOVWF 0xA2
+ DECFSZ 0xA2, F
+ GOTO $-1
+ RETURN
+
+    ; m * (3n + 8) + 2 where m = A1h
+    ; When A1h = 4, A0h = 255, total cycles around 3094 = 618.8 us
+    delay_loop:
  MOVLW 4
- MOVWF 21h
+ MOVWF 0xA1
  CALL delay
  RETURN
 
+    ; 3n + 8 where n = A0h - 1
     delay:
  MOVLW 255
- MOVWF 20h
- DECFSZ 20h, F
+ MOVWF 0xA0
+ DECFSZ 0xA0, F
  GOTO $-1
- DECFSZ 21h, F
+ DECFSZ 0xA1, F
  GOTO delay
  RETURN
 
-; ; Master issues Skip ROM command (0xCC -> 11001100)
-; ds18b20_ROM:
-; BCF TRISB, 1
-; BANKSEL PORTB
-; BSF PORTB, 1
-; CALL delay_60us
-; BSF PORTB, 1
-; CALL delay_60us
-; BCF PORTB, 1
-; CALL delay_60us
-; BCF PORTB, 1
-; CALL delay_60us
-; BSF PORTB, 1
-; CALL delay_60us
-; BSF PORTB, 1
-; CALL delay_60us
-; BCF PORTB, 1
-; CALL delay_60us
-; BCF PORTB, 1
-; CALL delay_60us
-;
-; ; Master issues Convert T command (0x44)
-; ds18b20_convert:
-; BCF PORTB, 1
-; CALL delay_60us
-; BSF PORTB, 1
-; CALL delay_60usPLA2216 Active Logic Probe
-;User?s Guide
-; BCF PORTB, 1
-; CALL delay_60us
-; BCF PORTB, 1
-; CALL delay_60us
-; BCF PORTB, 1
-; CALL delay_60us
-; BSF PORTB, 1
-; CALL delay_60us
-; BCF PORTB, 1
-; CALL delay_60us
-; BCF PORTB, 1
-; CALL delay_60us
-;
-; ; Master issues Read Scratchpad command (0xBE -> 10111110)
-; ds18b20_read:
-; BSF PORTB, 1
-; CALL delay_60us
-; BCF PORTB, 1
-; CALL delay_60us
-; BSF PORTB, 1
-; CALL delay_60us
-; BSF PORTB, 1
-; CALL delay_60us
-; BSF PORTB, 1
-; CALL delay_60us
-; BSF PORTB, 1
-; CALL delay_60us
-; BSF PORTB, 1
-; CALL delay_60us
-; BCF PORTB, 1
-; CALL delay_60us
-;
-; BANKSEL TRISB
-; BSF TRISB, 1 ; Set ((PORTB) and 07Fh), 1 as input to read the entire scratchpad
-; ; Initialize the SPBRG register for the appropriate baud rate
-; BANKSEL TXSTA
-; BCF TXSTA, 2 ; Select low speed baud rate
-; BCF TXSTA, 4 ; Enable async mode
-; MOVLW 25 ; Load the value for SPBRG, which controls the period of a 8-bit timer
-; BANKSEL SPBRG
-; MOVWF SPBRG ; Initialize SPBRG reg for the baud rate
-; ; Enable the async serial port
-; BANKSEL RCSTA ; Select Bank 0
-; BSF RCSTA, 7 ; Set bit ((RCSTA) and 07Fh), 7 to enable serial port
-; ; Enable the transmission
-; BANKSEL TXSTA
-; BSF TXSTA, 5 ; Set bit ((TXSTA) and 07Fh), 5 to enable transmission
-; ; Enable the reception
-; BANKSEL RCSTA
-; BSF RCSTA, 4 ; Set bit ((RCSTA) and 07Fh), 4 to enable reception
-;
-; GOTO init
-;
-    ; Generate 1.75us delay for initialization step
+    ; UART Rx Set Up
+    uart_receive_init:
+ BANKSEL TRISB
+ BSF TRISB, 1
+ BSF TRISB, 2
+ BANKSEL TXSTA
+ BCF TXSTA, 2
+ BCF TXSTA, 4
+ MOVLW 25
+ BANKSEL SPBRG
+ MOVWF SPBRG
+ BANkSEL RCSTA
+ BSF RCSTA, 7
+ BSF RCSTA, 4 ; Set bit ((RCSTA) and 07Fh), 4 to enable the reception
+ RETURN
+
+    ; UART Tx Set Up
+    uart_transmit_init:
+ ; Initialize pins RX and TX, both should be set as inputs
+ BANKSEL TRISB
+ BSF TRISB, 1 ; Set ((PORTB) and 07Fh), 1 as input to read the entire scratchpad
+ BSF TRISB, 2
+ ; Initialize the SPBRG register for the appropriate baud rate
+ BANKSEL TXSTA
+ BCF TXSTA, 2 ; Select low speed baud rate
+ BCF TXSTA, 4 ; Clear bit ((TXSTA) and 07Fh), 4 to enable async serial port
+ MOVLW 25 ; Load the value for SPBRG, which controls the period of a 8-bit timer
+ BANKSEL SPBRG
+ MOVWF SPBRG ; Initialize SPBRG reg for the baud rate
+ ; Enable the async serial port
+ BANKSEL RCSTA ; Select Bank 0
+ BSF RCSTA, 7 ; Set bit ((RCSTA) and 07Fh), 7 to enable async serial port
+ ; Enable the transmission
+ BANKSEL TXSTA
+ BSF TXSTA, 5 ; Set bit ((TXSTA) and 07Fh), 5 to enable transmission
+ RETURN
 
 
  END resetVec
