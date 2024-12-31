@@ -967,10 +967,6 @@ ENDM
     PSECT code
 
     main:
- ; UART Rx Tx Set Up
- ;CALL uart_receive_init
- ;CALL uart_transmit_init
-
  ; Temperature Conversion
  CALL reset_pulse
  CALL skip_rom
@@ -980,6 +976,9 @@ ENDM
  CALL reset_pulse
  CALL skip_rom
  CALL read_scratchpad
+
+ ; UART Tx
+ ;CALL uart_transmit
 
  GOTO main
 
@@ -1014,6 +1013,7 @@ ENDM
  CALL write_0
  CALL write_1
  CALL write_0
+ CALL read_bit
  RETURN
 
     ; Send BEh
@@ -1026,12 +1026,17 @@ ENDM
  CALL write_1
  CALL write_0
  CALL write_1
+ CALL read_byte ; Read byte 0
+ CALL read_byte ; Read byte 1
+ ;CALL read_byte ; Read byte 2
+ ;CALL read_byte ; Read byte 3
+ ;CALL read_byte ; Read byte 4
  RETURN
 
     write_1:
  BANKSEL TRISB
- BCF TRISB, 1 ; Pull the bus low to initiate the write time slot
- CALL delay_io_6us
+ BCF TRISB, 1 ; Pull the bus low
+ CALL delay_io_1us
  BSF TRISB, 1 ; Release the bus
  CALL delay_io_60us
  RETURN
@@ -1041,16 +1046,44 @@ ENDM
  BCF TRISB, 1
  CALL delay_io_60us ; Continue holding bus low without release
  BSF TRISB, 1 ; Release the bus
- CALL delay_io_6us ; 1us recovery time between slots
+ CALL delay_io_1us ; 1us recovery time between slots
  RETURN
 
-    ;
-    read:
+    ; 0xA4 - byte 0
+    ; 0xA5 - byte 1
+    ; ...
+    ; 0xAC - byte 8
+    ; Loop read_bit 8 times to read a byte
+    read_byte:
+ MOVLW 8
+ MOVWF 0xAD ; Loop variable
+ MOVLW 0
+ MOVWF 0xA4 ; Initialize the reg storing data
+ CALL read_bit
+ DECFSZ 0xAD, F
+ GOTO $-2
+ RETURN
+
+    ; A complete read time slot for reading one bit
+    read_bit:
  BANKSEL TRISB
- BCF TRISB, 1
- CALL delay_io_6us
- BSF TRISB, 1
- BTFSS TRISB, 1
+ BCF TRISB, 1 ; Pulling the bus low
+ CALL delay_io_1us
+ BSF TRISB, 1 ; Release the bus
+ CALL delay_io_10us ; Locate the master sample time towards end
+ CALL read
+ CALL delay_io_60us ; Make time slot duration at least 60 us
+ RETURN
+
+    ; Acutal sampling of the bit transmitted by the sensor
+    read:
+ BTFSS TRISB, 1 ; Sample the bus state within 15us
+ GOTO $+3 ; Read 0 if the bus state is low
+ BSF 0XA4, 0 ; Read 1 if the bus state is high
+ RLF 0XA4, F
+ BCF 0XA4, 0
+ RLF 0XA4, F
+ RETURN
 
     delay_io_60us:
  MOVLW 98
@@ -1059,9 +1092,17 @@ ENDM
  GOTO $-1
  RETURN
 
-    ; 6 us delay
-    delay_io_6us:
- MOVLW 10
+    ; 10.2 us delay
+    delay_io_10us:
+ MOVLW 16
+ MOVWF 0xAE
+ DECFSZ 0xAE, F
+ GOTO $-1
+ RETURN
+
+    ; 1.2 us delay
+    delay_io_1us:
+ MOVLW 1
  MOVWF 0xA2
  DECFSZ 0xA2, F
  GOTO $-1
@@ -1085,42 +1126,41 @@ ENDM
  GOTO delay
  RETURN
 
-    ; UART Rx Set Up
-    uart_receive_init:
- BANKSEL TRISB
- BSF TRISB, 1
- BSF TRISB, 2
- BANKSEL TXSTA
- BCF TXSTA, 2
- BCF TXSTA, 4
- MOVLW 25
- BANKSEL SPBRG
- MOVWF SPBRG
- BANkSEL RCSTA
- BSF RCSTA, 7
- BSF RCSTA, 4 ; Set bit ((RCSTA) and 07Fh), 4 to enable the reception
- RETURN
-
     ; UART Tx Set Up
-    uart_transmit_init:
- ; Initialize pins RX and TX, both should be set as inputs
+    uart_transmit:
+ ; Initialize pin TX, both should be set as inputs
  BANKSEL TRISB
- BSF TRISB, 1 ; Set ((PORTB) and 07Fh), 1 as input to read the entire scratchpad
  BSF TRISB, 2
  ; Initialize the SPBRG register for the appropriate baud rate
  BANKSEL TXSTA
- BCF TXSTA, 2 ; Select low speed baud rate
- BCF TXSTA, 4 ; Clear bit ((TXSTA) and 07Fh), 4 to enable async serial port
- MOVLW 25 ; Load the value for SPBRG, which controls the period of a 8-bit timer
+ BCF TXSTA, 2 ; ((TXSTA) and 07Fh), 2 = 0 (low speed baud rate)
+ BCF TXSTA, 4 ; Clear bit ((TXSTA) and 07Fh), 4 to enable serial port
+ MOVLW 32 ; SPBRG = 32 for 20 MHz, 25 for 16 MHz
  BANKSEL SPBRG
  MOVWF SPBRG ; Initialize SPBRG reg for the baud rate
  ; Enable the async serial port
  BANKSEL RCSTA ; Select Bank 0
- BSF RCSTA, 7 ; Set bit ((RCSTA) and 07Fh), 7 to enable async serial port
- ; Enable the transmission
+ BSF RCSTA, 7 ; Set bit ((RCSTA) and 07Fh), 7 to enable serial port
+ ; Enable the transmissionOne
  BANKSEL TXSTA
  BSF TXSTA, 5 ; Set bit ((TXSTA) and 07Fh), 5 to enable transmission
+ ; Start transmission
+ CALL transmit
  RETURN
 
+    ; Load data to the TXREG register and start transmission
+    transmit:
+        BANKSEL TXSTA ; Select Bank 1
+ BTFSS TXSTA, 1 ; Test if if TSR is empty
+ goto $-1 ; Continue checking until success
+ BANKSEL TXREG ; Select Bank 0
+
+ MOVF 0xA4, W ; Current byte read from the sensor
+ MOVWF TXREG
+ MOVLW 0X0D ; CR
+ MOVWF TXREG
+ MOVLW 0x0A ; LF
+ MOVWF TXREG
+ RETURN
 
  END resetVec
