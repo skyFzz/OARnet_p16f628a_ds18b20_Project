@@ -38,7 +38,7 @@
 	CALL	    read_scratchpad
 	
 	; UART Tx
-	;CALL	    uart_transmit
+	CALL	    uart_transmit
 	
 	GOTO	    main
 	
@@ -138,15 +138,15 @@
     ; Acutal sampling of the bit transmitted by the sensor
     read:
 	BTFSS	    TRISB, 1	    ; Sample the bus state within 15us
-	GOTO	    $+3		    ; Read 0 if the bus state is low
-	BSF	    0XA4, 0	    ; Read 1 if the bus state is high
-	RLF	    0XA4, F
-	BCF	    0XA4, 0
-	RLF	    0XA4, F
+	GOTO	    $+3		    
+	BSF	    0XA4, 7	    ; Set bit 7 and shift right
+	RRF	    0XA4, F
+	BCF	    0XA4, 7	    ; Clear bit 7 and shift right
+	RRF	    0XA4, F
 	RETURN
    
     delay_io_60us:
-	MOVLW	    98
+	MOVLW	    99
 	MOVWF	    0xA3
 	DECFSZ	    0xA3, F
 	GOTO	    $-1
@@ -205,24 +205,34 @@
 	BANKSEL	    TXSTA
 	BSF	    TXSTA, 5	; Set bit TXEN to enable transmission
 	; Start transmission
-	CALL	    transmit
+	CALL	    load
 	RETURN
 
     ; Load data to the TXREG register and start transmission
-    transmit:
-        BANKSEL	    TXSTA	; Select Bank 1
+    load:
+	MOVF	    0xA4, W	; Current byte read from the sensor
+	CALL	    tx
+	MOVLW	    0X0D	; CR
+	CALL	    tx
+	MOVLW	    0x0A	; LF
+	CALL	    tx
+	RETURN
+
+    ; Transmit a byte
+    tx:
+	BANKSEL	    TXSTA	; Select Bank 1
 	BTFSS	    TXSTA, 1	; Test if if TSR is empty
 	goto	    $-1		; Continue checking until success
-	BANKSEL	    TXREG	; Select Bank 0
-	
-	MOVF	    0xA4, W	; Current byte read from the sensor
-	MOVWF	    TXREG			    
-	MOVLW	    0X0D	; CR
-	MOVWF	    TXREG
-	MOVLW	    0x0A	; LF
+	BANKSEL	    TXREG
 	MOVWF	    TXREG
 	RETURN
 
+    ; Decode the least significant byte read from the temperature register
+    decode_LS_byte:
+
+    ; Decode the most significant byte read from the temperature register
+    decode_MS_byte:
+    
 	END resetVec
 
 

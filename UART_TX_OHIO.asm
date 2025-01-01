@@ -34,7 +34,7 @@
 	BANKSEL TXSTA
 	BCF TXSTA, 2		; Select low speed baud rate
 	BCF TXSTA, 4		; Enable async mode
-	MOVLW 25		; Load the value for SPBRG, which controls the period of a 8-bit timer
+	MOVLW 32		; Load the value for SPBRG, which controls the period of a 8-bit timer
 	BANKSEL SPBRG
 	MOVWF SPBRG		; Initialize SPBRG reg for the baud rate
 	; Enable the async serial port

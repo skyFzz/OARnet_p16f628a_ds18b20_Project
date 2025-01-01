@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=/opt/microchip/xc8/v2.50/pic/dat/20240725155939_en.msgs -cs \
   -h+dist/default/production/OARnet_P16F628A_DS18B20.X.production.sym \
   --cmf=dist/default/production/OARnet_P16F628A_DS18B20.X.production.cmf -z \
-  -Q16F628A -o/tmp/xcXOipKFD/driver_tmp_3.o -presetVec=0 \
+  -Q16F628A -o/tmp/xcXEEJeip/driver_tmp_3.o -presetVec=0 \
   --fixupoverflow=error -ver=XC8 PIC(R) Assembler --fixupoverflow=lstwarn \
   -Mdist/default/production/OARnet_P16F628A_DS18B20.X.production.map -E1 \
   --acfsm=1493 -ACODE=00h-07FFh -ASTRCODE=00h-07FFh -ASTRING=00h-0FFhx8 \
@@ -28,12 +28,12 @@ Machine type is 16F628A
 build/default/production/main.o
                 config                             2007     2007        1        0       4
                 resetVec                              0        0        1        0       0
-                code                                774      774       8C      EE8       0
+                code                                771      771       8F      EE2       0
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   CODE           
                 resetVec                              0        0        1         0
-                code                                774      774       8C         0
+                code                                771      771       8F         0
 
         CLASS   STRCODE        
 
@@ -74,7 +74,7 @@ TOTAL           Name                               Link     Load   Length     Sp
 
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
 
-                code                           000774  00008C  000800       EE8       0  CODE        2
+                code                           000771  00008F  000800       EE2       0  CODE        2
                 resetVec                       000000  000001  000001         0       0  CODE        2
 
 
@@ -84,11 +84,11 @@ UNUSED ADDRESS RANGES
         BANK0            0020-006F             50           1
         BANK1            00A0-00EF             50           1
         BANK2            0120-014F             30           1
-        CODE             0001-0773            773           2
+        CODE             0001-0770            770           2
         COMMON           0070-007F             10           1
-        CONST            0001-0773            100           2
+        CONST            0001-0770            100           2
         EEDATA           2100-217F             80           2
-        ENTRY            0001-0773            100           2
+        ENTRY            0001-0770            100           2
         IDLOC            2000-2003              4           2
         RAM              0020-006F             50           1
                          00A0-00EF             50
@@ -97,8 +97,8 @@ UNUSED ADDRESS RANGES
         SFR1             0080-009F             20           1
         SFR2             0100-011F             20           1
         SFR3             0180-01EF             70           1
-        STRCODE          0001-0773            773           2
-        STRING           0001-0773            100           2
+        STRCODE          0001-0770            770           2
+        STRING           0001-0770            100           2
 
                                   Symbol Table
 
