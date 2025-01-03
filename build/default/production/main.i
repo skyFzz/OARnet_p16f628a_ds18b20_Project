@@ -2,23 +2,19 @@
 # 1 "<built-in>" 1
 # 1 "main.asm" 2
 ;File: newAsm.asm
-;Author: hzhou1
+;Description: Read the temperature off a DS18B20 sensor
+;Author: Haoling Zhou
 ;Created on November 20, 2024, 3:34 PM
 
-; PIC16F628A Configuration Bit Settings
-
-; Assembly source line config statements
-
 ; CONFIG
-  CONFIG FOSC = HS ; Oscillator Selection bits (HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1/CLKIN)
-  CONFIG WDTE = OFF ; Watchdog Timer Enable bit (WDT disabled)
-  CONFIG PWRTE = OFF ; Power-up Timer Enable bit (PWRT disabled)
-  CONFIG MCLRE = OFF ; RA5/MCLR/VPP Pin Function Select bit (RA5/MCLR/VPP pin function is digital input, MCLR internally tied to VDD)
-  CONFIG BOREN = OFF ; Brown-out Detect Enable bit (BOD disabled)
-  CONFIG LVP = OFF ; Low-Voltage Programming Enable bit (RB4/PGM pin has digital I/O function, HV on MCLR must be used for programming)
-  CONFIG CPD = OFF ; Data EE Memory Code Protection bit (Data memory code protection off)
-  CONFIG CP = OFF ; Flash Program Memory Code Protection bit (Code protection off)
-
+    CONFIG FOSC = HS ; Oscillator Selection bits (HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1/CLKIN)
+    CONFIG WDTE = OFF ; Watchdog Timer Enable bit (WDT disabled)
+    CONFIG PWRTE = OFF ; Power-up Timer Enable bit (PWRT disabled)
+    CONFIG MCLRE = OFF ; RA5/MCLR/VPP Pin Function Select bit (RA5/MCLR/VPP pin function is digital input, MCLR internally tied to VDD)
+    CONFIG BOREN = OFF ; Brown-out Detect Enable bit (BOD disabled)
+    CONFIG LVP = OFF ; Low-Voltage Programming Enable bit (RB4/PGM pin has digital I/O function, HV on MCLR must be used for programming)
+    CONFIG CPD = OFF ; Data EE Memory Code Protection bit (Data memory code protection off)
+    CONFIG CP = OFF ; Flash Program Memory Code Protection bit (Code protection off)
 
 
 # 1 "/opt/microchip/xc8/v2.50/pic/include/xc.inc" 1 3
@@ -957,10 +953,11 @@ stk_offset SET 0
 auto_size SET 0
 ENDM
 # 8 "/opt/microchip/xc8/v2.50/pic/include/xc.inc" 2 3
-# 21 "main.asm" 2
+# 17 "main.asm" 2
  PSECT resetVec, class=CODE, delta=2
 
-    resetVec: ; Start address
+    resetVec:
+    ; Start address
  PAGESEL main
  GOTO main
 
@@ -1158,6 +1155,7 @@ ENDM
  CALL tx
  RETURN
 
+    ; Transmit a byte
     tx:
  BANKSEL TXSTA ; Select Bank 1
  BTFSS TXSTA, 1 ; Test if if TSR is empty
@@ -1165,5 +1163,15 @@ ENDM
  BANKSEL TXREG
  MOVWF TXREG
  RETURN
+
+    ; Decode the least significant byte read from the temperature register
+    decode_LS_byte:
+ IF 0XA4
+ ELSIF DEF
+ ELSE
+ ENDIF
+
+    ; Decode the most significant byte read from the temperature register
+    decode_MS_byte:
 
  END resetVec

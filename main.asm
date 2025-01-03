@@ -1,26 +1,23 @@
 ;File:   newAsm.asm
-;Author: hzhou1
+;Description: Read the temperature off a DS18B20 sensor
+;Author: Haoling Zhou
 ;Created on November 20, 2024, 3:34 PM
     
-; PIC16F628A Configuration Bit Settings
-
-; Assembly source line config statements
-    
 ; CONFIG
-  CONFIG  FOSC = HS             ; Oscillator Selection bits (HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1/CLKIN)
-  CONFIG  WDTE = OFF            ; Watchdog Timer Enable bit (WDT disabled)
-  CONFIG  PWRTE = OFF           ; Power-up Timer Enable bit (PWRT disabled)
-  CONFIG  MCLRE = OFF           ; RA5/MCLR/VPP Pin Function Select bit (RA5/MCLR/VPP pin function is digital input, MCLR internally tied to VDD)
-  CONFIG  BOREN = OFF           ; Brown-out Detect Enable bit (BOD disabled)
-  CONFIG  LVP = OFF             ; Low-Voltage Programming Enable bit (RB4/PGM pin has digital I/O function, HV on MCLR must be used for programming)
-  CONFIG  CPD = OFF             ; Data EE Memory Code Protection bit (Data memory code protection off)
-  CONFIG  CP = OFF              ; Flash Program Memory Code Protection bit (Code protection off)
+    CONFIG  FOSC = HS             ; Oscillator Selection bits (HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1/CLKIN)
+    CONFIG  WDTE = OFF            ; Watchdog Timer Enable bit (WDT disabled)
+    CONFIG  PWRTE = OFF           ; Power-up Timer Enable bit (PWRT disabled)
+    CONFIG  MCLRE = OFF           ; RA5/MCLR/VPP Pin Function Select bit (RA5/MCLR/VPP pin function is digital input, MCLR internally tied to VDD)
+    CONFIG  BOREN = OFF           ; Brown-out Detect Enable bit (BOD disabled)
+    CONFIG  LVP = OFF             ; Low-Voltage Programming Enable bit (RB4/PGM pin has digital I/O function, HV on MCLR must be used for programming)
+    CONFIG  CPD = OFF             ; Data EE Memory Code Protection bit (Data memory code protection off)
+    CONFIG  CP = OFF              ; Flash Program Memory Code Protection bit (Code protection off)
 
- // config statements should precede project file includes.
     #include <xc.inc>
     PSECT resetVec, class=CODE, delta=2
     
-    resetVec:			; Start address
+    resetVec:			
+    ; Start address
 	PAGESEL	    main
 	GOTO	    main
 	
@@ -86,8 +83,8 @@
 	CALL	    write_1
 	CALL	    write_0
 	CALL	    write_1
-	CALL	    read_byte	    ; Read byte 0
-	CALL	    read_byte	    ; Read byte 1
+	CALL	    read_byte_0	    ; Read byte 0
+	CALL	    read_byte_1	    ; Read byte 1
 	;CALL	    read_byte	    ; Read byte 2
 	;CALL	    read_byte	    ; Read byte 3
 	;CALL	    read_byte	    ; Read byte 4
@@ -114,11 +111,91 @@
     ; ...
     ; 0xAC - byte 8
     ; Loop read_bit 8 times to read a byte
-    read_byte:
+    read_byte_0:
 	MOVLW	    8
 	MOVWF	    0xAD	    ; Loop variable
 	MOVLW	    0
 	MOVWF	    0xA4	    ; Initialize the reg storing data
+	CALL	    read_bit
+	DECFSZ	    0xAD, F
+	GOTO	    $-2
+	RETURN
+
+    read_byte_1:
+	MOVLW	    8
+	MOVWF	    0xAD	    ; Loop variable
+	MOVLW	    0
+	MOVWF	    0xA5	    ; Initialize the reg storing data
+	CALL	    read_bit
+	DECFSZ	    0xAD, F
+	GOTO	    $-2
+	RETURN
+
+    read_byte_2:
+	MOVLW	    8
+	MOVWF	    0xAD	    ; Loop variable
+	MOVLW	    0
+	MOVWF	    0xA6	    ; Initialize the reg storing data
+	CALL	    read_bit
+	DECFSZ	    0xAD, F
+	GOTO	    $-2
+	RETURN
+	
+    read_byte_3:
+	MOVLW	    8
+	MOVWF	    0xAD	    ; Loop variable
+	MOVLW	    0
+	MOVWF	    0xA7	    ; Initialize the reg storing data
+	CALL	    read_bit
+	DECFSZ	    0xAD, F
+	GOTO	    $-2
+	RETURN
+
+    read_byte_4:
+	MOVLW	    8
+	MOVWF	    0xAD	    ; Loop variable
+	MOVLW	    0
+	MOVWF	    0xA8	    ; Initialize the reg storing data
+	CALL	    read_bit
+	DECFSZ	    0xAD, F
+	GOTO	    $-2
+	RETURN
+	
+    read_byte_5:
+	MOVLW	    8
+	MOVWF	    0xAD	    ; Loop variable
+	MOVLW	    0
+	MOVWF	    0xA9	    ; Initialize the reg storing data
+	CALL	    read_bit
+	DECFSZ	    0xAD, F
+	GOTO	    $-2
+	RETURN
+
+    read_byte_7:
+	MOVLW	    8
+	MOVWF	    0xAD	    ; Loop variable
+	MOVLW	    0
+	MOVWF	    0xAA	    ; Initialize the reg storing data
+	CALL	    read_bit
+	DECFSZ	    0xAD, F
+	GOTO	    $-2
+	RETURN
+
+    read_byte_8:
+	MOVLW	    8
+	MOVWF	    0xAD	    ; Loop variable
+	MOVLW	    0
+	MOVWF	    0xAB	    ; Initialize the reg storing data
+	CALL	    read_bit
+	DECFSZ	    0xAD, F
+	GOTO	    $-2
+	RETURN
+
+    read_byte_9:
+	MOVLW	    8
+	MOVWF	    0xAD	    ; Loop variable
+	MOVLW	    0
+	MOVWF	    0xAC	    ; Initialize the reg storing data
 	CALL	    read_bit
 	DECFSZ	    0xAD, F
 	GOTO	    $-2
@@ -222,17 +299,87 @@
     tx:
 	BANKSEL	    TXSTA	; Select Bank 1
 	BTFSS	    TXSTA, 1	; Test if if TSR is empty
-	goto	    $-1		; Continue checking until success
+	GOTO	    $-1		; Continue checking until success
 	BANKSEL	    TXREG
 	MOVWF	    TXREG
 	RETURN
 
-    ; Decode the least significant byte read from the temperature register
-    decode_LS_byte:
+    ; Decode the two byte read from the temperature register
+    ; 0xB0 - LS byte raw
+    ; 0xB1 - MS byte raw
+    ; 0xC0 - int part
+    ; 0xC1 - LS byte fraction
+    ; 0xC2 - MS byte fraction
+    decode_temp:
+	; Extract <7:4> from LS byte and <3:0> from MS byte to form the int part
+	BANKSEL	    0xA4
+	RRF	    0xA4, W	; W = LS_temp >> 1
+	RRF	    0xA4, W	; W = LS_temp >> 1
+	RRF	    0xA4, W	; W = LS_temp >> 1
+	RRF	    0xA4, W	; W = LS_temp >> 1
+	CLRF	    0xC0	; int_part = 0
+	MOVWF	    0xC0	; int_part = W
+	  
+	RLF	    0xA5, W	; W = MS_temp << 1
+	RLF	    0xA5, W	; W = MS_temp << 1
+	RLF	    0xA5, W	; W = MS_temp << 1
+	RLF	    0xA5, W	; W = MS_temp << 1
+	IORWF	    0xC0, F	; int_part |= W
+	
+	; Check for MS byte bit 3 for +/-
+	BANKSEL	    0xA5
+	BTFSS	    0xA5, 3
+	; ...
 
-    ; Decode the most significant byte read from the temperature register
-    decode_MS_byte:
+    ; 0xE0 - remainder
+    ; 0xE2 - copy of int part
+    mod_by_10:
+	MOVF	    0xC0	; W = int_part
+	MOVWF	    0xE2	; copy_int_part = W
+	MOVLW	    10		; W = 10
+	SUBWF	    0xE2, W 	; W = copy_int_part - 10
+	BTFSC	    STATUS, 0	; if (copy_int_part < 0) return;
+	RETURN			;	
+	MOVWF	    0xE0	; remainder = W  
+	GOTO	    mod_by_10	;
+	
+    ; 0xE1 - quotient
+    divide_by_10:
+	SUBLW	    10
+	BTFSS	    STATUS, 0
+	RETURN
+	INCF	    0xE1, F
+	GOTO	    divide_by_10
+	
+	
+    ; Preload the digit table	
+    ; 0xD0 - zero
+    ; 0xD1 - one
+    ; ...
+    ; 0xD9 - nine
+    compute_digit_table:
+	CLRW
+	ADDLW	    0x30	; W += 0x30
+	MOVWF	    0xD0	; zero = W
+	ADDLW	    1		; W += 1
+	MOVWF	    0xD1	; one = W
+	ADDLW	    1		; ...
+	MOVWF	    0xD2
+	ADDLW	    1
+	MOVWF	    0xD3
+	ADDLW	    1
+	MOVWF	    0xD4
+	ADDLW	    1
+	MOVWF	    0xD5
+	ADDLW	    1
+	MOVWF	    0xD6
+	ADDLW	    1
+	MOVWF	    0xD7
+	ADDLW	    1
+	MOVWF	    0xD8
+	ADDLW	    1		; W += 1
+	MOVWF	    0xD9	; nine = W
     
 	END resetVec
 
-
+	
