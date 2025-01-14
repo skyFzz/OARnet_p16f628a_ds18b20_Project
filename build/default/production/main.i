@@ -975,7 +975,7 @@ ENDM
  CALL read_scratchpad
 
  ; UART Tx
- CALL uart_transmit
+ ;CALL uart_transmit
 
  GOTO main
 
@@ -1023,11 +1023,17 @@ ENDM
  CALL write_1
  CALL write_0
  CALL write_1
- CALL read_byte ; Read byte 0
- CALL read_byte ; Read byte 1
- ;CALL read_byte ; Read byte 2
- ;CALL read_byte ; Read byte 3
- ;CALL read_byte ; Read byte 4
+ CALL read_byte_0 ; Read byte 0
+ CALL read_byte_1 ; Read byte 1
+ CALL read_byte_2 ; Read byte 2
+ CALL read_byte_3 ; Read byte 3
+ CALL read_byte_4 ; Read byte 4
+ CALL read_byte_5 ; Read byte 5
+ CALL read_byte_6 ; Read byte 6
+ CALL read_byte_7 ; Read byte 7
+ CALL read_byte_8 ; Read byte 8
+ CALL read_byte_8 ; Read byte 8
+ CALL read_byte_8 ; Read byte 8
  RETURN
 
     write_1:
@@ -1046,21 +1052,6 @@ ENDM
  CALL delay_io_1us ; 1us recovery time between slots
  RETURN
 
-    ; 0xA4 - byte 0
-    ; 0xA5 - byte 1
-    ; ...
-    ; 0xAC - byte 8
-    ; Loop read_bit 8 times to read a byte
-    read_byte:
- MOVLW 8
- MOVWF 0xAD ; Loop variable
- MOVLW 0
- MOVWF 0xA4 ; Initialize the reg storing data
- CALL read_bit
- DECFSZ 0xAD, F
- GOTO $-2
- RETURN
-
     ; A complete read time slot for reading one bit
     read_bit:
  BANKSEL TRISB
@@ -1068,18 +1059,205 @@ ENDM
  CALL delay_io_1us
  BSF TRISB, 1 ; Release the bus
  CALL delay_io_10us ; Locate the master sample time towards end
- CALL read
- CALL delay_io_60us ; Make time slot duration at least 60 us
  RETURN
 
-    ; Acutal sampling of the bit transmitted by the sensor
-    read:
- BTFSS TRISB, 1 ; Sample the bus state within 15us
+    ; Read byte 0, stored in 0xA4, value = TEMERATURE LSB
+    read_byte_0:
+ MOVLW 8
+ MOVWF 0xAD ; Loop variable
+ MOVLW 0
+ MOVWF 0xA4 ; Initialize the reg storing data
+ CALL read_bit ; Generate one read time slot
+ CALL bit_sample_byte_0 ; Sampling the bus state
+ DECFSZ 0xAD, F ; if (--i == 0) SKIP;
+ GOTO $-3 ; Read the next bit
+ RETURN
+
+    ; Sample the bit transmitted by the sensor
+    bit_sample_byte_0:
+ BTFSS TRISB, 1 ; Sample the bus state within 15us, skip if set
  GOTO $+3
  BSF 0XA4, 7 ; Set bit 7 and shift right
  RRF 0XA4, F
  BCF 0XA4, 7 ; Clear bit 7 and shift right
  RRF 0XA4, F
+ CALL delay_io_60us ; Make time slot duration at least 60 us
+ RETURN
+
+ ; Read byte 1, stored in 0xA5, value = TEMPERATUE MSB
+    read_byte_1:
+ MOVLW 8
+ MOVWF 0xAD
+ MOVLW 0
+ MOVWF 0xA5
+ CALL read_bit
+ CALL bit_sample_byte_1
+ DECFSZ 0xAD, F
+ GOTO $-3
+ RETURN
+
+    bit_sample_byte_1:
+ BTFSS TRISB, 1
+ GOTO $+3
+ BSF 0XA5, 7
+ RRF 0XA5, F
+ BCF 0XA5, 7
+ RRF 0XA5, F
+ CALL delay_io_60us
+ RETURN
+
+ ; Read byte 2, stored in 0xA6, value = HIGH ALARM TRIGGER REGISTER (EEPROM)
+    read_byte_2:
+ MOVLW 8
+ MOVWF 0xAD
+ MOVLW 0
+ MOVWF 0xA6
+ CALL read_bit
+ CALL bit_sample_byte_2
+ DECFSZ 0xAD, F
+ GOTO $-3
+ RETURN
+
+    bit_sample_byte_2:
+ BTFSS TRISB, 1
+ GOTO $+3
+ BSF 0XA6, 7
+ RRF 0XA6, F
+ BCF 0XA6, 7
+ RRF 0XA6, F
+ CALL delay_io_60us
+ RETURN
+
+ ; Read byte 3, stored in 0xA7, value = LOW ALARM TRIGGER REGISTER (EEPROM)
+    read_byte_3:
+ MOVLW 8
+ MOVWF 0xAD
+ MOVLW 0
+ MOVWF 0xA7
+ CALL read_bit
+ CALL bit_sample_byte_3
+ DECFSZ 0xAD, F
+ GOTO $-3
+ RETURN
+
+    bit_sample_byte_3:
+ BTFSS TRISB, 1
+ GOTO $+3
+ BSF 0XA7, 7
+ RRF 0XA7, F
+ BCF 0XA7, 7
+ RRF 0XA7, F
+ CALL delay_io_60us
+ RETURN
+
+ ; Read byte 4, stored in 0xA8, value = CONFIGURATION REGISTER (EEPROM)
+    read_byte_4:
+ MOVLW 8
+ MOVWF 0xAD
+ MOVLW 0
+ MOVWF 0xA8
+ CALL read_bit
+ CALL bit_sample_byte_4
+ DECFSZ 0xAD, F
+ GOTO $-3
+ RETURN
+
+    bit_sample_byte_4:
+ BTFSS TRISB, 1
+ GOTO $+3
+ BSF 0XA8, 7
+ RRF 0XA8, F
+ BCF 0XA8, 7
+ RRF 0XA8, F
+ CALL delay_io_60us
+ RETURN
+
+ ; Read byte 5, stored in 0xA9, value = RESERVED
+    read_byte_5:
+ MOVLW 8
+ MOVWF 0xAD
+ MOVLW 0
+ MOVWF 0xA9
+ CALL read_bit
+ CALL bit_sample_byte_5
+ DECFSZ 0xAD, F
+ GOTO $-3
+ RETURN
+
+    bit_sample_byte_5:
+ BTFSS TRISB, 1
+ GOTO $+3
+ BSF 0XA9, 7
+ RRF 0XA9, F
+ BCF 0XA9, 7
+ RRF 0XA9, F
+ CALL delay_io_60us
+ RETURN
+
+ ; Read byte 6, stored in 0xAA, value = RESERVED
+    read_byte_6:
+ MOVLW 8
+ MOVWF 0xAD
+ MOVLW 0
+ MOVWF 0xAA
+ CALL read_bit
+ CALL bit_sample_byte_7
+ DECFSZ 0xAD, F
+ GOTO $-3
+ RETURN
+
+    bit_sample_byte_6:
+ BTFSS TRISB, 1
+ GOTO $+3
+ BSF 0XA4, 7
+ RRF 0XA4, F
+ BCF 0XA4, 7
+ RRF 0XA4, F
+ CALL delay_io_60us
+ RETURN
+
+ ; Read byte 7, stored in 0xAB, value = RESERVED
+    read_byte_7:
+ MOVLW 8
+ MOVWF 0xAD
+ MOVLW 0
+ MOVWF 0xAB
+ CALL read_bit
+ CALL bit_sample_byte_8
+ DECFSZ 0xAD, F
+ GOTO $-3
+ RETURN
+
+    bit_sample_byte_7:
+ BTFSS TRISB, 1
+ GOTO $+3
+ BSF 0XAB, 7
+ RRF 0XAB, F
+ BCF 0XAB, 7
+ RRF 0XAB, F
+ CALL delay_io_60us
+ RETURN
+
+ ; Read byte 8, stored in 0xAC, value = CRC
+    read_byte_8:
+ MOVLW 8
+ MOVWF 0xAD
+ MOVLW 0
+ MOVWF 0xAC
+ CALL read_bit
+ CALL bit_sample_byte_8
+ DECFSZ 0xAD, F
+ GOTO $-3
+ RETURN
+
+    bit_sample_byte_8:
+ BTFSS TRISB, 1
+ GOTO $+3
+ BSF 0XAC, 7
+ RRF 0XAC, F
+ BCF 0XAC, 7
+ RRF 0XAC, F
+ CALL delay_io_60us
  RETURN
 
     delay_io_60us:
@@ -1159,19 +1337,85 @@ ENDM
     tx:
  BANKSEL TXSTA ; Select Bank 1
  BTFSS TXSTA, 1 ; Test if if TSR is empty
- goto $-1 ; Continue checking until success
+ GOTO $-1 ; Continue checking until success
  BANKSEL TXREG
  MOVWF TXREG
  RETURN
 
-    ; Decode the least significant byte read from the temperature register
-    decode_LS_byte:
- IF 0XA4
- ELSIF DEF
- ELSE
- ENDIF
+    ; Decode the two byte read from the temperature register
+    ; 0xB0 - LS byte raw
+    ; 0xB1 - MS byte raw
+    ; 0xC0 - int part
+    ; 0xC1 - LS byte fraction
+    ; 0xC2 - MS byte fraction
+    decode_temp:
+ ; Extract <7:4> from LS byte and <3:0> from MS byte to form the int part
+ BANKSEL 0xA4
+ RRF 0xA4, W ; W = LS_temp >> 1
+ RRF 0xA4, W ; W = LS_temp >> 1
+ RRF 0xA4, W ; W = LS_temp >> 1
+ RRF 0xA4, W ; W = LS_temp >> 1
+ CLRF 0xC0 ; int_part = 0
+ MOVWF 0xC0 ; int_part = W
 
-    ; Decode the most significant byte read from the temperature register
-    decode_MS_byte:
+ RLF 0xA5, W ; W = MS_temp << 1
+ RLF 0xA5, W ; W = MS_temp << 1
+ RLF 0xA5, W ; W = MS_temp << 1
+ RLF 0xA5, W ; W = MS_temp << 1
+ IORWF 0xC0, F ; int_part |= W
+
+ ; Check for MS byte bit 3 for +/-
+ BANKSEL 0xA5
+ BTFSS 0xA5, 3
+ ; ...
+
+    ; 0xE0 - remainder
+    ; 0xE2 - copy of int part
+    mod_by_10:
+ MOVF 0xC0 ; W = int_part
+ MOVWF 0xE2 ; copy_int_part = W
+ MOVLW 10 ; W = 10
+ SUBWF 0xE2, W ; W = copy_int_part - 10
+ BTFSC STATUS, 0 ; if (copy_int_part < 0) return;
+ RETURN ;
+ MOVWF 0xE0 ; remainder = W
+ GOTO mod_by_10 ;
+
+    ; 0xE1 - quotient
+    divide_by_10:
+ SUBLW 10
+ BTFSS STATUS, 0
+ RETURN
+ INCF 0xE1, F
+ GOTO divide_by_10
+
+
+    ; Preload the digit table
+    ; 0xD0 - zero
+    ; 0xD1 - one
+    ; ...
+    ; 0xD9 - nine
+    compute_digit_table:
+ CLRW
+ ADDLW 0x30 ; W += 0x30
+ MOVWF 0xD0 ; zero = W
+ ADDLW 1 ; W += 1
+ MOVWF 0xD1 ; one = W
+ ADDLW 1 ; ...
+ MOVWF 0xD2
+ ADDLW 1
+ MOVWF 0xD3
+ ADDLW 1
+ MOVWF 0xD4
+ ADDLW 1
+ MOVWF 0xD5
+ ADDLW 1
+ MOVWF 0xD6
+ ADDLW 1
+ MOVWF 0xD7
+ ADDLW 1
+ MOVWF 0xD8
+ ADDLW 1 ; W += 1
+ MOVWF 0xD9 ; nine = W
 
  END resetVec
