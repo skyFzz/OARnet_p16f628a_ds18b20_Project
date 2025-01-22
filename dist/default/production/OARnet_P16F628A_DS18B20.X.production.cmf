@@ -11,9 +11,19 @@
 # All addresses and the length are given in unqualified hexadecimal
 # in delta units.  Any other numeric values are decimal.
 %PSECTS
-$build/default/production/main.o
-resetVec CODE 0 0 0 1 2 1
-code CODE 0 6AF 6AF 151 2 1
+$dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+cinit CODE 0 7FE 7FE 2 2 1
+text1 CODE 0 7BA 7BA 9 2 1
+text2 CODE 0 7E5 7E5 19 2 1
+text3 CODE 0 7B1 7B1 9 2 1
+text4 CODE 0 7A8 7A8 9 2 1
+text5 CODE 0 7D4 7D4 11 2 1
+text6 CODE 0 7C3 7C3 11 2 1
+maintext CODE 0 7A1 7A1 7 2 1
+cstackCOMMON COMMON 1 70 70 2 1 1
+config CONFIG 4 2007 2007 1 2 1
+$/tmp/xcXCBFmJn/driver_tmp_12.o
+end_init CODE 0 0 0 1 2 1
 config CONFIG 4 2007 2007 1 2 1
 # %UNUSED Section
 # This section enumerates the unused ranges of each CLASS. Each entry
@@ -27,18 +37,18 @@ RAM 120-14F 1
 BANK0 20-6F 1
 BANK1 A0-EF 1
 BANK2 120-14F 1
-CONST 1-6AE 2
-ENTRY 1-6AE 2
+CONST 1-7A0 2
+ENTRY 1-7A0 2
 IDLOC 2000-2003 2
-CODE 1-6AE 2
-SFR0 2-1F 1
+CODE 1-7A0 2
+SFR0 0-1F 1
 SFR1 80-9F 1
 SFR2 100-11F 1
 SFR3 180-1EF 1
-COMMON 70-7F 1
+COMMON 72-7D 1
 EEDATA 2100-217F 2
-STRCODE 1-6AE 2
-STRING 1-6AE 2
+STRCODE 1-7A0 2
+STRING 1-7A0 2
 # %LINETAB Section
 # This section enumerates the file/line to address mappings.
 # The beginning of the section is indicated by %LINETAB.
@@ -52,333 +62,68 @@ STRING 1-6AE 2
 # are in ascending order of addresses.
 # All other numeric values are in decimal.
 %LINETAB
-$build/default/production/main.o
-0 resetVec CODE >21:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-0 resetVec CODE >22:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6AF code CODE >28:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6B0 code CODE >29:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6B1 code CODE >30:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6B2 code CODE >33:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6B3 code CODE >34:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6B4 code CODE >35:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6B5 code CODE >40:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6B6 code CODE >44:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6B8 code CODE >45:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6B9 code CODE >46:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6BA code CODE >47:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6BB code CODE >48:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6BC code CODE >49:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6BD code CODE >53:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6BE code CODE >54:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6BF code CODE >55:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6C0 code CODE >56:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6C1 code CODE >57:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6C2 code CODE >58:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6C3 code CODE >59:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6C4 code CODE >60:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6C5 code CODE >61:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6C6 code CODE >65:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6C7 code CODE >66:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6C8 code CODE >67:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6C9 code CODE >68:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6CA code CODE >69:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6CB code CODE >70:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6CC code CODE >71:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6CD code CODE >72:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6CE code CODE >73:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6CF code CODE >74:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6D0 code CODE >78:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6D1 code CODE >79:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6D2 code CODE >80:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6D3 code CODE >81:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6D4 code CODE >82:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6D5 code CODE >83:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6D6 code CODE >84:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6D7 code CODE >85:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6D8 code CODE >86:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6D9 code CODE >87:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6DA code CODE >88:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6DB code CODE >89:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6DC code CODE >90:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6DD code CODE >91:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6DE code CODE >92:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6DF code CODE >93:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6E0 code CODE >94:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6E1 code CODE >95:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6E2 code CODE >96:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6E3 code CODE >97:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6E4 code CODE >100:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6E6 code CODE >101:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6E7 code CODE >102:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6E8 code CODE >103:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6E9 code CODE >104:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6EA code CODE >105:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6EB code CODE >108:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6ED code CODE >109:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6EE code CODE >110:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6EF code CODE >111:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6F0 code CODE >112:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6F1 code CODE >113:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6F2 code CODE >117:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6F4 code CODE >118:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6F5 code CODE >119:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6F6 code CODE >120:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6F7 code CODE >121:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6F8 code CODE >122:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6F9 code CODE >126:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6FA code CODE >127:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6FB code CODE >128:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6FC code CODE >129:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6FD code CODE >130:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6FE code CODE >131:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-6FF code CODE >132:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-700 code CODE >133:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-701 code CODE >134:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-702 code CODE >138:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-703 code CODE >139:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-704 code CODE >140:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-705 code CODE >141:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-706 code CODE >142:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-707 code CODE >143:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-708 code CODE >144:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-709 code CODE >145:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-70A code CODE >149:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-70B code CODE >150:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-70C code CODE >151:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-70D code CODE >152:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-70E code CODE >153:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-70F code CODE >154:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-710 code CODE >155:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-711 code CODE >156:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-712 code CODE >157:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-713 code CODE >160:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-714 code CODE >161:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-715 code CODE >162:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-716 code CODE >163:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-717 code CODE >164:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-718 code CODE >165:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-719 code CODE >166:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-71A code CODE >167:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-71B code CODE >171:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-71C code CODE >172:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-71D code CODE >173:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-71E code CODE >174:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-71F code CODE >175:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-720 code CODE >176:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-721 code CODE >177:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-722 code CODE >178:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-723 code CODE >179:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-724 code CODE >182:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-725 code CODE >183:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-726 code CODE >184:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-727 code CODE >185:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-728 code CODE >186:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-729 code CODE >187:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-72A code CODE >188:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-72B code CODE >189:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-72C code CODE >193:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-72D code CODE >194:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-72E code CODE >195:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-72F code CODE >196:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-730 code CODE >197:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-731 code CODE >198:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-732 code CODE >199:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-733 code CODE >200:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-734 code CODE >201:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-735 code CODE >204:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-736 code CODE >205:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-737 code CODE >206:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-738 code CODE >207:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-739 code CODE >208:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-73A code CODE >209:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-73B code CODE >210:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-73C code CODE >211:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-73D code CODE >215:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-73E code CODE >216:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-73F code CODE >217:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-740 code CODE >218:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-741 code CODE >219:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-742 code CODE >220:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-743 code CODE >221:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-744 code CODE >222:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-745 code CODE >223:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-746 code CODE >226:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-747 code CODE >227:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-748 code CODE >228:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-749 code CODE >229:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-74A code CODE >230:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-74B code CODE >231:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-74C code CODE >232:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-74D code CODE >233:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-74E code CODE >237:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-74F code CODE >238:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-750 code CODE >239:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-751 code CODE >240:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-752 code CODE >241:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-753 code CODE >242:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-754 code CODE >243:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-755 code CODE >244:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-756 code CODE >245:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-757 code CODE >248:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-758 code CODE >249:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-759 code CODE >250:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-75A code CODE >251:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-75B code CODE >252:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-75C code CODE >253:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-75D code CODE >254:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-75E code CODE >255:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-75F code CODE >259:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-760 code CODE >260:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-761 code CODE >261:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-762 code CODE >262:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-763 code CODE >263:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-764 code CODE >264:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-765 code CODE >265:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-766 code CODE >266:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-767 code CODE >267:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-768 code CODE >270:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-769 code CODE >271:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-76A code CODE >272:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-76B code CODE >273:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-76C code CODE >274:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-76D code CODE >275:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-76E code CODE >276:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-76F code CODE >277:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-770 code CODE >281:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-771 code CODE >282:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-772 code CODE >283:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-773 code CODE >284:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-774 code CODE >285:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-775 code CODE >286:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-776 code CODE >287:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-777 code CODE >288:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-778 code CODE >289:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-779 code CODE >292:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-77A code CODE >293:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-77B code CODE >294:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-77C code CODE >295:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-77D code CODE >296:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-77E code CODE >297:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-77F code CODE >298:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-780 code CODE >299:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-781 code CODE >303:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-782 code CODE >304:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-783 code CODE >305:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-784 code CODE >306:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-785 code CODE >307:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-786 code CODE >308:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-787 code CODE >309:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-788 code CODE >310:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-789 code CODE >311:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-78A code CODE >314:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-78B code CODE >315:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-78C code CODE >316:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-78D code CODE >317:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-78E code CODE >318:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-78F code CODE >319:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-790 code CODE >320:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-791 code CODE >321:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-792 code CODE >324:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-793 code CODE >325:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-794 code CODE >326:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-795 code CODE >327:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-796 code CODE >328:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-797 code CODE >332:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-798 code CODE >333:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-799 code CODE >334:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-79A code CODE >335:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-79B code CODE >336:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-79C code CODE >340:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-79D code CODE >341:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-79E code CODE >342:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-79F code CODE >343:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7A0 code CODE >344:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7A1 code CODE >349:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7A2 code CODE >350:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7A3 code CODE >351:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7A4 code CODE >352:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7A5 code CODE >356:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7A6 code CODE >357:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7A7 code CODE >358:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7A8 code CODE >359:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7A9 code CODE >360:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7AA code CODE >361:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7AB code CODE >362:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7AC code CODE >367:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7AE code CODE >368:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7AF code CODE >370:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7B1 code CODE >371:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7B2 code CODE >372:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7B3 code CODE >373:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7B4 code CODE >374:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7B6 code CODE >375:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7B7 code CODE >377:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7B9 code CODE >378:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7BA code CODE >380:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7BC code CODE >381:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7BD code CODE >383:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7BE code CODE >384:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7BF code CODE >388:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7C0 code CODE >389:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7C1 code CODE >390:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7C2 code CODE >391:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7C3 code CODE >392:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7C4 code CODE >393:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7C5 code CODE >394:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7C6 code CODE >398:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7C8 code CODE >399:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7C9 code CODE >400:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7CA code CODE >401:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7CC code CODE >402:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7CD code CODE >403:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7CE code CODE >413:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7D0 code CODE >414:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7D1 code CODE >415:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7D2 code CODE >416:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7D3 code CODE >417:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7D4 code CODE >418:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7D5 code CODE >419:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7D6 code CODE >421:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7D7 code CODE >422:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7D8 code CODE >423:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7D9 code CODE >424:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7DA code CODE >425:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7DB code CODE >428:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7DD code CODE >429:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7DE code CODE >435:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7DF code CODE >436:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7E0 code CODE >437:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7E1 code CODE >438:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7E2 code CODE >439:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7E3 code CODE >440:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7E4 code CODE >441:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7E5 code CODE >442:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7E6 code CODE >446:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7E7 code CODE >447:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7E8 code CODE >448:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7E9 code CODE >449:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7EA code CODE >450:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7EB code CODE >459:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7EC code CODE >460:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7ED code CODE >461:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7EE code CODE >462:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7EF code CODE >463:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7F0 code CODE >464:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7F1 code CODE >465:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7F2 code CODE >466:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7F3 code CODE >467:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7F4 code CODE >468:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7F5 code CODE >469:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7F6 code CODE >470:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7F7 code CODE >471:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7F8 code CODE >472:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7F9 code CODE >473:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7FA code CODE >474:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7FB code CODE >475:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7FC code CODE >476:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7FD code CODE >477:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7FE code CODE >478:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
-7FF code CODE >479:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.asm
+$dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+7FE cinit CODE >268:/tmp/xcXCBFmJn/driver_tmp_1.s
+7FE cinit CODE >271:/tmp/xcXCBFmJn/driver_tmp_1.s
+7FE cinit CODE >277:/tmp/xcXCBFmJn/driver_tmp_1.s
+7FE cinit CODE >279:/tmp/xcXCBFmJn/driver_tmp_1.s
+7FF cinit CODE >280:/tmp/xcXCBFmJn/driver_tmp_1.s
+7C3 text6 CODE >92:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7C3 text6 CODE >93:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7C6 text6 CODE >94:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7CB text6 CODE >95:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7CE text6 CODE >96:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7D3 text6 CODE >97:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7D4 text5 CODE >83:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7D4 text5 CODE >84:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7D7 text5 CODE >85:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7DC text5 CODE >86:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7DF text5 CODE >87:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7E4 text5 CODE >89:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A8 text4 CODE >60:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A8 text4 CODE >61:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A9 text4 CODE >62:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7AA text4 CODE >63:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7AB text4 CODE >64:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7AC text4 CODE >65:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7AD text4 CODE >66:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7AE text4 CODE >67:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7AF text4 CODE >68:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B0 text4 CODE >69:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B1 text3 CODE >71:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B1 text3 CODE >72:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B2 text3 CODE >73:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B3 text3 CODE >74:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B4 text3 CODE >75:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B5 text3 CODE >76:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B6 text3 CODE >77:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B7 text3 CODE >78:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B8 text3 CODE >79:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7B9 text3 CODE >80:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7E5 text2 CODE >42:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7E5 text2 CODE >43:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7E8 text2 CODE >44:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7F1 text2 CODE >45:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7F4 text2 CODE >46:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7FD text2 CODE >47:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7BA text1 CODE >49:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7BA text1 CODE >50:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7BB text1 CODE >51:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7BC text1 CODE >52:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7BD text1 CODE >53:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7BE text1 CODE >54:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7BF text1 CODE >55:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7C0 text1 CODE >56:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7C1 text1 CODE >57:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7C2 text1 CODE >58:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A1 maintext CODE >30:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A1 maintext CODE >31:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A2 maintext CODE >32:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A3 maintext CODE >33:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A4 maintext CODE >35:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A5 maintext CODE >36:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A6 maintext CODE >37:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
+7A7 maintext CODE >40:/home/hzhou1/MPLABXProjects/OARnet_P16F628A_DS18B20.X/main.c
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -391,39 +136,127 @@ $build/default/production/main.o
 # was defined in a psect then <psect> will be "-". File-name
 # is the name of the object file in which the symbol was defined.
 %SYMTAB
+___latbits 0 0 ABS 0 - dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
 __Hspace_0 800 0 ABS 0 - -
-__Hspace_1 0 0 ABS 0 - -
+__Hspace_1 72 0 ABS 0 - -
+__Hspace_2 0 0 ABS 0 - -
 __Hspace_3 0 0 ABS 0 - -
 __Hspace_4 400F 0 ABS 0 - -
-__Hudata_bank0 2 0 ABS 0 udata_bank0 -
-__Hudata_bank1 2 0 ABS 0 udata_bank1 -
-__Hudata_bank2 2 0 ABS 0 udata_bank2 -
+__end_of_readPad F74 0 CODE 0 text3 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__Heeprom_data 0 0 EEDATA 3 eeprom_data -
 __L__absolute__ 0 0 ABS 0 __absolute__ -
-__LresetVec 0 0 CODE 0 resetVec -
-__HresetVec 2 0 CODE 0 resetVec -
-__Hedata 2 0 ABS 0 edata -
-__Hudata 2 0 ABS 0 udata -
+__Hstrings 0 0 ABS 0 strings -
+___sp 0 0 STACK 2 stack /tmp/xcXCBFmJn/driver_tmp_12.o
+_main F42 0 CODE 0 maintext dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+btemp 7E 0 ABS 0 - dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+___stack_hi 0 0 STACK 2 stack /tmp/xcXCBFmJn/driver_tmp_12.o
+___stack_lo 0 0 STACK 2 stack /tmp/xcXCBFmJn/driver_tmp_12.o
+start 0 0 CODE 0 init /tmp/xcXCBFmJn/driver_tmp_12.o
+__Hpowerup 0 0 CODE 0 powerup -
+intlevel0 0 0 ENTRY 0 functab /tmp/xcXCBFmJn/driver_tmp_12.o
+intlevel1 0 0 ENTRY 0 functab /tmp/xcXCBFmJn/driver_tmp_12.o
+intlevel2 0 0 ENTRY 0 functab /tmp/xcXCBFmJn/driver_tmp_12.o
+intlevel3 0 0 ENTRY 0 functab /tmp/xcXCBFmJn/driver_tmp_12.o
+intlevel4 0 0 ENTRY 0 functab /tmp/xcXCBFmJn/driver_tmp_12.o
+intlevel5 0 0 ENTRY 0 functab /tmp/xcXCBFmJn/driver_tmp_12.o
+wtemp0 7E 0 ABS 0 - dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__Hfunctab 0 0 ENTRY 0 functab -
+__Hclrtext 0 0 ABS 0 clrtext -
+__Lmaintext 0 0 ABS 0 maintext -
+___stackhi 0 0 ABS 0 - /tmp/xcXCBFmJn/driver_tmp_12.o
+___stacklo 0 0 ABS 0 - /tmp/xcXCBFmJn/driver_tmp_12.o
+start_initialization FFC 0 CODE 0 cinit dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+_TRISB1 431 0 ABS 0 - dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__end_of_skipRom F86 0 CODE 0 text1 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+_readPad F62 0 CODE 0 text3 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+___int_sp 0 0 STACK 2 stack /tmp/xcXCBFmJn/driver_tmp_12.o
+__Hbank0 0 0 ABS 0 bank0 -
+__Hbank1 0 0 ABS 0 bank1 -
+__Hbank2 0 0 ABS 0 bank2 -
+__Hbank3 0 0 BANK3 1 bank3 -
+__Hcinit 1000 0 CODE 0 cinit -
+__Hstack 0 0 STACK 2 stack -
+__Hmaintext 0 0 ABS 0 maintext -
+__Hcommon 0 0 ABS 0 common -
 __Hconfig 4010 0 CONFIG 4 config -
-__Ledata 2 0 ABS 0 edata -
-__Ludata 2 0 ABS 0 udata -
-__Hcode 2 0 ABS 0 code -
-__Hdata 2 0 ABS 0 data -
-__Lcode 2 0 ABS 0 code -
-__Ldata 2 0 ABS 0 data -
+__Lbank0 0 0 ABS 0 bank0 -
+__Lbank1 0 0 ABS 0 bank1 -
+__Lbank2 0 0 ABS 0 bank2 -
+__Lbank3 0 0 BANK3 1 bank3 -
+__Lcinit FFC 0 CODE 0 cinit -
+__end_of_write0 FA8 0 CODE 0 text6 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__end_of_write1 FCA 0 CODE 0 text5 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__Lstack 0 0 STACK 2 stack -
+__Habs1 0 0 ABS 0 abs1 -
+__Hcode 0 0 ABS 0 code -
+__Hheap 0 0 HEAP 7 heap -
+__Hinit 0 0 CODE 0 init -
+__Hsfr0 0 0 ABS 0 sfr0 -
+__Hsfr1 0 0 ABS 0 sfr1 -
+__Hsfr2 0 0 ABS 0 sfr2 -
+__Hsfr3 0 0 ABS 0 sfr3 -
+__Hsivt 0 0 CODE 0 sivt -
+__Htext 0 0 ABS 0 text -
+__Labs1 0 0 ABS 0 abs1 -
+__Lcode 0 0 ABS 0 code -
+__Lheap 0 0 HEAP 7 heap -
+__Linit 0 0 CODE 0 init -
+__Lsfr0 0 0 ABS 0 sfr0 -
+__Lsfr1 0 0 ABS 0 sfr1 -
+__Lsfr2 0 0 ABS 0 sfr2 -
+__Lsfr3 0 0 ABS 0 sfr3 -
+__Lsivt 0 0 CODE 0 sivt -
+__Ltext 0 0 ABS 0 text -
+__HcstackCOMMON 0 0 ABS 0 cstackCOMMON -
 __S0 800 0 ABS 0 - -
-__S1 0 0 ABS 0 - -
+__S1 72 0 ABS 0 - -
 __S3 0 0 ABS 0 - -
+__Lintentry 0 0 CODE 0 intentry -
+reset_vec 0 0 CODE 0 reset_vec /tmp/xcXCBFmJn/driver_tmp_12.o
+__pmaintext F42 0 CODE 0 maintext dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__Lcommon 0 0 ABS 0 common -
 __Lconfig 0 0 CONFIG 4 config -
+_write0 F86 0 CODE 0 text6 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+_write1 FA8 0 CODE 0 text5 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
 __Lspace_0 0 0 ABS 0 - -
 __Lspace_1 0 0 ABS 0 - -
+__Lspace_2 0 0 ABS 0 - -
 __Lspace_3 0 0 ABS 0 - -
 __Lspace_4 0 0 ABS 0 - -
-__Ludata_bank0 2 0 ABS 0 udata_bank0 -
-__Ludata_bank1 2 0 ABS 0 udata_bank1 -
-__Ludata_bank2 2 0 ABS 0 udata_bank2 -
+__Lend_init 0 0 CODE 0 end_init -
+__LcstackCOMMON 0 0 ABS 0 cstackCOMMON -
+end_of_initialization FFC 0 CODE 0 cinit dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__Hintentry 0 0 CODE 0 intentry -
+_skipRom F74 0 CODE 0 text1 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__Lstrings 0 0 ABS 0 strings -
+__Hreset_vec 0 0 CODE 0 reset_vec -
+__ptext1 F74 0 CODE 0 text1 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__ptext2 FCA 0 CODE 0 text2 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__ptext3 F62 0 CODE 0 text3 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__ptext4 F50 0 CODE 0 text4 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__ptext5 FA8 0 CODE 0 text5 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__ptext6 F86 0 CODE 0 text6 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__Lpowerup 0 0 CODE 0 powerup -
+__Leeprom_data 0 0 EEDATA 3 eeprom_data -
 __H__absolute__ 0 0 ABS 0 __absolute__ -
-__Hudata_shr 2 0 ABS 0 udata_shr -
-__Ludata_shr 2 0 ABS 0 udata_shr -
+__Lreset_vec 0 0 CODE 0 reset_vec -
+___heap_hi 0 0 ABS 0 - /tmp/xcXCBFmJn/driver_tmp_12.o
+___heap_lo 0 0 ABS 0 - /tmp/xcXCBFmJn/driver_tmp_12.o
+__end_of__initialization FFC 0 CODE 0 cinit dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__Lfunctab 0 0 ENTRY 0 functab -
+__Lclrtext 0 0 ABS 0 clrtext -
+__pcstackCOMMON 70 0 COMMON 1 cstackCOMMON dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__Hend_init 2 0 CODE 0 end_init -
+__end_of_main F50 0 CODE 0 maintext dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__end_of_reset FFC 0 CODE 0 text2 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__Hram 0 0 ABS 0 ram -
+__Lram 0 0 ABS 0 ram -
+_reset FCA 0 CODE 0 text2 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+_convertT F50 0 CODE 0 text4 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__initialization FFC 0 CODE 0 cinit dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+__end_of_convertT F62 0 CODE 0 text4 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
+___int_stack_hi 0 0 STACK 2 stack /tmp/xcXCBFmJn/driver_tmp_12.o
+___int_stack_lo 0 0 STACK 2 stack /tmp/xcXCBFmJn/driver_tmp_12.o
 # %SPLITSTAB Section
 # This section enumerates all the psect splits performed by the assembler.
 # The beginning of the section is indicated by %SPLITSTAB.
@@ -440,6 +273,7 @@ __Ludata_shr 2 0 ABS 0 udata_shr -
 # otherwise name will be "-".  The <space> number is in decimal.
 # <address> and <size> are in byte units as unqaulified hexadecimal
 %DABS
+- 1 7E 2
 # %SEGMENTS Section
 # This sections enumerates the segments of the program.  Each segment
 # is described on a single line as follows:
@@ -448,8 +282,16 @@ __Ludata_shr 2 0 ABS 0 udata_shr -
 # and size are in units of delta. The file address is in units of bytes.
 # All other numeric quantities are in decimal.
 %SEGMENTS
-resetVec 0 0 0 1 2
-code 0 6AF D5E 151 2
+cinit 0 7FE FFC 2 2
+text1 0 7BA F74 9 2
+text2 0 7E5 FCA 19 2
+text3 0 7B1 F62 9 2
+text4 0 7A8 F50 9 2
+text5 0 7D4 FA8 11 2
+text6 0 7C3 F86 11 2
+maintext 0 7A1 F42 7 2
+cstackCOMMON 1 70 70 2 1
+reset_vec 0 0 0 1 2
 # %NOTES Section
 # This section contains data of all the note-psects.  The beginning of the section
 # is indicated by %NOTES. The first line indicates the name and decimal
