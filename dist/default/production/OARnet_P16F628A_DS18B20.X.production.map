@@ -5,10 +5,10 @@ Linker command line:
 -W-3 --edf=/opt/microchip/xc8/v2.50/pic/dat/20240725155939_en.msgs -cn \
   -h+dist/default/production/OARnet_P16F628A_DS18B20.X.production.sym \
   --cmf=dist/default/production/OARnet_P16F628A_DS18B20.X.production.cmf -z \
-  -Q16F628A -o/tmp/xcXCBFmJn/driver_tmp_3.o --defsym=__MPLAB_BUILD=1 \
+  -Q16F628A -o/tmp/xcXJpEKaB/driver_tmp_3.o --defsym=__MPLAB_BUILD=1 \
   --fixupoverflow=error \
   -Mdist/default/production/OARnet_P16F628A_DS18B20.X.production.map \
-  --md=/tmp/xcXCBFmJn/driver_tmp_0.dat -E1 -ver=XC8 Compiler --acfsm=1493 \
+  --md=/tmp/xcXJpEKaB/driver_tmp_0.dat -E1 -ver=XC8 Compiler --acfsm=1493 \
   -ACODE=00h-07FFh -ASTRCODE=00h-07FFh -ASTRING=00h-0FFhx8 \
   -ACONST=00h-0FFhx8 -AENTRY=00h-0FFhx8 -ACOMMON=070h-07Fh \
   -ABANK0=020h-06Fh -ABANK1=0A0h-0EFh -ABANK2=0120h-014Fh \
@@ -18,7 +18,7 @@ Linker command line:
   -AIDLOC=02000h-02003h -DIDLOC=2 -AEEDATA=00h-07Fh/02100h \
   -peeprom_data=EEDATA -DEEDATA=2 -DCODE=2 -DSTRCODE=2 -DSTRING=2 -DCONST=2 \
   -DENTRY=2 -preset_vec=00h,intentry,sivt,init,end_init -ppowerup=CODE \
-  -pcinit=CODE -pfunctab=ENTRY -k /tmp/xcXCBFmJn/driver_tmp_12.o \
+  -pcinit=CODE -pfunctab=ENTRY -k /tmp/xcXJpEKaB/driver_tmp_12.o \
   dist/default/production/OARnet_P16F628A_DS18B20.X.production.o 
 
 Object code version is 3.11
@@ -28,32 +28,37 @@ Machine type is 16F628A
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-/tmp/xcXCBFmJn/driver_tmp_12.o
+/tmp/xcXJpEKaB/driver_tmp_12.o
                 end_init                              0        0        1        0       0
                 config                             2007     2007        1        0       4
 dist/default/production/OARnet_P16F628A_DS18B20.X.production.o
-                cinit                               7FE      7FE        2      FFC       0
+                cinit                               7F3      7F3        D      FE6       0
                 config                             2007     2007        1        0       4
-                text6                               7C3      7C3       11      F86       0
-                text5                               7D4      7D4       11      FA8       0
-                text4                               7A8      7A8        9      F50       0
-                text3                               7B1      7B1        9      F62       0
-                text2                               7E5      7E5       19      FCA       0
-                text1                               7BA      7BA        9      F74       0
-                maintext                            7A1      7A1        7      F42       0
-                cstackCOMMON                         70       70        2       70       1
+                text8                               70E      70E       11      E1C       0
+                text7                               71F      71F       11      E3E       0
+                text6                               6FC      6FC        9      DF8       0
+                text5                               741      741       19      E82       0
+                text4                               773      773       26      EE6       0
+                text3                               799      799       5A      F32       0
+                text2                               75A      75A       19      EB4       0
+                text1                               705      705        9      E0A       0
+                maintext                            730      730       11      E60       0
+                cstackCOMMON                         70       70        A       70       1
+                bssBANK0                             20       20        9       20       1
 
 TOTAL           Name                               Link     Load   Length     Space
         CLASS   CODE           
                 end_init                              0        0        1         0
-                cinit                               7FE      7FE        2         0
-                text6                               7C3      7C3       11         0
-                text5                               7D4      7D4       11         0
-                text4                               7A8      7A8        9         0
-                text3                               7B1      7B1        9         0
-                text2                               7E5      7E5       19         0
-                text1                               7BA      7BA        9         0
-                maintext                            7A1      7A1        7         0
+                cinit                               7F3      7F3        D         0
+                text8                               70E      70E       11         0
+                text7                               71F      71F       11         0
+                text6                               6FC      6FC        9         0
+                text5                               741      741       19         0
+                text4                               773      773       26         0
+                text3                               799      799       5A         0
+                text2                               75A      75A       19         0
+                text1                               705      705        9         0
+                maintext                            730      730       11         0
 
         CLASS   STRCODE        
 
@@ -64,9 +69,10 @@ TOTAL           Name                               Link     Load   Length     Sp
         CLASS   ENTRY          
 
         CLASS   COMMON         
-                cstackCOMMON                         70       70        2         1
+                cstackCOMMON                         70       70        A         1
 
         CLASS   BANK0          
+                bssBANK0                             20       20        9         1
 
         CLASS   BANK1          
 
@@ -102,42 +108,46 @@ TOTAL           Name                               Link     Load   Length     Sp
 
 SEGMENTS        Name                           Load    Length   Top    Selector   Space  Class     Delta
 
-                text1                          0007BA  000009  0007C3       F74       0  CODE        2
-                text6                          0007C3  000011  0007D4       F86       0  CODE        2
+                text5                          000741  000019  00075A       E82       0  CODE        2
+                text7                          00071F  000011  000730       E3E       0  CODE        2
+                maintext                       000730  000011  000741       E60       0  CODE        2
+                text2                          00075A  000019  000773       EB4       0  CODE        2
                 reset_vec                      000000  000001  000001         0       0  CODE        2
-                text3                          0007B1  000009  0007BA       F62       0  CODE        2
-                text2                          0007E5  000019  0007FE       FCA       0  CODE        2
-                text5                          0007D4  000011  0007E5       FA8       0  CODE        2
-                text4                          0007A8  000009  0007B1       F50       0  CODE        2
-                maintext                       0007A1  000007  0007A8       F42       0  CODE        2
-                cstackCOMMON                   000070  000002  000072        70       1  COMMON      1
-                cinit                          0007FE  000002  000800       FFC       0  CODE        2
+                text4                          000773  000026  000799       EE6       0  CODE        2
+                text8                          00070E  000011  00071F       E1C       0  CODE        2
+                text1                          000705  000009  00070E       E0A       0  CODE        2
+                text6                          0006FC  000009  000705       DF8       0  CODE        2
+                text3                          000799  00005A  0007F3       F32       0  CODE        2
+                bssBANK0                       000020  000009  000029        20       1  BANK0       1
+                cinit                          0007F3  00000D  000800       FE6       0  CODE        2
+                cstackCOMMON                   000070  00000A  00007A        70       1  COMMON      1
 
 
 UNUSED ADDRESS RANGES
 
         Name                Unused          Largest block    Delta
-        BANK0            0020-006F             50           1
+        BANK0            0029-006F             47           1
         BANK1            00A0-00EF             50           1
         BANK2            0120-014F             30           1
-        CODE             0001-07A0            7A0           2
-        COMMON           0072-007D              C           1
-        CONST            0001-07A0            100           2
+        CODE             0001-06FB            6FB           2
+        COMMON           007A-007D              4           1
+        CONST            0001-06FB            100           2
         EEDATA           2100-217F             80           2
-        ENTRY            0001-07A0            100           2
+        ENTRY            0001-06FB            100           2
         IDLOC            2000-2003              4           2
-        RAM              0020-006F             50           1
+        RAM              0029-006F             47           1
                          00A0-00EF             50
                          0120-014F             30
         SFR0             0000-001F             20           1
         SFR1             0080-009F             20           1
         SFR2             0100-011F             20           1
         SFR3             0180-01EF             70           1
-        STRCODE          0001-07A0            7A0           2
-        STRING           0001-07A0            100           2
+        STRCODE          0001-06FB            6FB           2
+        STRING           0001-06FB            100           2
 
                                   Symbol Table
 
+?_read_bit               cstackCOMMON 0070
 _TRISB1                  (abs)        0431
 __H__absolute__          __absolute__ 0000
 __Habs1                  abs1         0000
@@ -145,6 +155,7 @@ __Hbank0                 bank0        0000
 __Hbank1                 bank1        0000
 __Hbank2                 bank2        0000
 __Hbank3                 bank3        0000
+__HbssBANK0              bssBANK0     0000
 __Hcinit                 cinit        0800
 __Hclrtext               clrtext      0000
 __Hcode                  code         0000
@@ -167,7 +178,7 @@ __Hsfr2                  sfr2         0000
 __Hsfr3                  sfr3         0000
 __Hsivt                  sivt         0000
 __Hspace_0               (abs)        0800
-__Hspace_1               (abs)        0072
+__Hspace_1               (abs)        007A
 __Hspace_2               (abs)        0000
 __Hspace_3               (abs)        0000
 __Hspace_4               (abs)        400F
@@ -180,7 +191,8 @@ __Lbank0                 bank0        0000
 __Lbank1                 bank1        0000
 __Lbank2                 bank2        0000
 __Lbank3                 bank3        0000
-__Lcinit                 cinit        07FE
+__LbssBANK0              bssBANK0     0000
+__Lcinit                 cinit        07F3
 __Lclrtext               clrtext      0000
 __Lcode                  code         0000
 __Lcommon                common       0000
@@ -210,7 +222,7 @@ __Lstack                 stack        0000
 __Lstrings               strings      0000
 __Ltext                  text         0000
 __S0                     (abs)        0800
-__S1                     (abs)        0072
+__S1                     (abs)        007A
 __S3                     (abs)        0000
 ___heap_hi               (abs)        0000
 ___heap_lo               (abs)        0000
@@ -224,29 +236,37 @@ ___stack_lo              stack        0000
 ___stackhi               (abs)        0000
 ___stacklo               (abs)        0000
 __end_of__initialization cinit        07FE
-__end_of_convertT        text4        07B1
-__end_of_main            maintext     07A8
-__end_of_readPad         text3        07BA
-__end_of_reset           text2        07FE
-__end_of_skipRom         text1        07C3
-__end_of_write0          text6        07D4
-__end_of_write1          text5        07E5
-__initialization         cinit        07FE
+__end_of_convertT        text6        0705
+__end_of_main            maintext     0741
+__end_of_memset          text5        075A
+__end_of_readPad         text3        07F3
+__end_of_read_bit        text4        0799
+__end_of_reset           text2        0773
+__end_of_skipRom         text1        070E
+__end_of_write0          text8        071F
+__end_of_write1          text7        0730
+__initialization         cinit        07F3
+__pbssBANK0              bssBANK0     0020
 __pcstackCOMMON          cstackCOMMON 0070
-__pmaintext              maintext     07A1
-__ptext1                 text1        07BA
-__ptext2                 text2        07E5
-__ptext3                 text3        07B1
-__ptext4                 text4        07A8
-__ptext5                 text5        07D4
-__ptext6                 text6        07C3
-_convertT                text4        07A8
-_main                    maintext     07A1
-_readPad                 text3        07B1
-_reset                   text2        07E5
-_skipRom                 text1        07BA
-_write0                  text6        07C3
-_write1                  text5        07D4
+__pmaintext              maintext     0730
+__ptext1                 text1        0705
+__ptext2                 text2        075A
+__ptext3                 text3        0799
+__ptext4                 text4        0773
+__ptext5                 text5        0741
+__ptext6                 text6        06FC
+__ptext7                 text7        071F
+__ptext8                 text8        070E
+_convertT                text6        06FC
+_main                    maintext     0730
+_memset                  text5        0741
+_pad                     bssBANK0     0020
+_readPad                 text3        0799
+_read_bit                text4        0773
+_reset                   text2        075A
+_skipRom                 text1        0705
+_write0                  text8        070E
+_write1                  text7        071F
 btemp                    (abs)        007E
 end_of_initialization    cinit        07FE
 intlevel0                functab      0000
@@ -255,28 +275,41 @@ intlevel2                functab      0000
 intlevel3                functab      0000
 intlevel4                functab      0000
 intlevel5                functab      0000
+memset@c                 cstackCOMMON 0071
+memset@dest              cstackCOMMON 0070
+memset@n                 cstackCOMMON 0073
+memset@p                 cstackCOMMON 0075
+readPad@i                cstackCOMMON 0076
+readPad@j                cstackCOMMON 0078
+read_bit@b               cstackCOMMON 0073
 reset_vec                reset_vec    0000
 start                    init         0000
-start_initialization     cinit        07FE
+start_initialization     cinit        07F3
 wtemp0                   (abs)        007E
 
 
 MODULE INFORMATION
 
 Module		Function		Class		Link	Load	Size
-shared
-		__initialization		CODE           	07FE	0000	1
+/opt/microchip/xc8/v2.50/pic/sources/c99/common/memset.c
+		_memset        		CODE           	0741	0000	25
 
-shared estimated size: 1
+/opt/microchip/xc8/v2.50/pic/sources/c99/common/memset.c estimated size: 25
+
+shared
+		__initialization		CODE           	07F3	0000	11
+
+shared estimated size: 11
 
 main.c
-		_skipRom       		CODE           	07BA	0000	9
-		_reset         		CODE           	07E5	0000	25
-		_readPad       		CODE           	07B1	0000	9
-		_write0        		CODE           	07C3	0000	17
-		_main          		CODE           	07A1	0000	7
-		_write1        		CODE           	07D4	0000	17
-		_convertT      		CODE           	07A8	0000	9
+		_skipRom       		CODE           	0705	0000	9
+		_reset         		CODE           	075A	0000	25
+		_readPad       		CODE           	0799	0000	90
+		_write0        		CODE           	070E	0000	17
+		_main          		CODE           	0730	0000	17
+		_write1        		CODE           	071F	0000	17
+		_read_bit      		CODE           	0773	0000	38
+		_convertT      		CODE           	06FC	0000	9
 
-main.c estimated size: 93
+main.c estimated size: 222
 

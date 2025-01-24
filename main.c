@@ -6,6 +6,8 @@
  */
 #include <xc.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <string.h>
 
 // PIC16F628A Configuration Bit Settings
 #pragma config FOSC = HS    // Oscillator Selection bits
@@ -19,16 +21,21 @@
 
 #define _XTAL_FREQ 16000000
 
+#define bitset(var, bitno)	((var) |= 1UL << (bitno))
+#define bitclr(var, bitno)	((var) &= ~(1UL << (bitno)))
+
 void reset();
 void skipRom();
 void convertT();
 void write0();
 void write1();
-int read();
 void readPad();
+int read_bit();
+
+unsigned char pad[9];
 
 int main(void) {
-	unsigned char pad[9];
+	memset(pad, 0, 9);	
 
 	reset();
 	skipRom();
@@ -79,6 +86,17 @@ void readPad() {
 	write1();
 	write0();
 	write1();
+
+	/* Read the contents of the scratchpad */
+	for (int i = 0; i < 9; i++) {
+		for (int j = 0; j < 8; j++) {
+			if (read_bit()) {
+				bitset(pad[i], j);
+			} else {
+				bitclr(pad[i], j);
+			}
+		}
+	}
 }
 
 /* Write 1 Time Slot */
@@ -87,7 +105,6 @@ void write1() {
 	__delay_us(5);
 	TRISB1 = 1;
 	__delay_us(90);
-
 }
 
 /* Write 0 Time Slot */
@@ -99,19 +116,15 @@ void write0() {
 }
 
 /* Read Time Slot */
-int read() {
+int read_bit() {
+	int b = 0;
 	TRISB1 = 0;
 	__delay_us(5);
 	TRISB1 = 1;
-	__delay_us(90);
-	return 0;
+	__delay_us(5);
+	if (TRISB1) {		// bit sample
+		b = 1;
+	}
+	__delay_us(50);
+	return b;
 }
-
-
-
-
-
-
-
-
-    
