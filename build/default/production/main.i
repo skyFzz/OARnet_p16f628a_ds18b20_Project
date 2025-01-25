@@ -1247,18 +1247,12 @@ void *memccpy (void *restrict, const void *restrict, int, size_t);
 #pragma config LVP = OFF
 #pragma config CPD = OFF
 #pragma config CP = OFF
-
-
-
-
-
-
+# 43 "main.c"
 void reset();
-void skipRom();
-void convertT();
+void issueCmd(unsigned char cmd);
+void readPad();
 void write0();
 void write1();
-void readPad();
 int read_bit();
 
 unsigned char pad[9];
@@ -1267,11 +1261,12 @@ int main(void) {
  memset(pad, 0, 9);
 
  reset();
- skipRom();
- convertT();
+ issueCmd(0xCC);
+ issueCmd(0x44);
 
  reset();
- skipRom();
+ issueCmd(0xCC);
+ issueCmd(0xBE);
  readPad();
 
     return 0;
@@ -1279,44 +1274,23 @@ int main(void) {
 
 void reset() {
  TRISB1 = 0;
- _delay((unsigned long)((500)*(16000000/4000000.0)));
+ _delay((unsigned long)((500)*(20000000/4000000.0)));
  TRISB1 = 1;
- _delay((unsigned long)((500)*(16000000/4000000.0)));
+ _delay((unsigned long)((500)*(20000000/4000000.0)));
 }
 
-void skipRom() {
- write0();
- write0();
- write1();
- write1();
- write0();
- write0();
- write1();
- write1();
+void issueCmd(unsigned char cmd) {
+ for (int i = 0; i < 8; i++) {
+  if (cmd & (0x01 << i)) {
+   write1();
+  } else {
+   write0();
+  }
+ }
 }
 
-void convertT() {
- write0();
- write0();
- write1();
- write0();
- write0();
- write0();
- write1();
- write0();
-}
 
 void readPad() {
- write0();
- write1();
- write1();
- write1();
- write1();
- write1();
- write0();
- write1();
-
-
  for (int i = 0; i < 9; i++) {
   for (int j = 0; j < 8; j++) {
    if (read_bit()) {
@@ -1331,29 +1305,29 @@ void readPad() {
 
 void write1() {
  TRISB1 = 0;
- _delay((unsigned long)((5)*(16000000/4000000.0)));
+ _delay((unsigned long)((5)*(20000000/4000000.0)));
  TRISB1 = 1;
- _delay((unsigned long)((90)*(16000000/4000000.0)));
+ _delay((unsigned long)((90)*(20000000/4000000.0)));
 }
 
 
 void write0() {
  TRISB1 = 0;
- _delay((unsigned long)((90)*(16000000/4000000.0)));
+ _delay((unsigned long)((90)*(20000000/4000000.0)));
  TRISB1 = 1;
- _delay((unsigned long)((5)*(16000000/4000000.0)));
+ _delay((unsigned long)((5)*(20000000/4000000.0)));
 }
 
 
 int read_bit() {
  int b = 0;
  TRISB1 = 0;
- _delay((unsigned long)((5)*(16000000/4000000.0)));
+ _delay((unsigned long)((5)*(20000000/4000000.0)));
  TRISB1 = 1;
- _delay((unsigned long)((5)*(16000000/4000000.0)));
+ _delay((unsigned long)((10)*(20000000/4000000.0)));
  if (TRISB1) {
   b = 1;
  }
- _delay((unsigned long)((50)*(16000000/4000000.0)));
+ _delay((unsigned long)((50)*(20000000/4000000.0)));
  return b;
 }

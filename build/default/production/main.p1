@@ -3,17 +3,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "29 /opt/microchip/xc8/v2.50/pic/include/c99/string.h
 [; ;/opt/microchip/xc8/v2.50/pic/include/c99/string.h: 29: void *memset (void *, int, size_t);
 [v _memset `(*v ~T0 @X0 0 ef3`*v`i`ui ]
-"27 main.c
-[; ;main.c: 27: }
+"43 main.c
+[; ;main.c: 43: void reset();
 [v _reset `(v ~T0 @X0 0 e? ]
-"28
-[; ;main.c: 28: 
-[v _skipRom `(v ~T0 @X0 0 e? ]
-"29
-[; ;main.c: 29: void reset() {
-[v _convertT `(v ~T0 @X0 0 e? ]
-"32
-[; ;main.c: 32:  TRISB1 = 1;
+"44
+[; ;main.c: 44: void issueCmd(unsigned char cmd);
+[v _issueCmd `(v ~T0 @X0 0 ef1`uc ]
+"45
+[; ;main.c: 45: void readPad();
 [v _readPad `(v ~T0 @X0 0 e? ]
 "1639 /opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h
 [; ;/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h: 1639: extern volatile __bit TRISB1 __attribute__((address(0x431)));
@@ -22,14 +19,14 @@ Version 4.0 HI-TECH Software Intermediate Code
 "20 /opt/microchip/xc8/v2.50/pic/include/builtins.h
 [v __delay `JF164 ~T0 @X0 0 e ]
 [p i __delay ]
-"30 main.c
-[; ;main.c: 30:  TRISB1 = 0;
-[v _write0 `(v ~T0 @X0 0 e? ]
-"31
-[; ;main.c: 31:  _delay((unsigned long)((500)*(16000000/4000000.0)));
+"47 main.c
+[; ;main.c: 47: void write1();
 [v _write1 `(v ~T0 @X0 0 e? ]
-"33
-[; ;main.c: 33:  _delay((unsigned long)((500)*(16000000/4000000.0)));
+"46
+[; ;main.c: 46: void write0();
+[v _write0 `(v ~T0 @X0 0 e? ]
+"48
+[; ;main.c: 48: int read_bit();
 [v _read_bit `(i ~T0 @X0 0 e? ]
 "54 /opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h
 [; ;/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h: 54: __asm("INDF equ 00h");
@@ -143,311 +140,279 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h: 1269: __asm("VRCON equ 09Fh");
 [; <" VRCON equ 09Fh ;# ">
 "13 main.c
-[; ;main.c: 13: unsigned char pad[9];
 [p x FOSC  =  HS     ]
 "14
-[; ;main.c: 14: 
 [p x WDTE  =  OFF    ]
 "15
-[; ;main.c: 15: int main(void) {
 [p x PWRTE  =  OFF   ]
 "16
-[; ;main.c: 16:  memset(pad, 0, 9);
 [p x MCLRE  =  OFF   ]
 "17
-[; ;main.c: 17: 
 [p x BOREN  =  OFF   ]
 "18
-[; ;main.c: 18:  reset();
 [p x LVP  =  OFF     ]
 "19
-[; ;main.c: 19:  skipRom();
 [p x CPD  =  OFF     ]
 "20
-[; ;main.c: 20:  convertT();
 [p x CP  =  OFF      ]
-"35
-[; ;main.c: 35: 
+"50
+[; ;main.c: 50: unsigned char pad[9];
 [v _pad `uc ~T0 @X0 -> 9 `i e ]
 [v $root$_main `(v ~T0 @X0 0 e ]
-"37
-[; ;main.c: 37:  write0();
+"52
+[; ;main.c: 52: int main(void) {
 [v _main `(i ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"38
-[; ;main.c: 38:  write0();
+"53
+[; ;main.c: 53:  memset(pad, 0, 9);
 [e ( _memset (3 , , -> &U _pad `*v -> 0 `i -> -> 9 `i `ui ]
-"40
-[; ;main.c: 40:  write1();
+"55
+[; ;main.c: 55:  reset();
 [e ( _reset ..  ]
-"41
-[; ;main.c: 41:  write0();
-[e ( _skipRom ..  ]
-"42
-[; ;main.c: 42:  write0();
-[e ( _convertT ..  ]
-"44
-[; ;main.c: 44:  write1();
+"56
+[; ;main.c: 56:  issueCmd(0xCC);
+[e ( _issueCmd (1 -> -> 204 `i `uc ]
+"57
+[; ;main.c: 57:  issueCmd(0x44);
+[e ( _issueCmd (1 -> -> 68 `i `uc ]
+"59
+[; ;main.c: 59:  reset();
 [e ( _reset ..  ]
-"45
-[; ;main.c: 45: }
-[e ( _skipRom ..  ]
-"46
-[; ;main.c: 46: 
+"60
+[; ;main.c: 60:  issueCmd(0xCC);
+[e ( _issueCmd (1 -> -> 204 `i `uc ]
+"61
+[; ;main.c: 61:  issueCmd(0xBE);
+[e ( _issueCmd (1 -> -> 190 `i `uc ]
+"62
+[; ;main.c: 62:  readPad();
 [e ( _readPad ..  ]
-"48
-[; ;main.c: 48:  write0();
+"64
+[; ;main.c: 64:     return 0;
 [e ) -> 0 `i ]
 [e $UE 56  ]
-"49
-[; ;main.c: 49:  write0();
+"65
+[; ;main.c: 65: }
 [e :UE 56 ]
 }
-"51
-[; ;main.c: 51:  write0();
+"67
+[; ;main.c: 67: void reset() {
 [v _reset `(v ~T0 @X0 1 ef ]
 {
 [e :U _reset ]
 [f ]
-"52
-[; ;main.c: 52:  write0();
+"68
+[; ;main.c: 68:  TRISB1 = 0;
 [e = _TRISB1 -> -> 0 `i `b ]
-"53
-[; ;main.c: 53:  write0();
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
-"54
-[; ;main.c: 54:  write1();
+"69
+[; ;main.c: 69:  _delay((unsigned long)((500)*(20000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 20000000 `l `d .4000000.0 `ul ]
+"70
+[; ;main.c: 70:  TRISB1 = 1;
 [e = _TRISB1 -> -> 1 `i `b ]
-"55
-[; ;main.c: 55:  write0();
-[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
-"56
-[; ;main.c: 56: }
+"71
+[; ;main.c: 71:  _delay((unsigned long)((500)*(20000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 500 `i `d / -> -> 20000000 `l `d .4000000.0 `ul ]
+"72
+[; ;main.c: 72: }
 [e :UE 57 ]
 }
-"58
-[; ;main.c: 58: void readPad() {
-[v _skipRom `(v ~T0 @X0 1 ef ]
+"74
+[; ;main.c: 74: void issueCmd(unsigned char cmd) {
+[v _issueCmd `(v ~T0 @X0 1 ef1`uc ]
 {
-[e :U _skipRom ]
+[e :U _issueCmd ]
+[v _cmd `uc ~T0 @X0 1 r1 ]
 [f ]
-"59
-[; ;main.c: 59:  write0();
-[e ( _write0 ..  ]
-"60
-[; ;main.c: 60:  write1();
-[e ( _write0 ..  ]
-"61
-[; ;main.c: 61:  write1();
+"75
+[; ;main.c: 75:  for (int i = 0; i < 8; i++) {
+{
+[v _i `i ~T0 @X0 1 a ]
+[e = _i -> 0 `i ]
+[e $ < _i -> 8 `i 59  ]
+[e $U 60  ]
+[e :U 59 ]
+{
+"76
+[; ;main.c: 76:   if (cmd & (0x01 << i)) {
+[e $ ! != & -> _cmd `i << -> 1 `i _i -> 0 `i 62  ]
+{
+"77
+[; ;main.c: 77:    write1();
 [e ( _write1 ..  ]
-"62
-[; ;main.c: 62:  write1();
-[e ( _write1 ..  ]
-"63
-[; ;main.c: 63:  write1();
+"78
+[; ;main.c: 78:   } else {
+}
+[e $U 63  ]
+[e :U 62 ]
+{
+"79
+[; ;main.c: 79:    write0();
 [e ( _write0 ..  ]
-"64
-[; ;main.c: 64:  write1();
-[e ( _write0 ..  ]
-"65
-[; ;main.c: 65:  write0();
-[e ( _write1 ..  ]
-"66
-[; ;main.c: 66:  write1();
-[e ( _write1 ..  ]
-"67
-[; ;main.c: 67: 
+"80
+[; ;main.c: 80:   }
+}
+[e :U 63 ]
+"81
+[; ;main.c: 81:  }
+}
+[e ++ _i -> 1 `i ]
+[e $ < _i -> 8 `i 59  ]
+[e :U 60 ]
+}
+"82
+[; ;main.c: 82: }
 [e :UE 58 ]
 }
-"69
-[; ;main.c: 69:  for (int i = 0; i < 9; i++) {
-[v _convertT `(v ~T0 @X0 1 ef ]
-{
-[e :U _convertT ]
-[f ]
-"70
-[; ;main.c: 70:   for (int j = 0; j < 8; j++) {
-[e ( _write0 ..  ]
-"71
-[; ;main.c: 71:    if (read_bit()) {
-[e ( _write0 ..  ]
-"72
-[; ;main.c: 72:     ((pad[i]) |= 1UL << (j));
-[e ( _write1 ..  ]
-"73
-[; ;main.c: 73:    } else {
-[e ( _write0 ..  ]
-"74
-[; ;main.c: 74:     ((pad[i]) &= ~(1UL << (j)));
-[e ( _write0 ..  ]
-"75
-[; ;main.c: 75:    }
-[e ( _write0 ..  ]
-"76
-[; ;main.c: 76:   }
-[e ( _write1 ..  ]
-"77
-[; ;main.c: 77:  }
-[e ( _write0 ..  ]
-"78
-[; ;main.c: 78: }
-[e :UE 59 ]
-}
-"80
-[; ;main.c: 80: 
+"85
+[; ;main.c: 85: void readPad() {
 [v _readPad `(v ~T0 @X0 1 ef ]
 {
 [e :U _readPad ]
 [f ]
-"81
-[; ;main.c: 81: void write1() {
-[e ( _write0 ..  ]
-"82
-[; ;main.c: 82:  TRISB1 = 0;
-[e ( _write1 ..  ]
-"83
-[; ;main.c: 83:  _delay((unsigned long)((5)*(16000000/4000000.0)));
-[e ( _write1 ..  ]
-"84
-[; ;main.c: 84:  TRISB1 = 1;
-[e ( _write1 ..  ]
-"85
-[; ;main.c: 85:  _delay((unsigned long)((90)*(16000000/4000000.0)));
-[e ( _write1 ..  ]
 "86
-[; ;main.c: 86: }
-[e ( _write1 ..  ]
-"87
-[; ;main.c: 87: 
-[e ( _write0 ..  ]
-"88
-[; ;main.c: 88: 
-[e ( _write1 ..  ]
-"91
-[; ;main.c: 91:  _delay((unsigned long)((90)*(16000000/4000000.0)));
+[; ;main.c: 86:  for (int i = 0; i < 9; i++) {
 {
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-[e $ < _i -> 9 `i 61  ]
-[e $U 62  ]
-[e :U 61 ]
+[e $ < _i -> 9 `i 65  ]
+[e $U 66  ]
+[e :U 65 ]
 {
-"92
-[; ;main.c: 92:  TRISB1 = 1;
+"87
+[; ;main.c: 87:   for (int j = 0; j < 8; j++) {
 {
 [v _j `i ~T0 @X0 1 a ]
 [e = _j -> 0 `i ]
-[e $ < _j -> 8 `i 64  ]
-[e $U 65  ]
-[e :U 64 ]
-{
-"93
-[; ;main.c: 93:  _delay((unsigned long)((5)*(16000000/4000000.0)));
-[e $ ! != ( _read_bit ..  -> 0 `i 67  ]
-{
-"94
-[; ;main.c: 94: }
-[e =| *U + &U _pad * -> -> _i `ui `ux -> -> # *U &U _pad `ui `ux -> << -> 1 `ul _j `uc ]
-"95
-[; ;main.c: 95: 
-}
-[e $U 68  ]
-[e :U 67 ]
-{
-"96
-[; ;main.c: 96: 
-[e =& *U + &U _pad * -> -> _i `ui `ux -> -> # *U &U _pad `ui `ux -> ~ << -> 1 `ul _j `uc ]
-"97
-[; ;main.c: 97: int read_bit() {
-}
+[e $ < _j -> 8 `i 68  ]
+[e $U 69  ]
 [e :U 68 ]
-"98
-[; ;main.c: 98:  int b = 0;
+{
+"88
+[; ;main.c: 88:    if (read_bit()) {
+[e $ ! != ( _read_bit ..  -> 0 `i 71  ]
+{
+"89
+[; ;main.c: 89:     ((pad[i]) |= 1UL << (j));
+[e =| *U + &U _pad * -> -> _i `ui `ux -> -> # *U &U _pad `ui `ux -> << -> 1 `ul _j `uc ]
+"90
+[; ;main.c: 90:    } else {
+}
+[e $U 72  ]
+[e :U 71 ]
+{
+"91
+[; ;main.c: 91:     ((pad[i]) &= ~(1UL << (j)));
+[e =& *U + &U _pad * -> -> _i `ui `ux -> -> # *U &U _pad `ui `ux -> ~ << -> 1 `ul _j `uc ]
+"92
+[; ;main.c: 92:    }
+}
+[e :U 72 ]
+"93
+[; ;main.c: 93:   }
 }
 [e ++ _j -> 1 `i ]
-[e $ < _j -> 8 `i 64  ]
-[e :U 65 ]
+[e $ < _j -> 8 `i 68  ]
+[e :U 69 ]
 }
-"99
-[; ;main.c: 99:  TRISB1 = 0;
+"94
+[; ;main.c: 94:  }
 }
 [e ++ _i -> 1 `i ]
-[e $ < _i -> 9 `i 61  ]
-[e :U 62 ]
+[e $ < _i -> 9 `i 65  ]
+[e :U 66 ]
 }
-"100
-[; ;main.c: 100:  _delay((unsigned long)((5)*(16000000/4000000.0)));
-[e :UE 60 ]
+"95
+[; ;main.c: 95: }
+[e :UE 64 ]
 }
-"103
-[; ;main.c: 103:  if (TRISB1) {
+"98
+[; ;main.c: 98: void write1() {
 [v _write1 `(v ~T0 @X0 1 ef ]
 {
 [e :U _write1 ]
 [f ]
-"104
-[; ;main.c: 104:   b = 1;
+"99
+[; ;main.c: 99:  TRISB1 = 0;
 [e = _TRISB1 -> -> 0 `i `b ]
-"105
-[; ;main.c: 105:  }
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
-"106
-[; ;main.c: 106:  _delay((unsigned long)((50)*(16000000/4000000.0)));
+"100
+[; ;main.c: 100:  _delay((unsigned long)((5)*(20000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 20000000 `l `d .4000000.0 `ul ]
+"101
+[; ;main.c: 101:  TRISB1 = 1;
 [e = _TRISB1 -> -> 1 `i `b ]
-"107
-[; ;main.c: 107:  return b;
-[e ( __delay (1 -> * -> -> 90 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
-"108
-[; ;main.c: 108: }
-[e :UE 69 ]
+"102
+[; ;main.c: 102:  _delay((unsigned long)((90)*(20000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 90 `i `d / -> -> 20000000 `l `d .4000000.0 `ul ]
+"103
+[; ;main.c: 103: }
+[e :UE 73 ]
 }
-"111
+"106
+[; ;main.c: 106: void write0() {
 [v _write0 `(v ~T0 @X0 1 ef ]
 {
 [e :U _write0 ]
 [f ]
-"112
+"107
+[; ;main.c: 107:  TRISB1 = 0;
 [e = _TRISB1 -> -> 0 `i `b ]
-"113
-[e ( __delay (1 -> * -> -> 90 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
-"114
+"108
+[; ;main.c: 108:  _delay((unsigned long)((90)*(20000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 90 `i `d / -> -> 20000000 `l `d .4000000.0 `ul ]
+"109
+[; ;main.c: 109:  TRISB1 = 1;
 [e = _TRISB1 -> -> 1 `i `b ]
-"115
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
-"116
-[e :UE 70 ]
+"110
+[; ;main.c: 110:  _delay((unsigned long)((5)*(20000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 20000000 `l `d .4000000.0 `ul ]
+"111
+[; ;main.c: 111: }
+[e :UE 74 ]
 }
-"119
+"114
+[; ;main.c: 114: int read_bit() {
 [v _read_bit `(i ~T0 @X0 1 ef ]
 {
 [e :U _read_bit ]
 [f ]
-"120
+"115
+[; ;main.c: 115:  int b = 0;
 [v _b `i ~T0 @X0 1 a ]
 [e = _b -> 0 `i ]
-"121
+"116
+[; ;main.c: 116:  TRISB1 = 0;
 [e = _TRISB1 -> -> 0 `i `b ]
-"122
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
-"123
+"117
+[; ;main.c: 117:  _delay((unsigned long)((5)*(20000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 20000000 `l `d .4000000.0 `ul ]
+"118
+[; ;main.c: 118:  TRISB1 = 1;
 [e = _TRISB1 -> -> 1 `i `b ]
-"124
-[e ( __delay (1 -> * -> -> 5 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
-"125
-[e $ ! _TRISB1 72  ]
+"119
+[; ;main.c: 119:  _delay((unsigned long)((10)*(20000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 10 `i `d / -> -> 20000000 `l `d .4000000.0 `ul ]
+"120
+[; ;main.c: 120:  if (TRISB1) {
+[e $ ! _TRISB1 76  ]
 {
-"126
+"121
+[; ;main.c: 121:   b = 1;
 [e = _b -> 1 `i ]
-"127
+"122
+[; ;main.c: 122:  }
 }
-[e :U 72 ]
-"128
-[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 16000000 `l `d .4000000.0 `ul ]
-"129
+[e :U 76 ]
+"123
+[; ;main.c: 123:  _delay((unsigned long)((50)*(20000000/4000000.0)));
+[e ( __delay (1 -> * -> -> 50 `i `d / -> -> 20000000 `l `d .4000000.0 `ul ]
+"124
+[; ;main.c: 124:  return b;
 [e ) _b ]
-[e $UE 71  ]
-"130
-[e :UE 71 ]
+[e $UE 75  ]
+"125
+[; ;main.c: 125: }
+[e :UE 75 ]
 }
