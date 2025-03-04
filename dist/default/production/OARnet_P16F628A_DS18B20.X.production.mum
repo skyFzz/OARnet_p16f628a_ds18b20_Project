@@ -1,7 +1,7 @@
 
 16F628A Memory Summary:
-    Program space        used   115h (   277) of   800h words   ( 13.5%)
-    Data space           used    15h (    21) of    E0h bytes   (  9.4%)
+    Program space        used    28h (    40) of   800h words   (  2.0%)
+    Data space           used     5h (     5) of    E0h bytes   (  2.2%)
     EEPROM space         used     0h (     0) of    80h bytes   (  0.0%)
     Configuration bits   used     1h (     1) of     1h word    (100.0%)
     ID Location space    used     0h (     0) of     4h bytes   (  0.0%)

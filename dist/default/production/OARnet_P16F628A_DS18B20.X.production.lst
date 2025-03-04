@@ -1,1089 +1,301 @@
 
 
 Microchip MPLAB XC8 Assembler V2.50 build 20240725155939 
-                                                                                               Sat Jan 25 09:54:10 2025
+                                                                                               Fri Feb 28 17:53:31 2025
 
 Microchip MPLAB XC8 C Compiler v2.50 (Free license) build 20240725155939 Og1 
      1                           	processor	16F628A
      2                           	pagewidth 120
      3                           	opt	flic
      4                           	psect	cinit,global,class=CODE,space=0,merge=1,delta=2
-     5                           	psect	bssBANK0,global,class=BANK0,space=1,delta=1,noexec
-     6                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
-     7                           	psect	maintext,global,class=CODE,space=0,split=1,delta=2
-     8                           	psect	text1,local,class=CODE,space=0,merge=1,delta=2
-     9                           	psect	text2,local,class=CODE,space=0,merge=1,delta=2
-    10                           	psect	text3,local,class=CODE,space=0,merge=1,delta=2
-    11                           	psect	text4,local,class=CODE,space=0,merge=1,delta=2,group=2
-    12                           	psect	text5,local,class=CODE,space=0,merge=1,delta=2
-    13                           	psect	text6,local,class=CODE,space=0,merge=1,delta=2
-    14                           	psect	text7,local,class=CODE,space=0,merge=1,delta=2
-    15                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
-    16                           	dabs	1,0x7E,2
-    17     0000                     
-    18                           ; Generated 12/10/2023 GMT
-    19                           ; 
-    20                           ; Copyright © 2023, Microchip Technology Inc. and its subsidiaries ("Microchip")
-    21                           ; All rights reserved.
-    22                           ; 
-    23                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+     5                           	psect	cstackCOMMON,global,class=COMMON,space=1,delta=1,noexec
+     6                           	psect	maintext,global,class=CODE,space=0,split=1,delta=2
+     7                           	psect	config,global,abs,ovrld,class=CONFIG,space=4,delta=2,noexec
+     8                           	dabs	1,0x7E,2
+     9     0000                     
+    10                           ; Generated 12/10/2023 GMT
+    11                           ; 
+    12                           ; Copyright © 2023, Microchip Technology Inc. and its subsidiaries ("Microchip")
+    13                           ; All rights reserved.
+    14                           ; 
+    15                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
       +                          ip").
-    24                           ; 
-    25                           ; Redistribution and use in source and binary forms, with or without modification, are
-    26                           ; permitted provided that the following conditions are met:
-    27                           ; 
-    28                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+    16                           ; 
+    17                           ; Redistribution and use in source and binary forms, with or without modification, are
+    18                           ; permitted provided that the following conditions are met:
+    19                           ; 
+    20                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
       +                          t of
-    29                           ;        conditions and the following disclaimer.
-    30                           ; 
-    31                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+    21                           ;        conditions and the following disclaimer.
+    22                           ; 
+    23                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
       +                          list
-    32                           ;        of conditions and the following disclaimer in the documentation and/or other
-    33                           ;        materials provided with the distribution. Publication is not required when
-    34                           ;        this file is used in an embedded application.
-    35                           ; 
-    36                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+    24                           ;        of conditions and the following disclaimer in the documentation and/or other
+    25                           ;        materials provided with the distribution. Publication is not required when
+    26                           ;        this file is used in an embedded application.
+    27                           ; 
+    28                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
       +                          is
-    37                           ;        software without specific prior written permission.
-    38                           ; 
-    39                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
-    40                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+    29                           ;        software without specific prior written permission.
+    30                           ; 
+    31                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+    32                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
       +                          OR
-    41                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+    33                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
       +                          T,
-    42                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
-    43                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
-    44                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+    34                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+    35                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+    36                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
       +                          RICT
-    45                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+    37                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
       +                          SE OF
-    46                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-    47                           ; 
-    48                           ; 
-    49                           ; Code-generator required, PIC16F628A Definitions
-    50                           ; 
-    51                           ; SFR Addresses
-    52     0004                     fsr             equ	4
-    53     0004                     fsr0            equ	4
-    54     0000                     indf            equ	0
-    55     0000                     indf0           equ	0
-    56     0002                     pc              equ	2
-    57     0002                     pcl             equ	2
-    58     000A                     pclath          equ	10
-    59     0003                     status          equ	3
-    60     0000                     INDF            equ	0	;# 
-    61     0001                     TMR0            equ	1	;# 
-    62     0002                     PCL             equ	2	;# 
-    63     0003                     STATUS          equ	3	;# 
-    64     0004                     FSR             equ	4	;# 
-    65     0005                     PORTA           equ	5	;# 
-    66     0006                     PORTB           equ	6	;# 
-    67     000A                     PCLATH          equ	10	;# 
-    68     000B                     INTCON          equ	11	;# 
-    69     000C                     PIR1            equ	12	;# 
-    70     000E                     TMR1            equ	14	;# 
-    71     000E                     TMR1L           equ	14	;# 
-    72     000F                     TMR1H           equ	15	;# 
-    73     0010                     T1CON           equ	16	;# 
-    74     0011                     TMR2            equ	17	;# 
-    75     0012                     T2CON           equ	18	;# 
-    76     0015                     CCPR1           equ	21	;# 
-    77     0015                     CCPR1L          equ	21	;# 
-    78     0016                     CCPR1H          equ	22	;# 
-    79     0017                     CCP1CON         equ	23	;# 
-    80     0018                     RCSTA           equ	24	;# 
-    81     0019                     TXREG           equ	25	;# 
-    82     001A                     RCREG           equ	26	;# 
-    83     001F                     CMCON           equ	31	;# 
-    84     0081                     OPTION_REG      equ	129	;# 
-    85     0085                     TRISA           equ	133	;# 
-    86     0086                     TRISB           equ	134	;# 
-    87     008C                     PIE1            equ	140	;# 
-    88     008E                     PCON            equ	142	;# 
-    89     0092                     PR2             equ	146	;# 
-    90     0098                     TXSTA           equ	152	;# 
-    91     0099                     SPBRG           equ	153	;# 
-    92     009A                     EEDATA          equ	154	;# 
-    93     009B                     EEADR           equ	155	;# 
-    94     009C                     EECON1          equ	156	;# 
-    95     009D                     EECON2          equ	157	;# 
-    96     009F                     VRCON           equ	159	;# 
-    97     0000                     INDF            equ	0	;# 
-    98     0001                     TMR0            equ	1	;# 
-    99     0002                     PCL             equ	2	;# 
-   100     0003                     STATUS          equ	3	;# 
-   101     0004                     FSR             equ	4	;# 
-   102     0005                     PORTA           equ	5	;# 
-   103     0006                     PORTB           equ	6	;# 
-   104     000A                     PCLATH          equ	10	;# 
-   105     000B                     INTCON          equ	11	;# 
-   106     000C                     PIR1            equ	12	;# 
-   107     000E                     TMR1            equ	14	;# 
-   108     000E                     TMR1L           equ	14	;# 
-   109     000F                     TMR1H           equ	15	;# 
-   110     0010                     T1CON           equ	16	;# 
-   111     0011                     TMR2            equ	17	;# 
-   112     0012                     T2CON           equ	18	;# 
-   113     0015                     CCPR1           equ	21	;# 
-   114     0015                     CCPR1L          equ	21	;# 
-   115     0016                     CCPR1H          equ	22	;# 
-   116     0017                     CCP1CON         equ	23	;# 
-   117     0018                     RCSTA           equ	24	;# 
-   118     0019                     TXREG           equ	25	;# 
-   119     001A                     RCREG           equ	26	;# 
-   120     001F                     CMCON           equ	31	;# 
-   121     0081                     OPTION_REG      equ	129	;# 
-   122     0085                     TRISA           equ	133	;# 
-   123     0086                     TRISB           equ	134	;# 
-   124     008C                     PIE1            equ	140	;# 
-   125     008E                     PCON            equ	142	;# 
-   126     0092                     PR2             equ	146	;# 
-   127     0098                     TXSTA           equ	152	;# 
-   128     0099                     SPBRG           equ	153	;# 
-   129     009A                     EEDATA          equ	154	;# 
-   130     009B                     EEADR           equ	155	;# 
-   131     009C                     EECON1          equ	156	;# 
-   132     009D                     EECON2          equ	157	;# 
-   133     009F                     VRCON           equ	159	;# 
-   134     0431                     _TRISB1         set	1073
-   135                           
-   136                           	psect	cinit
-   137     07F3                     start_initialization:	
-   138                           ; #config settings
-   139                           
-   140     07F3                     __initialization:
-   141                           
-   142                           ; Clear objects allocated to BANK0
-   143     07F3  1283               	bcf	3,5	;RP0=0, select bank0
-   144     07F4  1303               	bcf	3,6	;RP1=0, select bank0
-   145     07F5  01A0               	clrf	__pbssBANK0& (0+127)
-   146     07F6  01A1               	clrf	(__pbssBANK0+1)& (0+127)
-   147     07F7  01A2               	clrf	(__pbssBANK0+2)& (0+127)
-   148     07F8  01A3               	clrf	(__pbssBANK0+3)& (0+127)
-   149     07F9  01A4               	clrf	(__pbssBANK0+4)& (0+127)
-   150     07FA  01A5               	clrf	(__pbssBANK0+5)& (0+127)
-   151     07FB  01A6               	clrf	(__pbssBANK0+6)& (0+127)
-   152     07FC  01A7               	clrf	(__pbssBANK0+7)& (0+127)
-   153     07FD  01A8               	clrf	(__pbssBANK0+8)& (0+127)
-   154     07FE                     end_of_initialization:	
-   155                           ;End of C runtime variable initialization code
-   156                           
-   157     07FE                     __end_of__initialization:
-   158     07FE  0183               	clrf	3
-   159     07FF  2F0C               	ljmp	_main	;jump to C main() function
-   160                           
-   161                           	psect	bssBANK0
-   162     0020                     __pbssBANK0:
-   163     0020                     _pad:
-   164     0020                     	ds	9
-   165                           
-   166                           	psect	cstackCOMMON
-   167     0070                     __pcstackCOMMON:
-   168     0070                     ?_memset:
-   169     0070                     ?_reset:	
-   170                           ; 1 bytes @ 0x0
-   171                           
-   172     0070                     ?_issueCmd:	
-   173                           ; 1 bytes @ 0x0
-   174                           
-   175     0070                     ?_readPad:	
-   176                           ; 1 bytes @ 0x0
-   177                           
-   178     0070                     ?_write1:	
-   179                           ; 1 bytes @ 0x0
-   180                           
-   181     0070                     ?_write0:	
-   182                           ; 1 bytes @ 0x0
+    38                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    39                           ; 
+    40                           ; 
+    41                           ; Code-generator required, PIC16F628A Definitions
+    42                           ; 
+    43                           ; SFR Addresses
+    44     0004                     fsr             equ	4
+    45     0004                     fsr0            equ	4
+    46     0000                     indf            equ	0
+    47     0000                     indf0           equ	0
+    48     0002                     pc              equ	2
+    49     0002                     pcl             equ	2
+    50     000A                     pclath          equ	10
+    51     0003                     status          equ	3
+    52     0000                     INDF            equ	0	;# 
+    53     0001                     TMR0            equ	1	;# 
+    54     0002                     PCL             equ	2	;# 
+    55     0003                     STATUS          equ	3	;# 
+    56     0004                     FSR             equ	4	;# 
+    57     0005                     PORTA           equ	5	;# 
+    58     0006                     PORTB           equ	6	;# 
+    59     000A                     PCLATH          equ	10	;# 
+    60     000B                     INTCON          equ	11	;# 
+    61     000C                     PIR1            equ	12	;# 
+    62     000E                     TMR1            equ	14	;# 
+    63     000E                     TMR1L           equ	14	;# 
+    64     000F                     TMR1H           equ	15	;# 
+    65     0010                     T1CON           equ	16	;# 
+    66     0011                     TMR2            equ	17	;# 
+    67     0012                     T2CON           equ	18	;# 
+    68     0015                     CCPR1           equ	21	;# 
+    69     0015                     CCPR1L          equ	21	;# 
+    70     0016                     CCPR1H          equ	22	;# 
+    71     0017                     CCP1CON         equ	23	;# 
+    72     0018                     RCSTA           equ	24	;# 
+    73     0019                     TXREG           equ	25	;# 
+    74     001A                     RCREG           equ	26	;# 
+    75     001F                     CMCON           equ	31	;# 
+    76     0081                     OPTION_REG      equ	129	;# 
+    77     0085                     TRISA           equ	133	;# 
+    78     0086                     TRISB           equ	134	;# 
+    79     008C                     PIE1            equ	140	;# 
+    80     008E                     PCON            equ	142	;# 
+    81     0092                     PR2             equ	146	;# 
+    82     0098                     TXSTA           equ	152	;# 
+    83     0099                     SPBRG           equ	153	;# 
+    84     009A                     EEDATA          equ	154	;# 
+    85     009B                     EEADR           equ	155	;# 
+    86     009C                     EECON1          equ	156	;# 
+    87     009D                     EECON2          equ	157	;# 
+    88     009F                     VRCON           equ	159	;# 
+    89     0000                     INDF            equ	0	;# 
+    90     0001                     TMR0            equ	1	;# 
+    91     0002                     PCL             equ	2	;# 
+    92     0003                     STATUS          equ	3	;# 
+    93     0004                     FSR             equ	4	;# 
+    94     0005                     PORTA           equ	5	;# 
+    95     0006                     PORTB           equ	6	;# 
+    96     000A                     PCLATH          equ	10	;# 
+    97     000B                     INTCON          equ	11	;# 
+    98     000C                     PIR1            equ	12	;# 
+    99     000E                     TMR1            equ	14	;# 
+   100     000E                     TMR1L           equ	14	;# 
+   101     000F                     TMR1H           equ	15	;# 
+   102     0010                     T1CON           equ	16	;# 
+   103     0011                     TMR2            equ	17	;# 
+   104     0012                     T2CON           equ	18	;# 
+   105     0015                     CCPR1           equ	21	;# 
+   106     0015                     CCPR1L          equ	21	;# 
+   107     0016                     CCPR1H          equ	22	;# 
+   108     0017                     CCP1CON         equ	23	;# 
+   109     0018                     RCSTA           equ	24	;# 
+   110     0019                     TXREG           equ	25	;# 
+   111     001A                     RCREG           equ	26	;# 
+   112     001F                     CMCON           equ	31	;# 
+   113     0081                     OPTION_REG      equ	129	;# 
+   114     0085                     TRISA           equ	133	;# 
+   115     0086                     TRISB           equ	134	;# 
+   116     008C                     PIE1            equ	140	;# 
+   117     008E                     PCON            equ	142	;# 
+   118     0092                     PR2             equ	146	;# 
+   119     0098                     TXSTA           equ	152	;# 
+   120     0099                     SPBRG           equ	153	;# 
+   121     009A                     EEDATA          equ	154	;# 
+   122     009B                     EEADR           equ	155	;# 
+   123     009C                     EECON1          equ	156	;# 
+   124     009D                     EECON2          equ	157	;# 
+   125     009F                     VRCON           equ	159	;# 
+   126     0033                     _RB3            set	51
+   127     0086                     _TRISB          set	134
+   128                           
+   129                           	psect	cinit
+   130     07FE                     start_initialization:	
+   131                           ; #config settings
+   132                           
+   133     07FE                     __initialization:
+   134     07FE                     end_of_initialization:	
+   135                           ;End of C runtime variable initialization code
+   136                           
+   137     07FE                     __end_of__initialization:
+   138     07FE  0183               	clrf	3
+   139     07FF  2FD9               	ljmp	_main	;jump to C main() function
+   140                           
+   141                           	psect	cstackCOMMON
+   142     0070                     __pcstackCOMMON:
+   143     0070                     ?_main:
+   144     0070                     ??_main:	
+   145                           ; 1 bytes @ 0x0
+   146                           
+   147                           
+   148                           ; 1 bytes @ 0x0
+   149     0070                     	ds	3
+   150                           
+   151                           	psect	maintext
+   152     07D9                     __pmaintext:	
+   153 ;;
+   154 ;;Main: autosize = 0, tempsize = 3, incstack = 0, save=0
+   155 ;;
+   156 ;; *************** function _main *****************
+   157 ;; Defined at:
+   158 ;;		line 15 in file "LED_blink.c"
+   159 ;; Parameters:    Size  Location     Type
+   160 ;;		None
+   161 ;; Auto vars:     Size  Location     Type
+   162 ;;		None
+   163 ;; Return value:  Size  Location     Type
+   164 ;;                  1    wreg      void 
+   165 ;; Registers used:
+   166 ;;		wreg, status,2
+   167 ;; Tracked objects:
+   168 ;;		On entry : B00/0
+   169 ;;		On exit  : 0/0
+   170 ;;		Unchanged: 0/0
+   171 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
+   172 ;;      Params:         0       0       0       0
+   173 ;;      Locals:         0       0       0       0
+   174 ;;      Temps:          3       0       0       0
+   175 ;;      Totals:         3       0       0       0
+   176 ;;Total ram usage:        3 bytes
+   177 ;; This function calls:
+   178 ;;		Nothing
+   179 ;; This function is called by:
+   180 ;;		Startup code after reset
+   181 ;; This function uses a non-reentrant model
+   182 ;;
    183                           
-   184     0070                     ?_read_bit:	
-   185                           ; 1 bytes @ 0x0
+   184     07D9                     _main:	
+   185                           ;psect for function _main
    186                           
-   187     0070                     ?_main:	
-   188                           ; 2 bytes @ 0x0
-   189                           
-   190     0070                     memset@dest:	
-   191                           ; 2 bytes @ 0x0
-   192                           
-   193     0070                     ??_reset:	
-   194                           ; 1 bytes @ 0x0
-   195                           
-   196     0070                     ??_write1:	
-   197                           ; 1 bytes @ 0x0
-   198                           
-   199     0070                     ??_write0:	
-   200                           ; 1 bytes @ 0x0
-   201                           
-   202                           
-   203                           ; 1 bytes @ 0x0
-   204     0070                     	ds	1
-   205     0071                     memset@c:
-   206     0071                     ??_issueCmd:	
-   207                           ; 2 bytes @ 0x1
-   208                           
-   209                           
-   210                           ; 1 bytes @ 0x1
-   211     0071                     	ds	1
-   212     0072                     issueCmd@cmd:
-   213     0072                     ??_read_bit:	
-   214                           ; 1 bytes @ 0x2
-   215                           
-   216                           
-   217                           ; 1 bytes @ 0x2
-   218     0072                     	ds	1
-   219     0073                     issueCmd@i:
-   220     0073                     read_bit@b:	
-   221                           ; 2 bytes @ 0x3
-   222                           
-   223     0073                     memset@n:	
-   224                           ; 2 bytes @ 0x3
-   225                           
-   226                           
-   227                           ; 2 bytes @ 0x3
-   228     0073                     	ds	2
-   229     0075                     memset@p:
-   230     0075                     ??_memset:	
-   231                           ; 1 bytes @ 0x5
-   232                           
-   233     0075                     ??_readPad:	
-   234                           ; 1 bytes @ 0x5
-   235                           
-   236                           
-   237                           ; 1 bytes @ 0x5
-   238     0075                     	ds	1
-   239     0076                     readPad@i:
+   187     07D9                     l558:	
+   188                           ;incstack = 0
+   189                           ; Regs used in _main: [wreg+status,2]
+   190                           
+   191     07D9  1683               	bsf	3,5	;RP0=1, select bank1
+   192     07DA  1303               	bcf	3,6	;RP1=0, select bank1
+   193     07DB  0186               	clrf	6	;volatile
+   194     07DC                     l560:
+   195     07DC  1283               	bcf	3,5	;RP0=0, select bank0
+   196     07DD  1303               	bcf	3,6	;RP1=0, select bank0
+   197     07DE  1586               	bsf	6,3	;volatile
+   198     07DF                     l562:
+   199     07DF  301A               	movlw	26
+   200     07E0  00F2               	movwf	??_main+2
+   201     07E1  305E               	movlw	94
+   202     07E2  00F1               	movwf	??_main+1
+   203     07E3  306E               	movlw	110
+   204     07E4  00F0               	movwf	??_main
+   205     07E5                     u17:
+   206     07E5  0BF0               	decfsz	??_main,f
+   207     07E6  2FE5               	goto	u17
+   208     07E7  0BF1               	decfsz	??_main+1,f
+   209     07E8  2FE5               	goto	u17
+   210     07E9  0BF2               	decfsz	??_main+2,f
+   211     07EA  2FE5               	goto	u17
+   212     07EB  0000               	nop
+   213     07EC                     l564:
+   214     07EC  1283               	bcf	3,5	;RP0=0, select bank0
+   215     07ED  1303               	bcf	3,6	;RP1=0, select bank0
+   216     07EE  1186               	bcf	6,3	;volatile
+   217     07EF                     l566:
+   218     07EF  301A               	movlw	26
+   219     07F0  00F2               	movwf	??_main+2
+   220     07F1  305E               	movlw	94
+   221     07F2  00F1               	movwf	??_main+1
+   222     07F3  306E               	movlw	110
+   223     07F4  00F0               	movwf	??_main
+   224     07F5                     u27:
+   225     07F5  0BF0               	decfsz	??_main,f
+   226     07F6  2FF5               	goto	u27
+   227     07F7  0BF1               	decfsz	??_main+1,f
+   228     07F8  2FF5               	goto	u27
+   229     07F9  0BF2               	decfsz	??_main+2,f
+   230     07FA  2FF5               	goto	u27
+   231     07FB  0000               	nop
+   232     07FC  2FDC               	goto	l560
+   233     07FD  2800               	ljmp	start
+   234     07FE                     __end_of_main:
+   235     0000                     ___latbits      equ	0
+   236     007E                     btemp           set	126	;btemp
+   237     007E                     wtemp0          set	126
+   238                           
+   239                           	psect	config
    240                           
-   241                           ; 2 bytes @ 0x6
-   242     0076                     	ds	2
-   243     0078                     readPad@j:
-   244                           
-   245                           ; 2 bytes @ 0x8
-   246     0078                     	ds	2
-   247     007A                     ??_main:
-   248                           
-   249                           	psect	maintext
-   250     070C                     __pmaintext:	
-   251                           ; 1 bytes @ 0xA
-   252 ;;
-   253 ;;Main: autosize = 0, tempsize = 0, incstack = 0, save=0
-   254 ;;
-   255 ;; *************** function _main *****************
-   256 ;; Defined at:
-   257 ;;		line 52 in file "main.c"
-   258 ;; Parameters:    Size  Location     Type
-   259 ;;		None
-   260 ;; Auto vars:     Size  Location     Type
-   261 ;;		None
-   262 ;; Return value:  Size  Location     Type
-   263 ;;                  2   24[None  ] int 
-   264 ;; Registers used:
-   265 ;;		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
-   266 ;; Tracked objects:
-   267 ;;		On entry : B00/0
-   268 ;;		On exit  : 0/0
-   269 ;;		Unchanged: 0/0
-   270 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-   271 ;;      Params:         0       0       0       0
-   272 ;;      Locals:         0       0       0       0
-   273 ;;      Temps:          0       0       0       0
-   274 ;;      Totals:         0       0       0       0
-   275 ;;Total ram usage:        0 bytes
-   276 ;; Hardware stack levels required when called: 2
-   277 ;; This function calls:
-   278 ;;		_issueCmd
-   279 ;;		_memset
-   280 ;;		_readPad
-   281 ;;		_reset
-   282 ;; This function is called by:
-   283 ;;		Startup code after reset
-   284 ;; This function uses a non-reentrant model
-   285 ;;
-   286                           
-   287     070C                     _main:	
-   288                           ;psect for function _main
-   289                           
-   290     070C                     l790:	
-   291                           ;incstack = 0
-   292                           ; Regs used in _main: [wreg-fsr0h+status,2+status,0+btemp+1+pclath+cstack]
-   293                           
-   294                           
-   295                           ;main.c: 53:  memset(pad, 0, 9);
-   296     070C  3020               	movlw	(low (_pad| 0))& (0+255)
-   297     070D  00F0               	movwf	memset@dest
-   298     070E  3000               	movlw	0
-   299     070F  00F1               	movwf	memset@c
-   300     0710  00F2               	movwf	memset@c+1
-   301     0711  3009               	movlw	9
-   302     0712  00F3               	movwf	memset@n
-   303     0713  3000               	movlw	0
-   304     0714  00F4               	movwf	memset@n+1
-   305     0715  2722               	fcall	_memset
-   306     0716                     l792:
-   307                           
-   308                           ;main.c: 55:  reset();
-   309     0716  273B               	fcall	_reset
-   310     0717                     l794:
-   311                           
-   312                           ;main.c: 56:  issueCmd(0xCC);
-   313     0717  30CC               	movlw	204
-   314     0718  2778               	fcall	_issueCmd
-   315     0719                     l796:
-   316                           
-   317                           ;main.c: 57:  issueCmd(0x44);
-   318     0719  3044               	movlw	68
-   319     071A  2778               	fcall	_issueCmd
-   320     071B                     l798:
-   321                           
-   322                           ;main.c: 59:  reset();
-   323     071B  273B               	fcall	_reset
-   324     071C                     l800:
-   325                           
-   326                           ;main.c: 60:  issueCmd(0xCC);
-   327     071C  30CC               	movlw	204
-   328     071D  2778               	fcall	_issueCmd
-   329     071E                     l802:
-   330                           
-   331                           ;main.c: 61:  issueCmd(0xBE);
-   332     071E  30BE               	movlw	190
-   333     071F  2778               	fcall	_issueCmd
-   334     0720                     l804:
-   335                           
-   336                           ;main.c: 62:  readPad();
-   337     0720  27A1               	fcall	_readPad
-   338     0721                     l25:
-   339     0721  2800               	ljmp	start
-   340     0722                     __end_of_main:
-   341                           
-   342                           	psect	text1
-   343     073B                     __ptext1:	
-   344 ;; *************** function _reset *****************
-   345 ;; Defined at:
-   346 ;;		line 67 in file "main.c"
-   347 ;; Parameters:    Size  Location     Type
-   348 ;;		None
-   349 ;; Auto vars:     Size  Location     Type
-   350 ;;		None
-   351 ;; Return value:  Size  Location     Type
-   352 ;;                  1    wreg      void 
-   353 ;; Registers used:
-   354 ;;		wreg
-   355 ;; Tracked objects:
-   356 ;;		On entry : 0/0
-   357 ;;		On exit  : 0/0
-   358 ;;		Unchanged: 0/0
-   359 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-   360 ;;      Params:         0       0       0       0
-   361 ;;      Locals:         0       0       0       0
-   362 ;;      Temps:          2       0       0       0
-   363 ;;      Totals:         2       0       0       0
-   364 ;;Total ram usage:        2 bytes
-   365 ;; Hardware stack levels used: 1
-   366 ;; This function calls:
-   367 ;;		Nothing
-   368 ;; This function is called by:
-   369 ;;		_main
-   370 ;; This function uses a non-reentrant model
-   371 ;;
-   372                           
-   373     073B                     _reset:	
-   374                           ;psect for function _reset
-   375                           
-   376     073B                     l742:	
-   377                           ;incstack = 0
-   378                           ; Regs used in _reset: [wreg]
-   379                           
-   380                           
-   381                           ;main.c: 68:  TRISB1 = 0;
-   382     073B  1683               	bsf	3,5	;RP0=1, select bank1
-   383     073C  1303               	bcf	3,6	;RP1=0, select bank1
-   384     073D  1086               	bcf	6,1	;volatile
-   385     073E                     l744:
-   386                           
-   387                           ;main.c: 69:  _delay((unsigned long)((500)*(20000000/4000000.0)));
-   388     073E  3004               	movlw	4
-   389     073F  00F1               	movwf	??_reset+1
-   390     0740  303D               	movlw	61
-   391     0741  00F0               	movwf	??_reset
-   392     0742                     u217:
-   393     0742  0BF0               	decfsz	??_reset,f
-   394     0743  2F42               	goto	u217
-   395     0744  0BF1               	decfsz	??_reset+1,f
-   396     0745  2F42               	goto	u217
-   397     0746  2F47               	nop2
-   398     0747                     l746:
-   399                           
-   400                           ;main.c: 70:  TRISB1 = 1;
-   401     0747  1683               	bsf	3,5	;RP0=1, select bank1
-   402     0748  1303               	bcf	3,6	;RP1=0, select bank1
-   403     0749  1486               	bsf	6,1	;volatile
-   404                           
-   405                           ;main.c: 71:  _delay((unsigned long)((500)*(20000000/4000000.0)));
-   406     074A  3004               	movlw	4
-   407     074B  00F1               	movwf	??_reset+1
-   408     074C  303D               	movlw	61
-   409     074D  00F0               	movwf	??_reset
-   410     074E                     u227:
-   411     074E  0BF0               	decfsz	??_reset,f
-   412     074F  2F4E               	goto	u227
-   413     0750  0BF1               	decfsz	??_reset+1,f
-   414     0751  2F4E               	goto	u227
-   415     0752  2F53               	nop2
-   416     0753                     l28:
-   417     0753  0008               	return
-   418     0754                     __end_of_reset:
-   419                           
-   420                           	psect	text2
-   421     07A1                     __ptext2:	
-   422 ;; *************** function _readPad *****************
-   423 ;; Defined at:
-   424 ;;		line 85 in file "main.c"
-   425 ;; Parameters:    Size  Location     Type
-   426 ;;		None
-   427 ;; Auto vars:     Size  Location     Type
-   428 ;;  j               2    8[COMMON] int 
-   429 ;;  i               2    6[COMMON] int 
-   430 ;; Return value:  Size  Location     Type
-   431 ;;                  1    wreg      void 
-   432 ;; Registers used:
-   433 ;;		wreg, fsr0l, fsr0h, status,2, status,0, btemp+1, pclath, cstack
-   434 ;; Tracked objects:
-   435 ;;		On entry : 0/0
-   436 ;;		On exit  : 0/0
-   437 ;;		Unchanged: 0/0
-   438 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-   439 ;;      Params:         0       0       0       0
-   440 ;;      Locals:         4       0       0       0
-   441 ;;      Temps:          1       0       0       0
-   442 ;;      Totals:         5       0       0       0
-   443 ;;Total ram usage:        5 bytes
-   444 ;; Hardware stack levels used: 1
-   445 ;; Hardware stack levels required when called: 1
-   446 ;; This function calls:
-   447 ;;		_read_bit
-   448 ;; This function is called by:
-   449 ;;		_main
-   450 ;; This function uses a non-reentrant model
-   451 ;;
-   452                           
-   453     07A1                     _readPad:	
-   454                           ;psect for function _readPad
-   455                           
-   456     07A1                     l764:	
-   457                           ;incstack = 0
-   458                           ; Regs used in _readPad: [wreg-fsr0h+status,2+status,0+btemp+1+pclath+cstack]
-   459                           
-   460                           
-   461                           ;main.c: 86:  for (int i = 0; i < 9; i++) {
-   462     07A1  01F6               	clrf	readPad@i
-   463     07A2  01F7               	clrf	readPad@i+1
-   464     07A3                     l770:
-   465                           
-   466                           ;main.c: 87:   for (int j = 0; j < 8; j++) {
-   467     07A3  01F8               	clrf	readPad@j
-   468     07A4  01F9               	clrf	readPad@j+1
-   469     07A5                     l776:
-   470                           
-   471                           ;main.c: 88:    if (read_bit()) {
-   472     07A5  2754               	fcall	_read_bit
-   473     07A6  0870               	movf	?_read_bit,w
-   474     07A7  0471               	iorwf	?_read_bit+1,w
-   475     07A8  1903               	btfsc	3,2
-   476     07A9  2FAB               	goto	u161
-   477     07AA  2FAC               	goto	u160
-   478     07AB                     u161:
-   479     07AB  2FBC               	goto	l780
-   480     07AC                     u160:
-   481     07AC                     l778:
-   482                           
-   483                           ;main.c: 89:     ((pad[i]) |= 1UL << (j));
-   484     07AC  0876               	movf	readPad@i,w
-   485     07AD  3E20               	addlw	(low (_pad| 0))& (0+255)
-   486     07AE  0084               	movwf	4
-   487     07AF  3001               	movlw	1
-   488     07B0  00F5               	movwf	??_readPad
-   489     07B1  0A78               	incf	readPad@j,w
-   490     07B2  2FB5               	goto	u174
-   491     07B3                     u175:
-   492     07B3  1003               	clrc
-   493     07B4  0DF5               	rlf	??_readPad,f
-   494     07B5                     u174:
-   495     07B5  3EFF               	addlw	-1
-   496     07B6  1D03               	skipz
-   497     07B7  2FB3               	goto	u175
-   498     07B8  0875               	movf	??_readPad,w
-   499     07B9  1383               	bcf	3,7	;select IRP bank0
-   500     07BA  0480               	iorwf	0,f
-   501                           
-   502                           ;main.c: 90:    } else {
-   503     07BB  2FCC               	goto	l782
-   504     07BC                     l780:
-   505                           
-   506                           ;main.c: 91:     ((pad[i]) &= ~(1UL << (j)));
-   507     07BC  0876               	movf	readPad@i,w
-   508     07BD  3E20               	addlw	(low (_pad| 0))& (0+255)
-   509     07BE  0084               	movwf	4
-   510     07BF  3001               	movlw	1
-   511     07C0  00F5               	movwf	??_readPad
-   512     07C1  0A78               	incf	readPad@j,w
-   513     07C2  2FC5               	goto	u184
-   514     07C3                     u185:
-   515     07C3  1003               	clrc
-   516     07C4  0DF5               	rlf	??_readPad,f
-   517     07C5                     u184:
-   518     07C5  3EFF               	addlw	-1
-   519     07C6  1D03               	skipz
-   520     07C7  2FC3               	goto	u185
-   521     07C8  0875               	movf	??_readPad,w
-   522     07C9  3AFF               	xorlw	255
-   523     07CA  1383               	bcf	3,7	;select IRP bank0
-   524     07CB  0580               	andwf	0,f
-   525     07CC                     l782:
-   526                           
-   527                           ;main.c: 93:   }
-   528     07CC  3001               	movlw	1
-   529     07CD  07F8               	addwf	readPad@j,f
-   530     07CE  1803               	skipnc
-   531     07CF  0AF9               	incf	readPad@j+1,f
-   532     07D0  3000               	movlw	0
-   533     07D1  07F9               	addwf	readPad@j+1,f
-   534     07D2                     l784:
-   535     07D2  0879               	movf	readPad@j+1,w
-   536     07D3  3A80               	xorlw	128
-   537     07D4  00FF               	movwf	btemp+1
-   538     07D5  3080               	movlw	128
-   539     07D6  027F               	subwf	btemp+1,w
-   540     07D7  1D03               	skipz
-   541     07D8  2FDB               	goto	u195
-   542     07D9  3008               	movlw	8
-   543     07DA  0278               	subwf	readPad@j,w
-   544     07DB                     u195:
-   545     07DB  1C03               	skipc
-   546     07DC  2FDE               	goto	u191
-   547     07DD  2FDF               	goto	u190
-   548     07DE                     u191:
-   549     07DE  2FA5               	goto	l776
-   550     07DF                     u190:
-   551     07DF                     l786:
-   552                           
-   553                           ;main.c: 94:  }
-   554     07DF  3001               	movlw	1
-   555     07E0  07F6               	addwf	readPad@i,f
-   556     07E1  1803               	skipnc
-   557     07E2  0AF7               	incf	readPad@i+1,f
-   558     07E3  3000               	movlw	0
-   559     07E4  07F7               	addwf	readPad@i+1,f
-   560     07E5                     l788:
-   561     07E5  0877               	movf	readPad@i+1,w
-   562     07E6  3A80               	xorlw	128
-   563     07E7  00FF               	movwf	btemp+1
-   564     07E8  3080               	movlw	128
-   565     07E9  027F               	subwf	btemp+1,w
-   566     07EA  1D03               	skipz
-   567     07EB  2FEE               	goto	u205
-   568     07EC  3009               	movlw	9
-   569     07ED  0276               	subwf	readPad@i,w
-   570     07EE                     u205:
-   571     07EE  1C03               	skipc
-   572     07EF  2FF1               	goto	u201
-   573     07F0  2FF2               	goto	u200
-   574     07F1                     u201:
-   575     07F1  2FA3               	goto	l770
-   576     07F2                     u200:
-   577     07F2                     l44:
-   578     07F2  0008               	return
-   579     07F3                     __end_of_readPad:
-   580                           
-   581                           	psect	text3
-   582     0754                     __ptext3:	
-   583 ;; *************** function _read_bit *****************
-   584 ;; Defined at:
-   585 ;;		line 114 in file "main.c"
-   586 ;; Parameters:    Size  Location     Type
-   587 ;;		None
-   588 ;; Auto vars:     Size  Location     Type
-   589 ;;  b               2    3[COMMON] int 
-   590 ;; Return value:  Size  Location     Type
-   591 ;;                  2    0[COMMON] int 
-   592 ;; Registers used:
-   593 ;;		wreg, status,2
-   594 ;; Tracked objects:
-   595 ;;		On entry : 0/0
-   596 ;;		On exit  : 0/0
-   597 ;;		Unchanged: 0/0
-   598 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-   599 ;;      Params:         2       0       0       0
-   600 ;;      Locals:         2       0       0       0
-   601 ;;      Temps:          1       0       0       0
-   602 ;;      Totals:         5       0       0       0
-   603 ;;Total ram usage:        5 bytes
-   604 ;; Hardware stack levels used: 1
-   605 ;; This function calls:
-   606 ;;		Nothing
-   607 ;; This function is called by:
-   608 ;;		_readPad
-   609 ;; This function uses a non-reentrant model
-   610 ;;
-   611                           
-   612     0754                     _read_bit:	
-   613                           ;psect for function _read_bit
-   614                           
-   615     0754                     l718:	
-   616                           ;incstack = 0
-   617                           ; Regs used in _read_bit: [wreg+status,2]
-   618                           
-   619                           
-   620                           ;main.c: 115:  int b = 0;
-   621     0754  01F3               	clrf	read_bit@b
-   622     0755  01F4               	clrf	read_bit@b+1
-   623     0756                     l720:
-   624                           
-   625                           ;main.c: 116:  TRISB1 = 0;
-   626     0756  1683               	bsf	3,5	;RP0=1, select bank1
-   627     0757  1303               	bcf	3,6	;RP1=0, select bank1
-   628     0758  1086               	bcf	6,1	;volatile
-   629     0759                     l722:
-   630                           
-   631                           ;main.c: 117:  _delay((unsigned long)((5)*(20000000/4000000.0)));
-   632     0759  3008               	movlw	8
-   633     075A  00F2               	movwf	??_read_bit
-   634     075B                     u237:
-   635     075B  0BF2               	decfsz	??_read_bit,f
-   636     075C  2F5B               	goto	u237
-   637     075D                     l724:
-   638                           
-   639                           ;main.c: 118:  TRISB1 = 1;
-   640     075D  1683               	bsf	3,5	;RP0=1, select bank1
-   641     075E  1303               	bcf	3,6	;RP1=0, select bank1
-   642     075F  1486               	bsf	6,1	;volatile
-   643     0760                     l726:
-   644                           
-   645                           ;main.c: 119:  _delay((unsigned long)((10)*(20000000/4000000.0)));
-   646     0760  3010               	movlw	16
-   647     0761  00F2               	movwf	??_read_bit
-   648     0762                     u247:
-   649     0762  0BF2               	decfsz	??_read_bit,f
-   650     0763  2F62               	goto	u247
-   651     0764  0000               	nop
-   652     0765                     l728:
-   653                           
-   654                           ;main.c: 120:  if (TRISB1) {
-   655     0765  1683               	bsf	3,5	;RP0=1, select bank1
-   656     0766  1303               	bcf	3,6	;RP1=0, select bank1
-   657     0767  1C86               	btfss	6,1	;volatile
-   658     0768  2F6A               	goto	u111
-   659     0769  2F6B               	goto	u110
-   660     076A                     u111:
-   661     076A  2F6F               	goto	l53
-   662     076B                     u110:
-   663     076B                     l730:
-   664                           
-   665                           ;main.c: 121:   b = 1;
-   666     076B  3001               	movlw	1
-   667     076C  00F3               	movwf	read_bit@b
-   668     076D  3000               	movlw	0
-   669     076E  00F4               	movwf	read_bit@b+1
-   670     076F                     l53:	
-   671                           ;main.c: 122:  }
-   672                           
-   673                           
-   674                           ;main.c: 123:  _delay((unsigned long)((50)*(20000000/4000000.0)));
-   675     076F  3053               	movlw	83
-   676     0770  00F2               	movwf	??_read_bit
-   677     0771                     u257:
-   678     0771  0BF2               	decfsz	??_read_bit,f
-   679     0772  2F71               	goto	u257
-   680                           
-   681                           ;main.c: 124:  return b;
-   682     0773  0874               	movf	read_bit@b+1,w
-   683     0774  00F1               	movwf	?_read_bit+1
-   684     0775  0873               	movf	read_bit@b,w
-   685     0776  00F0               	movwf	?_read_bit
-   686     0777                     l54:
-   687     0777  0008               	return
-   688     0778                     __end_of_read_bit:
-   689                           
-   690                           	psect	text4
-   691     0722                     __ptext4:	
-   692 ;; *************** function _memset *****************
-   693 ;; Defined at:
-   694 ;;		line 3 in file "/opt/microchip/xc8/v2.50/pic/sources/c99/common/memset.c"
-   695 ;; Parameters:    Size  Location     Type
-   696 ;;  dest            1    0[COMMON] PTR void 
-   697 ;;		 -> pad(9), 
-   698 ;;  c               2    1[COMMON] int 
-   699 ;;  n               2    3[COMMON] unsigned int 
-   700 ;; Auto vars:     Size  Location     Type
-   701 ;;  p               1    5[COMMON] PTR unsigned char 
-   702 ;;		 -> pad(9), 
-   703 ;; Return value:  Size  Location     Type
-   704 ;;                  1    0[COMMON] PTR void 
-   705 ;; Registers used:
-   706 ;;		wreg, fsr0l, fsr0h, status,2, status,0
-   707 ;; Tracked objects:
-   708 ;;		On entry : 0/0
-   709 ;;		On exit  : 0/0
-   710 ;;		Unchanged: 0/0
-   711 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-   712 ;;      Params:         5       0       0       0
-   713 ;;      Locals:         1       0       0       0
-   714 ;;      Temps:          0       0       0       0
-   715 ;;      Totals:         6       0       0       0
-   716 ;;Total ram usage:        6 bytes
-   717 ;; Hardware stack levels used: 1
-   718 ;; This function calls:
-   719 ;;		Nothing
-   720 ;; This function is called by:
-   721 ;;		_main
-   722 ;; This function uses a non-reentrant model
-   723 ;;
-   724                           
-   725     0722                     _memset:	
-   726                           ;psect for function _memset
-   727                           
-   728     0722                     l734:	
-   729                           ;incstack = 0
-   730                           ; Regs used in _memset: [wreg-fsr0h+status,2+status,0]
-   731                           
-   732     0722  0870               	movf	memset@dest,w
-   733     0723  00F5               	movwf	memset@p
-   734     0724  2F2C               	goto	l740
-   735     0725                     l736:
-   736     0725  0875               	movf	memset@p,w
-   737     0726  0084               	movwf	4
-   738     0727  0871               	movf	memset@c,w
-   739     0728  1383               	bcf	3,7	;select IRP bank0
-   740     0729  0080               	movwf	0
-   741     072A                     l738:
-   742     072A  3001               	movlw	1
-   743     072B  07F5               	addwf	memset@p,f
-   744     072C                     l740:
-   745     072C  3001               	movlw	1
-   746     072D  02F3               	subwf	memset@n,f
-   747     072E  3000               	movlw	0
-   748     072F  1C03               	skipc
-   749     0730  03F4               	decf	memset@n+1,f
-   750     0731  02F4               	subwf	memset@n+1,f
-   751     0732  0A73               	incf	memset@n,w
-   752     0733  1D03               	skipz
-   753     0734  2F39               	goto	u121
-   754     0735  0A74               	incf	memset@n+1,w
-   755     0736  1D03               	btfss	3,2
-   756     0737  2F39               	goto	u121
-   757     0738  2F3A               	goto	u120
-   758     0739                     u121:
-   759     0739  2F25               	goto	l736
-   760     073A                     u120:
-   761     073A                     l602:
-   762     073A  0008               	return
-   763     073B                     __end_of_memset:
-   764                           
-   765                           	psect	text5
-   766     0778                     __ptext5:	
-   767 ;; *************** function _issueCmd *****************
-   768 ;; Defined at:
-   769 ;;		line 74 in file "main.c"
-   770 ;; Parameters:    Size  Location     Type
-   771 ;;  cmd             1    wreg     unsigned char 
-   772 ;; Auto vars:     Size  Location     Type
-   773 ;;  cmd             1    2[COMMON] unsigned char 
-   774 ;;  i               2    3[COMMON] int 
-   775 ;; Return value:  Size  Location     Type
-   776 ;;                  1    wreg      void 
-   777 ;; Registers used:
-   778 ;;		wreg, status,2, status,0, btemp+1, pclath, cstack
-   779 ;; Tracked objects:
-   780 ;;		On entry : 0/0
-   781 ;;		On exit  : 0/0
-   782 ;;		Unchanged: 0/0
-   783 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-   784 ;;      Params:         0       0       0       0
-   785 ;;      Locals:         3       0       0       0
-   786 ;;      Temps:          1       0       0       0
-   787 ;;      Totals:         4       0       0       0
-   788 ;;Total ram usage:        4 bytes
-   789 ;; Hardware stack levels used: 1
-   790 ;; Hardware stack levels required when called: 1
-   791 ;; This function calls:
-   792 ;;		_write0
-   793 ;;		_write1
-   794 ;; This function is called by:
-   795 ;;		_main
-   796 ;; This function uses a non-reentrant model
-   797 ;;
-   798                           
-   799     0778                     _issueCmd:	
-   800                           ;psect for function _issueCmd
-   801                           
-   802                           
-   803                           ;incstack = 0
-   804                           ; Regs used in _issueCmd: [wreg+status,2+status,0+btemp+1+pclath+cstack]
-   805                           ;issueCmd@cmd stored from wreg
-   806     0778  00F2               	movwf	issueCmd@cmd
-   807     0779                     l748:
-   808                           
-   809                           ;main.c: 75:  for (int i = 0; i < 8; i++) {
-   810     0779  01F3               	clrf	issueCmd@i
-   811     077A  01F4               	clrf	issueCmd@i+1
-   812     077B                     l754:
-   813                           
-   814                           ;main.c: 76:   if (cmd & (0x01 << i)) {
-   815     077B  3001               	movlw	1
-   816     077C  00F1               	movwf	??_issueCmd
-   817     077D  0A73               	incf	issueCmd@i,w
-   818     077E  2F81               	goto	u134
-   819     077F                     u135:
-   820     077F  1003               	clrc
-   821     0780  0DF1               	rlf	??_issueCmd,f
-   822     0781                     u134:
-   823     0781  3EFF               	addlw	-1
-   824     0782  1D03               	skipz
-   825     0783  2F7F               	goto	u135
-   826     0784  0871               	movf	??_issueCmd,w
-   827     0785  0572               	andwf	issueCmd@cmd,w
-   828     0786  1903               	btfsc	3,2
-   829     0787  2F89               	goto	u141
-   830     0788  2F8A               	goto	u140
-   831     0789                     u141:
-   832     0789  2F8C               	goto	l758
-   833     078A                     u140:
-   834     078A                     l756:
-   835                           
-   836                           ;main.c: 77:    write1();
-   837     078A  26FC               	fcall	_write1
-   838                           
-   839                           ;main.c: 78:   } else {
-   840     078B  2F8D               	goto	l760
-   841     078C                     l758:
-   842                           
-   843                           ;main.c: 79:    write0();
-   844     078C  26EC               	fcall	_write0
-   845     078D                     l760:
-   846                           
-   847                           ;main.c: 81:  }
-   848     078D  3001               	movlw	1
-   849     078E  07F3               	addwf	issueCmd@i,f
-   850     078F  1803               	skipnc
-   851     0790  0AF4               	incf	issueCmd@i+1,f
-   852     0791  3000               	movlw	0
-   853     0792  07F4               	addwf	issueCmd@i+1,f
-   854     0793                     l762:
-   855     0793  0874               	movf	issueCmd@i+1,w
-   856     0794  3A80               	xorlw	128
-   857     0795  00FF               	movwf	btemp+1
-   858     0796  3080               	movlw	128
-   859     0797  027F               	subwf	btemp+1,w
-   860     0798  1D03               	skipz
-   861     0799  2F9C               	goto	u155
-   862     079A  3008               	movlw	8
-   863     079B  0273               	subwf	issueCmd@i,w
-   864     079C                     u155:
-   865     079C  1C03               	skipc
-   866     079D  2F9F               	goto	u151
-   867     079E  2FA0               	goto	u150
-   868     079F                     u151:
-   869     079F  2F7B               	goto	l754
-   870     07A0                     u150:
-   871     07A0                     l35:
-   872     07A0  0008               	return
-   873     07A1                     __end_of_issueCmd:
-   874                           
-   875                           	psect	text6
-   876     06FC                     __ptext6:	
-   877 ;; *************** function _write1 *****************
-   878 ;; Defined at:
-   879 ;;		line 98 in file "main.c"
-   880 ;; Parameters:    Size  Location     Type
-   881 ;;		None
-   882 ;; Auto vars:     Size  Location     Type
-   883 ;;		None
-   884 ;; Return value:  Size  Location     Type
-   885 ;;                  1    wreg      void 
-   886 ;; Registers used:
-   887 ;;		wreg
-   888 ;; Tracked objects:
-   889 ;;		On entry : 0/0
-   890 ;;		On exit  : 0/0
-   891 ;;		Unchanged: 0/0
-   892 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-   893 ;;      Params:         0       0       0       0
-   894 ;;      Locals:         0       0       0       0
-   895 ;;      Temps:          1       0       0       0
-   896 ;;      Totals:         1       0       0       0
-   897 ;;Total ram usage:        1 bytes
-   898 ;; Hardware stack levels used: 1
-   899 ;; This function calls:
-   900 ;;		Nothing
-   901 ;; This function is called by:
-   902 ;;		_issueCmd
-   903 ;; This function uses a non-reentrant model
-   904 ;;
-   905                           
-   906     06FC                     _write1:	
-   907                           ;psect for function _write1
-   908                           
-   909     06FC                     l706:	
-   910                           ;incstack = 0
-   911                           ; Regs used in _write1: [wreg]
-   912                           
-   913                           
-   914                           ;main.c: 99:  TRISB1 = 0;
-   915     06FC  1683               	bsf	3,5	;RP0=1, select bank1
-   916     06FD  1303               	bcf	3,6	;RP1=0, select bank1
-   917     06FE  1086               	bcf	6,1	;volatile
-   918     06FF                     l708:
-   919                           
-   920                           ;main.c: 100:  _delay((unsigned long)((5)*(20000000/4000000.0)));
-   921     06FF  3008               	movlw	8
-   922     0700  00F0               	movwf	??_write1
-   923     0701                     u267:
-   924     0701  0BF0               	decfsz	??_write1,f
-   925     0702  2F01               	goto	u267
-   926     0703                     l710:
-   927                           
-   928                           ;main.c: 101:  TRISB1 = 1;
-   929     0703  1683               	bsf	3,5	;RP0=1, select bank1
-   930     0704  1303               	bcf	3,6	;RP1=0, select bank1
-   931     0705  1486               	bsf	6,1	;volatile
-   932                           
-   933                           ;main.c: 102:  _delay((unsigned long)((90)*(20000000/4000000.0)));
-   934     0706  3095               	movlw	149
-   935     0707  00F0               	movwf	??_write1
-   936     0708                     u277:
-   937     0708  0BF0               	decfsz	??_write1,f
-   938     0709  2F08               	goto	u277
-   939     070A  2F0B               	nop2
-   940     070B                     l47:
-   941     070B  0008               	return
-   942     070C                     __end_of_write1:
-   943                           
-   944                           	psect	text7
-   945     06EC                     __ptext7:	
-   946 ;; *************** function _write0 *****************
-   947 ;; Defined at:
-   948 ;;		line 106 in file "main.c"
-   949 ;; Parameters:    Size  Location     Type
-   950 ;;		None
-   951 ;; Auto vars:     Size  Location     Type
-   952 ;;		None
-   953 ;; Return value:  Size  Location     Type
-   954 ;;                  1    wreg      void 
-   955 ;; Registers used:
-   956 ;;		wreg
-   957 ;; Tracked objects:
-   958 ;;		On entry : 0/0
-   959 ;;		On exit  : 0/0
-   960 ;;		Unchanged: 0/0
-   961 ;; Data sizes:     COMMON   BANK0   BANK1   BANK2
-   962 ;;      Params:         0       0       0       0
-   963 ;;      Locals:         0       0       0       0
-   964 ;;      Temps:          1       0       0       0
-   965 ;;      Totals:         1       0       0       0
-   966 ;;Total ram usage:        1 bytes
-   967 ;; Hardware stack levels used: 1
-   968 ;; This function calls:
-   969 ;;		Nothing
-   970 ;; This function is called by:
-   971 ;;		_issueCmd
-   972 ;; This function uses a non-reentrant model
-   973 ;;
-   974                           
-   975     06EC                     _write0:	
-   976                           ;psect for function _write0
-   977                           
-   978     06EC                     l712:	
-   979                           ;incstack = 0
-   980                           ; Regs used in _write0: [wreg]
-   981                           
-   982                           
-   983                           ;main.c: 107:  TRISB1 = 0;
-   984     06EC  1683               	bsf	3,5	;RP0=1, select bank1
-   985     06ED  1303               	bcf	3,6	;RP1=0, select bank1
-   986     06EE  1086               	bcf	6,1	;volatile
-   987     06EF                     l714:
-   988                           
-   989                           ;main.c: 108:  _delay((unsigned long)((90)*(20000000/4000000.0)));
-   990     06EF  3095               	movlw	149
-   991     06F0  00F0               	movwf	??_write0
-   992     06F1                     u287:
-   993     06F1  0BF0               	decfsz	??_write0,f
-   994     06F2  2EF1               	goto	u287
-   995     06F3  2EF4               	nop2
-   996     06F4                     l716:
-   997                           
-   998                           ;main.c: 109:  TRISB1 = 1;
-   999     06F4  1683               	bsf	3,5	;RP0=1, select bank1
-  1000     06F5  1303               	bcf	3,6	;RP1=0, select bank1
-  1001     06F6  1486               	bsf	6,1	;volatile
-  1002                           
-  1003                           ;main.c: 110:  _delay((unsigned long)((5)*(20000000/4000000.0)));
-  1004     06F7  3008               	movlw	8
-  1005     06F8  00F0               	movwf	??_write0
-  1006     06F9                     u297:
-  1007     06F9  0BF0               	decfsz	??_write0,f
-  1008     06FA  2EF9               	goto	u297
-  1009     06FB                     l50:
-  1010     06FB  0008               	return
-  1011     06FC                     __end_of_write0:
-  1012     0000                     ___latbits      equ	0
-  1013     007E                     btemp           set	126	;btemp
-  1014     007E                     wtemp0          set	126
-  1015                           
-  1016                           	psect	config
-  1017                           
-  1018                           ;Config register CONFIG @ 0x2007
-  1019                           ;	Oscillator Selection bits
-  1020                           ;	FOSC = HS, HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1
+   241                           ;Config register CONFIG @ 0x2007
+   242                           ;	Oscillator Selection bits
+   243                           ;	FOSC = HS, HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1
       +                          /CLKIN
-  1021                           ;	Watchdog Timer Enable bit
-  1022                           ;	WDTE = OFF, WDT disabled
-  1023                           ;	Power-up Timer Enable bit
-  1024                           ;	PWRTE = OFF, PWRT disabled
-  1025                           ;	RA5/MCLR/VPP Pin Function Select bit
-  1026                           ;	MCLRE = OFF, RA5/MCLR/VPP pin function is digital input, MCLR internally tied to VDD
-  1027                           ;	Brown-out Detect Enable bit
-  1028                           ;	BOREN = OFF, BOD disabled
-  1029                           ;	Low-Voltage Programming Enable bit
-  1030                           ;	LVP = OFF, RB4/PGM pin has digital I/O function, HV on MCLR must be used for programmi
+   244                           ;	Watchdog Timer Enable bit
+   245                           ;	WDTE = OFF, WDT disabled
+   246                           ;	Power-up Timer Enable bit
+   247                           ;	PWRTE = OFF, PWRT disabled
+   248                           ;	RA5/MCLR/VPP Pin Function Select bit
+   249                           ;	MCLRE = OFF, RA5/MCLR/VPP pin function is digital input, MCLR internally tied to VDD
+   250                           ;	Brown-out Detect Enable bit
+   251                           ;	BOREN = OFF, BOD disabled
+   252                           ;	Low-Voltage Programming Enable bit
+   253                           ;	LVP = OFF, RB4/PGM pin has digital I/O function, HV on MCLR must be used for programmi
       +                          ng
-  1031                           ;	Data EE Memory Code Protection bit
-  1032                           ;	CPD = OFF, Data memory code protection off
-  1033                           ;	Flash Program Memory Code Protection bit
-  1034                           ;	CP = OFF, Code protection off
-  1035     2007                     	org	8199
-  1036     2007  3F0A               	dw	16138
+   254                           ;	Data EE Memory Code Protection bit
+   255                           ;	CPD = OFF, Data memory code protection off
+   256                           ;	Flash Program Memory Code Protection bit
+   257                           ;	CP = OFF, Code protection off
+   258     2007                     	org	8199
+   259     2007  3F0A               	dw	16138
 
 Data Sizes:
     Strings     0
     Constant    0
     Data        0
-    BSS         9
+    BSS         0
     Persistent  0
     Stack       0
 
 Auto Spaces:
     Space          Size  Autos    Used
-    COMMON           14     10      10
-    BANK0            80      0       9
+    COMMON           14      3       3
+    BANK0            80      0       0
     BANK1            80      0       0
     BANK2            48      0       0
 
 Pointer List with Targets:
 
-    memset@dest	PTR void  size(1) Largest target is 9
-		 -> pad(BANK0[9]), 
-
-    memset@p	PTR unsigned char  size(1) Largest target is 9
-		 -> pad(BANK0[9]), 
-
-    sp__memset	PTR void  size(1) Largest target is 9
-		 -> pad(BANK0[9]), 
-
+    None.
 
 Critical Paths under _main in COMMON
 
-    _main->_readPad
-    _readPad->_read_bit
-    _issueCmd->_write0
-    _issueCmd->_write1
+    None.
 
 Critical Paths under _main in BANK0
 
@@ -1102,49 +314,15 @@ Call Graph Tables:
  ---------------------------------------------------------------------------------
  (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
  ---------------------------------------------------------------------------------
- (0) _main                                                 0     0      0     400
-                           _issueCmd
-                             _memset
-                            _readPad
-                              _reset
+ (0) _main                                                 3     3      0       0
+                                              0 COMMON     3     3      0
  ---------------------------------------------------------------------------------
- (1) _reset                                                2     2      0       0
-                                              0 COMMON     2     2      0
- ---------------------------------------------------------------------------------
- (1) _readPad                                              5     5      0     204
-                                              5 COMMON     5     5      0
-                           _read_bit
- ---------------------------------------------------------------------------------
- (2) _read_bit                                             5     3      2      24
-                                              0 COMMON     5     3      2
- ---------------------------------------------------------------------------------
- (1) _memset                                               6     1      5      99
-                                              0 COMMON     6     1      5
- ---------------------------------------------------------------------------------
- (1) _issueCmd                                             4     4      0      97
-                                              1 COMMON     4     4      0
-                             _write0
-                             _write1
- ---------------------------------------------------------------------------------
- (2) _write1                                               1     1      0       0
-                                              0 COMMON     1     1      0
- ---------------------------------------------------------------------------------
- (2) _write0                                               1     1      0       0
-                                              0 COMMON     1     1      0
- ---------------------------------------------------------------------------------
- Estimated maximum stack depth 2
+ Estimated maximum stack depth 0
  ---------------------------------------------------------------------------------
 
  Call Graph Graphs:
 
  _main (ROOT)
-   _issueCmd
-     _write0
-     _write1
-   _memset
-   _readPad
-     _read_bit
-   _reset
 
 Address spaces:
 Name               Size   Autos  Total    Usage
@@ -1152,64 +330,22 @@ BITCOMMON           14      0       0      0.0%
 BITBANK0            80      0       0      0.0%
 BITBANK1            80      0       0      0.0%
 BITBANK2            48      0       0      0.0%
-COMMON              14     10      10     71.4%
-BANK0               80      0       9     11.2%
+COMMON              14      3       3     21.4%
+BANK0               80      0       0      0.0%
 BANK1               80      0       0      0.0%
 BANK2               48      0       0      0.0%
 STACK                0      0       0      0.0%
-DATA                 0      0      19      0.0%
+DATA                 0      0       3      0.0%
 
 
 Microchip Technology PIC Macro Assembler V2.50 build 20240725155939 
-Symbol Table                                                                                   Sat Jan 25 09:54:10 2025
+Symbol Table                                                                                   Fri Feb 28 17:53:31 2025
 
-                     l25 0721                       l50 06FB                       l35 07A0  
-                     l44 07F2                       l28 0753                       l53 076F  
-                     l54 0777                       l47 070B                      l602 073A  
-                    l710 0703                      l712 06EC                      l720 0756  
-                    l800 071C                      l714 06EF                      l706 06FC  
-                    l730 076B                      l722 0759                      l802 071E  
-                    l716 06F4                      l708 06FF                      l740 072C  
-                    l724 075D                      l804 0720                      l734 0722  
-                    l726 0760                      l718 0754                      l742 073B  
-                    l760 078D                      l736 0725                      l728 0765  
-                    l744 073E                      l762 0793                      l754 077B  
-                    l738 072A                      l770 07A3                      l746 0747  
-                    l756 078A                      l748 0779                      l780 07BC  
-                    l764 07A1                      l758 078C                      l782 07CC  
-                    l790 070C                      l784 07D2                      l776 07A5  
-                    l792 0716                      l786 07DF                      l778 07AC  
-                    l794 0717                      l788 07E5                      l796 0719  
-                    l798 071B                      u110 076B                      u111 076A  
-                    u120 073A                      u200 07F2                      u121 0739  
-                    u201 07F1                      u140 078A                      u141 0789  
-                    u205 07EE                      u150 07A0                      u134 0781  
-                    u151 079F                      u135 077F                      u160 07AC  
-                    u161 07AB                      u217 0742                      u155 079C  
-                    u227 074E                      u237 075B                      u190 07DF  
-                    u174 07B5                      u247 0762                      u191 07DE  
-                    u175 07B3                      u184 07C5                      u257 0771  
-                    u185 07C3                      u267 0701                      u195 07DB  
-                    u277 0708                      u287 06F1                      u297 06F9  
-                    _pad 0020                      fsr0 0004                      indf 0000  
-                   _main 070C                     btemp 007E                     start 0000  
-                  ?_main 0070          __end_of_readPad 07F3                    _reset 073B  
-                  status 0003                    wtemp0 007E          __initialization 07F3  
-           __end_of_main 0722                   ??_main 007A                   ?_reset 0070  
-                 _TRISB1 0431                   _memset 0722         __end_of_read_bit 0778  
-                 _write0 06EC                   _write1 06FC         __end_of_issueCmd 07A1  
-              ??_readPad 0075  __end_of__initialization 07FE           __pcstackCOMMON 0070  
-          __end_of_reset 0754                  ??_reset 0070               __pbssBANK0 0020  
-             __pmaintext 070C                  ?_memset 0070                  ?_write0 0070  
-                ?_write1 0070              issueCmd@cmd 0072                ?_read_bit 0070  
-              ?_issueCmd 0070                  __ptext1 073B                  __ptext2 07A1  
-                __ptext3 0754                  __ptext4 0722                  __ptext5 0778  
-                __ptext6 06FC                  __ptext7 06EC                  _readPad 07A1  
-   end_of_initialization 07FE                  memset@c 0071                  memset@n 0073  
-                memset@p 0075               ??_read_bit 0072               ??_issueCmd 0071  
-         __end_of_memset 073B           __end_of_write0 06FC           __end_of_write1 070C  
-    start_initialization 07F3                 ??_memset 0075               memset@dest 0070  
-               ??_write0 0070                 ??_write1 0070                ___latbits 0000  
-               ?_readPad 0070                read_bit@b 0073                issueCmd@i 0073  
-               _read_bit 0754                 _issueCmd 0778                 readPad@i 0076  
-               readPad@j 0078  
+                     u17 07E5                       u27 07F5                      l560 07DC  
+                    l562 07DF                      l564 07EC                      l566 07EF  
+                    l558 07D9                      _RB3 0033                     _main 07D9  
+                   btemp 007E                     start 0000                    ?_main 0070  
+                  _TRISB 0086                    status 0003                    wtemp0 007E  
+        __initialization 07FE             __end_of_main 07FE                   ??_main 0070  
+__end_of__initialization 07FE           __pcstackCOMMON 0070               __pmaintext 07D9  
+   end_of_initialization 07FE      start_initialization 07FE                ___latbits 0000  

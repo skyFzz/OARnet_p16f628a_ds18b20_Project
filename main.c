@@ -47,7 +47,14 @@ void write0();
 void write1();
 int read_bit();
 
-unsigned char pad[9];
+uint8_t pad[9];
+
+struct tmp {
+	uint8_t int_part;
+	float	dec_part;
+}
+
+struct tmp temp;
 
 int main(void) {
 	memset(pad, 0, 9);	
@@ -84,13 +91,11 @@ void issueCmd(unsigned char cmd) {
 /* Read the contents of the scratchpad */
 void readPad() {
 	for (int i = 0; i < 9; i++) {
+		uint8_t byte = 0;
 		for (int j = 0; j < 8; j++) {
-			if (read_bit()) {
-				bitset(pad[i], j);
-			} else {
-				bitclr(pad[i], j);
-			}
+			if (read_bit()) byte |= (1 << j);
 		}
+		pad[i] = byte;
 	}
 }
 
@@ -116,14 +121,24 @@ int read_bit() {
 	TRISB1 = 0;
 	__delay_us(5);
 	TRISB1 = 1;
-	__delay_us(10);		// add pullup resistor delay 
-	if (TRISB1) {		// sampling the bit transmitted from the sensor
-		b = 1;
-	}
+	__delay_us(15);		// add pullup resistor delay 
+	if (RB1) b = 1;		// sampling the bit transmitted from the sensor
 	__delay_us(50);
 	return b;
 }
 
-void decode() {
-	
+void decode_tmp() {
+    // Read LSB and MSB from DS18B20 scratchpad
+    uint8_t lsb = pad[0];
+    uint8_t msb = pad[1];
+
+    // Combine into a signed 16-bit value
+    int16_t raw_temp = (msb << 8) | lsb;
+
+    // Convert raw value to Celsius
+    float tempC = raw_temp * 0.0625;
+
+    // Extract integer and decimal parts
+    temp.int_part = (int8_t)tempC;
+    temp.dec_part = tempC - temp.int_part;
 }

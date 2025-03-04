@@ -1,986 +1,1197 @@
-# 1 "LED_blink.asm"
+# 1 "LED_blink.c"
 # 1 "<built-in>" 1
-# 1 "LED_blink.asm" 2
-;File: newAsm.asm
-;Author: hzhou1
-;Created on November 20, 2024, 3:34 PM
-
-; PIC16F628A Configuration Bit Settings
-
-; Assembly source line config statements
+# 1 "<built-in>" 3
+# 288 "<built-in>" 3
+# 1 "<command line>" 1
+# 1 "<built-in>" 2
+# 1 "/opt/microchip/xc8/v2.50/pic/include/language_support.h" 1 3
+# 2 "<built-in>" 2
+# 1 "LED_blink.c" 2
+# 1 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 1 3
+# 18 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 3
+extern const char __xc8_OPTIM_SPEED;
 
-; CONFIG
-  CONFIG FOSC = HS ; Oscillator Selection bits (HS oscillator: High-speed crystal/resonator on RA6/OSC2/CLKOUT and RA7/OSC1/CLKIN)
-  CONFIG WDTE = OFF ; Watchdog Timer Enable bit (WDT disabled)
-  CONFIG PWRTE = OFF ; Power-up Timer Enable bit (PWRT disabled)
-  CONFIG MCLRE = OFF ; RA5/MCLR/VPP Pin Function Select bit (RA5/MCLR/VPP pin function is digital input, MCLR internally tied to VDD)
-  CONFIG BOREN = OFF ; Brown-out Detect Enable bit (BOD disabled)
-  CONFIG LVP = OFF ; Low-Voltage Programming Enable bit (RB4/PGM pin has digital I/O function, HV on MCLR must be used for programming)
-  CONFIG CPD = OFF ; Data EE Memory Code Protection bit (Data memory code protection off)
-  CONFIG CP = OFF ; Flash Program Memory Code Protection bit (Code protection off)
+extern double __fpnormalize(double);
 
 
 
-# 1 "/opt/microchip/xc8/v2.50/pic/include/xc.inc" 1 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/xc8debug.h" 1 3
 
 
 
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/stdlib.h" 1 3
 
 
 
-# 1 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic.inc" 1 3
-
-
-
-# 1 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic_as_chip_select.inc" 1 3
-# 163 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic_as_chip_select.inc" 3
-# 1 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.inc" 1 3
-# 47 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.inc" 3
-INDF equ 0000h
-
-
-
-TMR0 equ 0001h
-
-
-
-PCL equ 0002h
-
-
-
-STATUS equ 0003h
-
-STATUS_C_POSN equ 0000h
-STATUS_C_POSITION equ 0000h
-STATUS_C_SIZE equ 0001h
-STATUS_C_LENGTH equ 0001h
-STATUS_C_MASK equ 0001h
-STATUS_DC_POSN equ 0001h
-STATUS_DC_POSITION equ 0001h
-STATUS_DC_SIZE equ 0001h
-STATUS_DC_LENGTH equ 0001h
-STATUS_DC_MASK equ 0002h
-STATUS_Z_POSN equ 0002h
-STATUS_Z_POSITION equ 0002h
-STATUS_Z_SIZE equ 0001h
-STATUS_Z_LENGTH equ 0001h
-STATUS_Z_MASK equ 0004h
-STATUS_nPD_POSN equ 0003h
-STATUS_nPD_POSITION equ 0003h
-STATUS_nPD_SIZE equ 0001h
-STATUS_nPD_LENGTH equ 0001h
-STATUS_nPD_MASK equ 0008h
-STATUS_nTO_POSN equ 0004h
-STATUS_nTO_POSITION equ 0004h
-STATUS_nTO_SIZE equ 0001h
-STATUS_nTO_LENGTH equ 0001h
-STATUS_nTO_MASK equ 0010h
-STATUS_RP_POSN equ 0005h
-STATUS_RP_POSITION equ 0005h
-STATUS_RP_SIZE equ 0002h
-STATUS_RP_LENGTH equ 0002h
-STATUS_RP_MASK equ 0060h
-STATUS_IRP_POSN equ 0007h
-STATUS_IRP_POSITION equ 0007h
-STATUS_IRP_SIZE equ 0001h
-STATUS_IRP_LENGTH equ 0001h
-STATUS_IRP_MASK equ 0080h
-STATUS_RP0_POSN equ 0005h
-STATUS_RP0_POSITION equ 0005h
-STATUS_RP0_SIZE equ 0001h
-STATUS_RP0_LENGTH equ 0001h
-STATUS_RP0_MASK equ 0020h
-STATUS_RP1_POSN equ 0006h
-STATUS_RP1_POSITION equ 0006h
-STATUS_RP1_SIZE equ 0001h
-STATUS_RP1_LENGTH equ 0001h
-STATUS_RP1_MASK equ 0040h
-STATUS_CARRY_POSN equ 0000h
-STATUS_CARRY_POSITION equ 0000h
-STATUS_CARRY_SIZE equ 0001h
-STATUS_CARRY_LENGTH equ 0001h
-STATUS_CARRY_MASK equ 0001h
-STATUS_ZERO_POSN equ 0002h
-STATUS_ZERO_POSITION equ 0002h
-STATUS_ZERO_SIZE equ 0001h
-STATUS_ZERO_LENGTH equ 0001h
-STATUS_ZERO_MASK equ 0004h
-
-
-
-FSR equ 0004h
-
-
-
-PORTA equ 0005h
-
-PORTA_RA0_POSN equ 0000h
-PORTA_RA0_POSITION equ 0000h
-PORTA_RA0_SIZE equ 0001h
-PORTA_RA0_LENGTH equ 0001h
-PORTA_RA0_MASK equ 0001h
-PORTA_RA1_POSN equ 0001h
-PORTA_RA1_POSITION equ 0001h
-PORTA_RA1_SIZE equ 0001h
-PORTA_RA1_LENGTH equ 0001h
-PORTA_RA1_MASK equ 0002h
-PORTA_RA2_POSN equ 0002h
-PORTA_RA2_POSITION equ 0002h
-PORTA_RA2_SIZE equ 0001h
-PORTA_RA2_LENGTH equ 0001h
-PORTA_RA2_MASK equ 0004h
-PORTA_RA3_POSN equ 0003h
-PORTA_RA3_POSITION equ 0003h
-PORTA_RA3_SIZE equ 0001h
-PORTA_RA3_LENGTH equ 0001h
-PORTA_RA3_MASK equ 0008h
-PORTA_RA4_POSN equ 0004h
-PORTA_RA4_POSITION equ 0004h
-PORTA_RA4_SIZE equ 0001h
-PORTA_RA4_LENGTH equ 0001h
-PORTA_RA4_MASK equ 0010h
-PORTA_RA5_POSN equ 0005h
-PORTA_RA5_POSITION equ 0005h
-PORTA_RA5_SIZE equ 0001h
-PORTA_RA5_LENGTH equ 0001h
-PORTA_RA5_MASK equ 0020h
-PORTA_RA6_POSN equ 0006h
-PORTA_RA6_POSITION equ 0006h
-PORTA_RA6_SIZE equ 0001h
-PORTA_RA6_LENGTH equ 0001h
-PORTA_RA6_MASK equ 0040h
-PORTA_RA7_POSN equ 0007h
-PORTA_RA7_POSITION equ 0007h
-PORTA_RA7_SIZE equ 0001h
-PORTA_RA7_LENGTH equ 0001h
-PORTA_RA7_MASK equ 0080h
-
-
-
-PORTB equ 0006h
-
-PORTB_RB0_POSN equ 0000h
-PORTB_RB0_POSITION equ 0000h
-PORTB_RB0_SIZE equ 0001h
-PORTB_RB0_LENGTH equ 0001h
-PORTB_RB0_MASK equ 0001h
-PORTB_RB1_POSN equ 0001h
-PORTB_RB1_POSITION equ 0001h
-PORTB_RB1_SIZE equ 0001h
-PORTB_RB1_LENGTH equ 0001h
-PORTB_RB1_MASK equ 0002h
-PORTB_RB2_POSN equ 0002h
-PORTB_RB2_POSITION equ 0002h
-PORTB_RB2_SIZE equ 0001h
-PORTB_RB2_LENGTH equ 0001h
-PORTB_RB2_MASK equ 0004h
-PORTB_RB3_POSN equ 0003h
-PORTB_RB3_POSITION equ 0003h
-PORTB_RB3_SIZE equ 0001h
-PORTB_RB3_LENGTH equ 0001h
-PORTB_RB3_MASK equ 0008h
-PORTB_RB4_POSN equ 0004h
-PORTB_RB4_POSITION equ 0004h
-PORTB_RB4_SIZE equ 0001h
-PORTB_RB4_LENGTH equ 0001h
-PORTB_RB4_MASK equ 0010h
-PORTB_RB5_POSN equ 0005h
-PORTB_RB5_POSITION equ 0005h
-PORTB_RB5_SIZE equ 0001h
-PORTB_RB5_LENGTH equ 0001h
-PORTB_RB5_MASK equ 0020h
-PORTB_RB6_POSN equ 0006h
-PORTB_RB6_POSITION equ 0006h
-PORTB_RB6_SIZE equ 0001h
-PORTB_RB6_LENGTH equ 0001h
-PORTB_RB6_MASK equ 0040h
-PORTB_RB7_POSN equ 0007h
-PORTB_RB7_POSITION equ 0007h
-PORTB_RB7_SIZE equ 0001h
-PORTB_RB7_LENGTH equ 0001h
-PORTB_RB7_MASK equ 0080h
-
-
-
-PCLATH equ 000Ah
-
-PCLATH_PCLATH_POSN equ 0000h
-PCLATH_PCLATH_POSITION equ 0000h
-PCLATH_PCLATH_SIZE equ 0005h
-PCLATH_PCLATH_LENGTH equ 0005h
-PCLATH_PCLATH_MASK equ 001Fh
-
-
-
-INTCON equ 000Bh
-
-INTCON_RBIF_POSN equ 0000h
-INTCON_RBIF_POSITION equ 0000h
-INTCON_RBIF_SIZE equ 0001h
-INTCON_RBIF_LENGTH equ 0001h
-INTCON_RBIF_MASK equ 0001h
-INTCON_INTF_POSN equ 0001h
-INTCON_INTF_POSITION equ 0001h
-INTCON_INTF_SIZE equ 0001h
-INTCON_INTF_LENGTH equ 0001h
-INTCON_INTF_MASK equ 0002h
-INTCON_T0IF_POSN equ 0002h
-INTCON_T0IF_POSITION equ 0002h
-INTCON_T0IF_SIZE equ 0001h
-INTCON_T0IF_LENGTH equ 0001h
-INTCON_T0IF_MASK equ 0004h
-INTCON_RBIE_POSN equ 0003h
-INTCON_RBIE_POSITION equ 0003h
-INTCON_RBIE_SIZE equ 0001h
-INTCON_RBIE_LENGTH equ 0001h
-INTCON_RBIE_MASK equ 0008h
-INTCON_INTE_POSN equ 0004h
-INTCON_INTE_POSITION equ 0004h
-INTCON_INTE_SIZE equ 0001h
-INTCON_INTE_LENGTH equ 0001h
-INTCON_INTE_MASK equ 0010h
-INTCON_T0IE_POSN equ 0005h
-INTCON_T0IE_POSITION equ 0005h
-INTCON_T0IE_SIZE equ 0001h
-INTCON_T0IE_LENGTH equ 0001h
-INTCON_T0IE_MASK equ 0020h
-INTCON_PEIE_POSN equ 0006h
-INTCON_PEIE_POSITION equ 0006h
-INTCON_PEIE_SIZE equ 0001h
-INTCON_PEIE_LENGTH equ 0001h
-INTCON_PEIE_MASK equ 0040h
-INTCON_GIE_POSN equ 0007h
-INTCON_GIE_POSITION equ 0007h
-INTCON_GIE_SIZE equ 0001h
-INTCON_GIE_LENGTH equ 0001h
-INTCON_GIE_MASK equ 0080h
-INTCON_TMR0IF_POSN equ 0002h
-INTCON_TMR0IF_POSITION equ 0002h
-INTCON_TMR0IF_SIZE equ 0001h
-INTCON_TMR0IF_LENGTH equ 0001h
-INTCON_TMR0IF_MASK equ 0004h
-INTCON_TMR0IE_POSN equ 0005h
-INTCON_TMR0IE_POSITION equ 0005h
-INTCON_TMR0IE_SIZE equ 0001h
-INTCON_TMR0IE_LENGTH equ 0001h
-INTCON_TMR0IE_MASK equ 0020h
-
-
-
-PIR1 equ 000Ch
-
-PIR1_TMR1IF_POSN equ 0000h
-PIR1_TMR1IF_POSITION equ 0000h
-PIR1_TMR1IF_SIZE equ 0001h
-PIR1_TMR1IF_LENGTH equ 0001h
-PIR1_TMR1IF_MASK equ 0001h
-PIR1_TMR2IF_POSN equ 0001h
-PIR1_TMR2IF_POSITION equ 0001h
-PIR1_TMR2IF_SIZE equ 0001h
-PIR1_TMR2IF_LENGTH equ 0001h
-PIR1_TMR2IF_MASK equ 0002h
-PIR1_CCP1IF_POSN equ 0002h
-PIR1_CCP1IF_POSITION equ 0002h
-PIR1_CCP1IF_SIZE equ 0001h
-PIR1_CCP1IF_LENGTH equ 0001h
-PIR1_CCP1IF_MASK equ 0004h
-PIR1_TXIF_POSN equ 0004h
-PIR1_TXIF_POSITION equ 0004h
-PIR1_TXIF_SIZE equ 0001h
-PIR1_TXIF_LENGTH equ 0001h
-PIR1_TXIF_MASK equ 0010h
-PIR1_RCIF_POSN equ 0005h
-PIR1_RCIF_POSITION equ 0005h
-PIR1_RCIF_SIZE equ 0001h
-PIR1_RCIF_LENGTH equ 0001h
-PIR1_RCIF_MASK equ 0020h
-PIR1_CMIF_POSN equ 0006h
-PIR1_CMIF_POSITION equ 0006h
-PIR1_CMIF_SIZE equ 0001h
-PIR1_CMIF_LENGTH equ 0001h
-PIR1_CMIF_MASK equ 0040h
-PIR1_EEIF_POSN equ 0007h
-PIR1_EEIF_POSITION equ 0007h
-PIR1_EEIF_SIZE equ 0001h
-PIR1_EEIF_LENGTH equ 0001h
-PIR1_EEIF_MASK equ 0080h
-
-
-
-TMR1L equ 000Eh
-
-
-
-TMR1H equ 000Fh
-
-
-
-T1CON equ 0010h
-
-T1CON_TMR1ON_POSN equ 0000h
-T1CON_TMR1ON_POSITION equ 0000h
-T1CON_TMR1ON_SIZE equ 0001h
-T1CON_TMR1ON_LENGTH equ 0001h
-T1CON_TMR1ON_MASK equ 0001h
-T1CON_TMR1CS_POSN equ 0001h
-T1CON_TMR1CS_POSITION equ 0001h
-T1CON_TMR1CS_SIZE equ 0001h
-T1CON_TMR1CS_LENGTH equ 0001h
-T1CON_TMR1CS_MASK equ 0002h
-T1CON_nT1SYNC_POSN equ 0002h
-T1CON_nT1SYNC_POSITION equ 0002h
-T1CON_nT1SYNC_SIZE equ 0001h
-T1CON_nT1SYNC_LENGTH equ 0001h
-T1CON_nT1SYNC_MASK equ 0004h
-T1CON_T1OSCEN_POSN equ 0003h
-T1CON_T1OSCEN_POSITION equ 0003h
-T1CON_T1OSCEN_SIZE equ 0001h
-T1CON_T1OSCEN_LENGTH equ 0001h
-T1CON_T1OSCEN_MASK equ 0008h
-T1CON_T1CKPS_POSN equ 0004h
-T1CON_T1CKPS_POSITION equ 0004h
-T1CON_T1CKPS_SIZE equ 0002h
-T1CON_T1CKPS_LENGTH equ 0002h
-T1CON_T1CKPS_MASK equ 0030h
-T1CON_T1CKPS0_POSN equ 0004h
-T1CON_T1CKPS0_POSITION equ 0004h
-T1CON_T1CKPS0_SIZE equ 0001h
-T1CON_T1CKPS0_LENGTH equ 0001h
-T1CON_T1CKPS0_MASK equ 0010h
-T1CON_T1CKPS1_POSN equ 0005h
-T1CON_T1CKPS1_POSITION equ 0005h
-T1CON_T1CKPS1_SIZE equ 0001h
-T1CON_T1CKPS1_LENGTH equ 0001h
-T1CON_T1CKPS1_MASK equ 0020h
-
-
-
-TMR2 equ 0011h
-
-
-
-T2CON equ 0012h
-
-T2CON_T2CKPS_POSN equ 0000h
-T2CON_T2CKPS_POSITION equ 0000h
-T2CON_T2CKPS_SIZE equ 0002h
-T2CON_T2CKPS_LENGTH equ 0002h
-T2CON_T2CKPS_MASK equ 0003h
-T2CON_TMR2ON_POSN equ 0002h
-T2CON_TMR2ON_POSITION equ 0002h
-T2CON_TMR2ON_SIZE equ 0001h
-T2CON_TMR2ON_LENGTH equ 0001h
-T2CON_TMR2ON_MASK equ 0004h
-T2CON_TOUTPS_POSN equ 0003h
-T2CON_TOUTPS_POSITION equ 0003h
-T2CON_TOUTPS_SIZE equ 0004h
-T2CON_TOUTPS_LENGTH equ 0004h
-T2CON_TOUTPS_MASK equ 0078h
-T2CON_T2CKPS0_POSN equ 0000h
-T2CON_T2CKPS0_POSITION equ 0000h
-T2CON_T2CKPS0_SIZE equ 0001h
-T2CON_T2CKPS0_LENGTH equ 0001h
-T2CON_T2CKPS0_MASK equ 0001h
-T2CON_T2CKPS1_POSN equ 0001h
-T2CON_T2CKPS1_POSITION equ 0001h
-T2CON_T2CKPS1_SIZE equ 0001h
-T2CON_T2CKPS1_LENGTH equ 0001h
-T2CON_T2CKPS1_MASK equ 0002h
-T2CON_TOUTPS0_POSN equ 0003h
-T2CON_TOUTPS0_POSITION equ 0003h
-T2CON_TOUTPS0_SIZE equ 0001h
-T2CON_TOUTPS0_LENGTH equ 0001h
-T2CON_TOUTPS0_MASK equ 0008h
-T2CON_TOUTPS1_POSN equ 0004h
-T2CON_TOUTPS1_POSITION equ 0004h
-T2CON_TOUTPS1_SIZE equ 0001h
-T2CON_TOUTPS1_LENGTH equ 0001h
-T2CON_TOUTPS1_MASK equ 0010h
-T2CON_TOUTPS2_POSN equ 0005h
-T2CON_TOUTPS2_POSITION equ 0005h
-T2CON_TOUTPS2_SIZE equ 0001h
-T2CON_TOUTPS2_LENGTH equ 0001h
-T2CON_TOUTPS2_MASK equ 0020h
-T2CON_TOUTPS3_POSN equ 0006h
-T2CON_TOUTPS3_POSITION equ 0006h
-T2CON_TOUTPS3_SIZE equ 0001h
-T2CON_TOUTPS3_LENGTH equ 0001h
-T2CON_TOUTPS3_MASK equ 0040h
-
-
-
-CCPR1L equ 0015h
-
-
-
-CCPR1H equ 0016h
-
-
-
-CCP1CON equ 0017h
-
-CCP1CON_CCP1M_POSN equ 0000h
-CCP1CON_CCP1M_POSITION equ 0000h
-CCP1CON_CCP1M_SIZE equ 0004h
-CCP1CON_CCP1M_LENGTH equ 0004h
-CCP1CON_CCP1M_MASK equ 000Fh
-CCP1CON_CCP1Y_POSN equ 0004h
-CCP1CON_CCP1Y_POSITION equ 0004h
-CCP1CON_CCP1Y_SIZE equ 0001h
-CCP1CON_CCP1Y_LENGTH equ 0001h
-CCP1CON_CCP1Y_MASK equ 0010h
-CCP1CON_CCP1X_POSN equ 0005h
-CCP1CON_CCP1X_POSITION equ 0005h
-CCP1CON_CCP1X_SIZE equ 0001h
-CCP1CON_CCP1X_LENGTH equ 0001h
-CCP1CON_CCP1X_MASK equ 0020h
-CCP1CON_CCP1M0_POSN equ 0000h
-CCP1CON_CCP1M0_POSITION equ 0000h
-CCP1CON_CCP1M0_SIZE equ 0001h
-CCP1CON_CCP1M0_LENGTH equ 0001h
-CCP1CON_CCP1M0_MASK equ 0001h
-CCP1CON_CCP1M1_POSN equ 0001h
-CCP1CON_CCP1M1_POSITION equ 0001h
-CCP1CON_CCP1M1_SIZE equ 0001h
-CCP1CON_CCP1M1_LENGTH equ 0001h
-CCP1CON_CCP1M1_MASK equ 0002h
-CCP1CON_CCP1M2_POSN equ 0002h
-CCP1CON_CCP1M2_POSITION equ 0002h
-CCP1CON_CCP1M2_SIZE equ 0001h
-CCP1CON_CCP1M2_LENGTH equ 0001h
-CCP1CON_CCP1M2_MASK equ 0004h
-CCP1CON_CCP1M3_POSN equ 0003h
-CCP1CON_CCP1M3_POSITION equ 0003h
-CCP1CON_CCP1M3_SIZE equ 0001h
-CCP1CON_CCP1M3_LENGTH equ 0001h
-CCP1CON_CCP1M3_MASK equ 0008h
-
-
-
-RCSTA equ 0018h
-
-RCSTA_RX9D_POSN equ 0000h
-RCSTA_RX9D_POSITION equ 0000h
-RCSTA_RX9D_SIZE equ 0001h
-RCSTA_RX9D_LENGTH equ 0001h
-RCSTA_RX9D_MASK equ 0001h
-RCSTA_OERR_POSN equ 0001h
-RCSTA_OERR_POSITION equ 0001h
-RCSTA_OERR_SIZE equ 0001h
-RCSTA_OERR_LENGTH equ 0001h
-RCSTA_OERR_MASK equ 0002h
-RCSTA_FERR_POSN equ 0002h
-RCSTA_FERR_POSITION equ 0002h
-RCSTA_FERR_SIZE equ 0001h
-RCSTA_FERR_LENGTH equ 0001h
-RCSTA_FERR_MASK equ 0004h
-RCSTA_ADEN_POSN equ 0003h
-RCSTA_ADEN_POSITION equ 0003h
-RCSTA_ADEN_SIZE equ 0001h
-RCSTA_ADEN_LENGTH equ 0001h
-RCSTA_ADEN_MASK equ 0008h
-RCSTA_CREN_POSN equ 0004h
-RCSTA_CREN_POSITION equ 0004h
-RCSTA_CREN_SIZE equ 0001h
-RCSTA_CREN_LENGTH equ 0001h
-RCSTA_CREN_MASK equ 0010h
-RCSTA_SREN_POSN equ 0005h
-RCSTA_SREN_POSITION equ 0005h
-RCSTA_SREN_SIZE equ 0001h
-RCSTA_SREN_LENGTH equ 0001h
-RCSTA_SREN_MASK equ 0020h
-RCSTA_RX9_POSN equ 0006h
-RCSTA_RX9_POSITION equ 0006h
-RCSTA_RX9_SIZE equ 0001h
-RCSTA_RX9_LENGTH equ 0001h
-RCSTA_RX9_MASK equ 0040h
-RCSTA_SPEN_POSN equ 0007h
-RCSTA_SPEN_POSITION equ 0007h
-RCSTA_SPEN_SIZE equ 0001h
-RCSTA_SPEN_LENGTH equ 0001h
-RCSTA_SPEN_MASK equ 0080h
-RCSTA_ADDEN_POSN equ 0003h
-RCSTA_ADDEN_POSITION equ 0003h
-RCSTA_ADDEN_SIZE equ 0001h
-RCSTA_ADDEN_LENGTH equ 0001h
-RCSTA_ADDEN_MASK equ 0008h
-
-
-
-TXREG equ 0019h
-
-
-
-RCREG equ 001Ah
-
-
-
-CMCON equ 001Fh
-
-CMCON_CM_POSN equ 0000h
-CMCON_CM_POSITION equ 0000h
-CMCON_CM_SIZE equ 0003h
-CMCON_CM_LENGTH equ 0003h
-CMCON_CM_MASK equ 0007h
-CMCON_CIS_POSN equ 0003h
-CMCON_CIS_POSITION equ 0003h
-CMCON_CIS_SIZE equ 0001h
-CMCON_CIS_LENGTH equ 0001h
-CMCON_CIS_MASK equ 0008h
-CMCON_C1INV_POSN equ 0004h
-CMCON_C1INV_POSITION equ 0004h
-CMCON_C1INV_SIZE equ 0001h
-CMCON_C1INV_LENGTH equ 0001h
-CMCON_C1INV_MASK equ 0010h
-CMCON_C2INV_POSN equ 0005h
-CMCON_C2INV_POSITION equ 0005h
-CMCON_C2INV_SIZE equ 0001h
-CMCON_C2INV_LENGTH equ 0001h
-CMCON_C2INV_MASK equ 0020h
-CMCON_C1OUT_POSN equ 0006h
-CMCON_C1OUT_POSITION equ 0006h
-CMCON_C1OUT_SIZE equ 0001h
-CMCON_C1OUT_LENGTH equ 0001h
-CMCON_C1OUT_MASK equ 0040h
-CMCON_C2OUT_POSN equ 0007h
-CMCON_C2OUT_POSITION equ 0007h
-CMCON_C2OUT_SIZE equ 0001h
-CMCON_C2OUT_LENGTH equ 0001h
-CMCON_C2OUT_MASK equ 0080h
-CMCON_CM0_POSN equ 0000h
-CMCON_CM0_POSITION equ 0000h
-CMCON_CM0_SIZE equ 0001h
-CMCON_CM0_LENGTH equ 0001h
-CMCON_CM0_MASK equ 0001h
-CMCON_CM1_POSN equ 0001h
-CMCON_CM1_POSITION equ 0001h
-CMCON_CM1_SIZE equ 0001h
-CMCON_CM1_LENGTH equ 0001h
-CMCON_CM1_MASK equ 0002h
-CMCON_CM2_POSN equ 0002h
-CMCON_CM2_POSITION equ 0002h
-CMCON_CM2_SIZE equ 0001h
-CMCON_CM2_LENGTH equ 0001h
-CMCON_CM2_MASK equ 0004h
-
-
-
-OPTION_REG equ 0081h
-
-OPTION_REG_PS_POSN equ 0000h
-OPTION_REG_PS_POSITION equ 0000h
-OPTION_REG_PS_SIZE equ 0003h
-OPTION_REG_PS_LENGTH equ 0003h
-OPTION_REG_PS_MASK equ 0007h
-OPTION_REG_PSA_POSN equ 0003h
-OPTION_REG_PSA_POSITION equ 0003h
-OPTION_REG_PSA_SIZE equ 0001h
-OPTION_REG_PSA_LENGTH equ 0001h
-OPTION_REG_PSA_MASK equ 0008h
-OPTION_REG_T0SE_POSN equ 0004h
-OPTION_REG_T0SE_POSITION equ 0004h
-OPTION_REG_T0SE_SIZE equ 0001h
-OPTION_REG_T0SE_LENGTH equ 0001h
-OPTION_REG_T0SE_MASK equ 0010h
-OPTION_REG_T0CS_POSN equ 0005h
-OPTION_REG_T0CS_POSITION equ 0005h
-OPTION_REG_T0CS_SIZE equ 0001h
-OPTION_REG_T0CS_LENGTH equ 0001h
-OPTION_REG_T0CS_MASK equ 0020h
-OPTION_REG_INTEDG_POSN equ 0006h
-OPTION_REG_INTEDG_POSITION equ 0006h
-OPTION_REG_INTEDG_SIZE equ 0001h
-OPTION_REG_INTEDG_LENGTH equ 0001h
-OPTION_REG_INTEDG_MASK equ 0040h
-OPTION_REG_nRBPU_POSN equ 0007h
-OPTION_REG_nRBPU_POSITION equ 0007h
-OPTION_REG_nRBPU_SIZE equ 0001h
-OPTION_REG_nRBPU_LENGTH equ 0001h
-OPTION_REG_nRBPU_MASK equ 0080h
-OPTION_REG_PS0_POSN equ 0000h
-OPTION_REG_PS0_POSITION equ 0000h
-OPTION_REG_PS0_SIZE equ 0001h
-OPTION_REG_PS0_LENGTH equ 0001h
-OPTION_REG_PS0_MASK equ 0001h
-OPTION_REG_PS1_POSN equ 0001h
-OPTION_REG_PS1_POSITION equ 0001h
-OPTION_REG_PS1_SIZE equ 0001h
-OPTION_REG_PS1_LENGTH equ 0001h
-OPTION_REG_PS1_MASK equ 0002h
-OPTION_REG_PS2_POSN equ 0002h
-OPTION_REG_PS2_POSITION equ 0002h
-OPTION_REG_PS2_SIZE equ 0001h
-OPTION_REG_PS2_LENGTH equ 0001h
-OPTION_REG_PS2_MASK equ 0004h
-
-
-
-TRISA equ 0085h
-
-TRISA_TRISA0_POSN equ 0000h
-TRISA_TRISA0_POSITION equ 0000h
-TRISA_TRISA0_SIZE equ 0001h
-TRISA_TRISA0_LENGTH equ 0001h
-TRISA_TRISA0_MASK equ 0001h
-TRISA_TRISA1_POSN equ 0001h
-TRISA_TRISA1_POSITION equ 0001h
-TRISA_TRISA1_SIZE equ 0001h
-TRISA_TRISA1_LENGTH equ 0001h
-TRISA_TRISA1_MASK equ 0002h
-TRISA_TRISA2_POSN equ 0002h
-TRISA_TRISA2_POSITION equ 0002h
-TRISA_TRISA2_SIZE equ 0001h
-TRISA_TRISA2_LENGTH equ 0001h
-TRISA_TRISA2_MASK equ 0004h
-TRISA_TRISA3_POSN equ 0003h
-TRISA_TRISA3_POSITION equ 0003h
-TRISA_TRISA3_SIZE equ 0001h
-TRISA_TRISA3_LENGTH equ 0001h
-TRISA_TRISA3_MASK equ 0008h
-TRISA_TRISA4_POSN equ 0004h
-TRISA_TRISA4_POSITION equ 0004h
-TRISA_TRISA4_SIZE equ 0001h
-TRISA_TRISA4_LENGTH equ 0001h
-TRISA_TRISA4_MASK equ 0010h
-TRISA_TRISA5_POSN equ 0005h
-TRISA_TRISA5_POSITION equ 0005h
-TRISA_TRISA5_SIZE equ 0001h
-TRISA_TRISA5_LENGTH equ 0001h
-TRISA_TRISA5_MASK equ 0020h
-TRISA_TRISA6_POSN equ 0006h
-TRISA_TRISA6_POSITION equ 0006h
-TRISA_TRISA6_SIZE equ 0001h
-TRISA_TRISA6_LENGTH equ 0001h
-TRISA_TRISA6_MASK equ 0040h
-TRISA_TRISA7_POSN equ 0007h
-TRISA_TRISA7_POSITION equ 0007h
-TRISA_TRISA7_SIZE equ 0001h
-TRISA_TRISA7_LENGTH equ 0001h
-TRISA_TRISA7_MASK equ 0080h
-
-
-
-TRISB equ 0086h
-
-TRISB_TRISB0_POSN equ 0000h
-TRISB_TRISB0_POSITION equ 0000h
-TRISB_TRISB0_SIZE equ 0001h
-TRISB_TRISB0_LENGTH equ 0001h
-TRISB_TRISB0_MASK equ 0001h
-TRISB_TRISB1_POSN equ 0001h
-TRISB_TRISB1_POSITION equ 0001h
-TRISB_TRISB1_SIZE equ 0001h
-TRISB_TRISB1_LENGTH equ 0001h
-TRISB_TRISB1_MASK equ 0002h
-TRISB_TRISB2_POSN equ 0002h
-TRISB_TRISB2_POSITION equ 0002h
-TRISB_TRISB2_SIZE equ 0001h
-TRISB_TRISB2_LENGTH equ 0001h
-TRISB_TRISB2_MASK equ 0004h
-TRISB_TRISB3_POSN equ 0003h
-TRISB_TRISB3_POSITION equ 0003h
-TRISB_TRISB3_SIZE equ 0001h
-TRISB_TRISB3_LENGTH equ 0001h
-TRISB_TRISB3_MASK equ 0008h
-TRISB_TRISB4_POSN equ 0004h
-TRISB_TRISB4_POSITION equ 0004h
-TRISB_TRISB4_SIZE equ 0001h
-TRISB_TRISB4_LENGTH equ 0001h
-TRISB_TRISB4_MASK equ 0010h
-TRISB_TRISB5_POSN equ 0005h
-TRISB_TRISB5_POSITION equ 0005h
-TRISB_TRISB5_SIZE equ 0001h
-TRISB_TRISB5_LENGTH equ 0001h
-TRISB_TRISB5_MASK equ 0020h
-TRISB_TRISB6_POSN equ 0006h
-TRISB_TRISB6_POSITION equ 0006h
-TRISB_TRISB6_SIZE equ 0001h
-TRISB_TRISB6_LENGTH equ 0001h
-TRISB_TRISB6_MASK equ 0040h
-TRISB_TRISB7_POSN equ 0007h
-TRISB_TRISB7_POSITION equ 0007h
-TRISB_TRISB7_SIZE equ 0001h
-TRISB_TRISB7_LENGTH equ 0001h
-TRISB_TRISB7_MASK equ 0080h
-
-
-
-PIE1 equ 008Ch
-
-PIE1_TMR1IE_POSN equ 0000h
-PIE1_TMR1IE_POSITION equ 0000h
-PIE1_TMR1IE_SIZE equ 0001h
-PIE1_TMR1IE_LENGTH equ 0001h
-PIE1_TMR1IE_MASK equ 0001h
-PIE1_TMR2IE_POSN equ 0001h
-PIE1_TMR2IE_POSITION equ 0001h
-PIE1_TMR2IE_SIZE equ 0001h
-PIE1_TMR2IE_LENGTH equ 0001h
-PIE1_TMR2IE_MASK equ 0002h
-PIE1_CCP1IE_POSN equ 0002h
-PIE1_CCP1IE_POSITION equ 0002h
-PIE1_CCP1IE_SIZE equ 0001h
-PIE1_CCP1IE_LENGTH equ 0001h
-PIE1_CCP1IE_MASK equ 0004h
-PIE1_TXIE_POSN equ 0004h
-PIE1_TXIE_POSITION equ 0004h
-PIE1_TXIE_SIZE equ 0001h
-PIE1_TXIE_LENGTH equ 0001h
-PIE1_TXIE_MASK equ 0010h
-PIE1_RCIE_POSN equ 0005h
-PIE1_RCIE_POSITION equ 0005h
-PIE1_RCIE_SIZE equ 0001h
-PIE1_RCIE_LENGTH equ 0001h
-PIE1_RCIE_MASK equ 0020h
-PIE1_CMIE_POSN equ 0006h
-PIE1_CMIE_POSITION equ 0006h
-PIE1_CMIE_SIZE equ 0001h
-PIE1_CMIE_LENGTH equ 0001h
-PIE1_CMIE_MASK equ 0040h
-PIE1_EEIE_POSN equ 0007h
-PIE1_EEIE_POSITION equ 0007h
-PIE1_EEIE_SIZE equ 0001h
-PIE1_EEIE_LENGTH equ 0001h
-PIE1_EEIE_MASK equ 0080h
-
-
-
-PCON equ 008Eh
-
-PCON_nBOR_POSN equ 0000h
-PCON_nBOR_POSITION equ 0000h
-PCON_nBOR_SIZE equ 0001h
-PCON_nBOR_LENGTH equ 0001h
-PCON_nBOR_MASK equ 0001h
-PCON_nPOR_POSN equ 0001h
-PCON_nPOR_POSITION equ 0001h
-PCON_nPOR_SIZE equ 0001h
-PCON_nPOR_LENGTH equ 0001h
-PCON_nPOR_MASK equ 0002h
-PCON_OSCF_POSN equ 0003h
-PCON_OSCF_POSITION equ 0003h
-PCON_OSCF_SIZE equ 0001h
-PCON_OSCF_LENGTH equ 0001h
-PCON_OSCF_MASK equ 0008h
-PCON_nBO_POSN equ 0000h
-PCON_nBO_POSITION equ 0000h
-PCON_nBO_SIZE equ 0001h
-PCON_nBO_LENGTH equ 0001h
-PCON_nBO_MASK equ 0001h
-PCON_nBOD_POSN equ 0000h
-PCON_nBOD_POSITION equ 0000h
-PCON_nBOD_SIZE equ 0001h
-PCON_nBOD_LENGTH equ 0001h
-PCON_nBOD_MASK equ 0001h
-
-
-
-PR2 equ 0092h
-
-
-
-TXSTA equ 0098h
-
-TXSTA_TX9D_POSN equ 0000h
-TXSTA_TX9D_POSITION equ 0000h
-TXSTA_TX9D_SIZE equ 0001h
-TXSTA_TX9D_LENGTH equ 0001h
-TXSTA_TX9D_MASK equ 0001h
-TXSTA_TRMT_POSN equ 0001h
-TXSTA_TRMT_POSITION equ 0001h
-TXSTA_TRMT_SIZE equ 0001h
-TXSTA_TRMT_LENGTH equ 0001h
-TXSTA_TRMT_MASK equ 0002h
-TXSTA_BRGH_POSN equ 0002h
-TXSTA_BRGH_POSITION equ 0002h
-TXSTA_BRGH_SIZE equ 0001h
-TXSTA_BRGH_LENGTH equ 0001h
-TXSTA_BRGH_MASK equ 0004h
-TXSTA_SYNC_POSN equ 0004h
-TXSTA_SYNC_POSITION equ 0004h
-TXSTA_SYNC_SIZE equ 0001h
-TXSTA_SYNC_LENGTH equ 0001h
-TXSTA_SYNC_MASK equ 0010h
-TXSTA_TXEN_POSN equ 0005h
-TXSTA_TXEN_POSITION equ 0005h
-TXSTA_TXEN_SIZE equ 0001h
-TXSTA_TXEN_LENGTH equ 0001h
-TXSTA_TXEN_MASK equ 0020h
-TXSTA_TX9_POSN equ 0006h
-TXSTA_TX9_POSITION equ 0006h
-TXSTA_TX9_SIZE equ 0001h
-TXSTA_TX9_LENGTH equ 0001h
-TXSTA_TX9_MASK equ 0040h
-TXSTA_CSRC_POSN equ 0007h
-TXSTA_CSRC_POSITION equ 0007h
-TXSTA_CSRC_SIZE equ 0001h
-TXSTA_CSRC_LENGTH equ 0001h
-TXSTA_CSRC_MASK equ 0080h
-
-
-
-SPBRG equ 0099h
-
-
-
-EEDATA equ 009Ah
-
-
-
-EEADR equ 009Bh
-
-
-
-EECON1 equ 009Ch
-
-EECON1_RD_POSN equ 0000h
-EECON1_RD_POSITION equ 0000h
-EECON1_RD_SIZE equ 0001h
-EECON1_RD_LENGTH equ 0001h
-EECON1_RD_MASK equ 0001h
-EECON1_WR_POSN equ 0001h
-EECON1_WR_POSITION equ 0001h
-EECON1_WR_SIZE equ 0001h
-EECON1_WR_LENGTH equ 0001h
-EECON1_WR_MASK equ 0002h
-EECON1_WREN_POSN equ 0002h
-EECON1_WREN_POSITION equ 0002h
-EECON1_WREN_SIZE equ 0001h
-EECON1_WREN_LENGTH equ 0001h
-EECON1_WREN_MASK equ 0004h
-EECON1_WRERR_POSN equ 0003h
-EECON1_WRERR_POSITION equ 0003h
-EECON1_WRERR_SIZE equ 0001h
-EECON1_WRERR_LENGTH equ 0001h
-EECON1_WRERR_MASK equ 0008h
-
-
-
-EECON2 equ 009Dh
-
-
-
-VRCON equ 009Fh
-
-VRCON_VR_POSN equ 0000h
-VRCON_VR_POSITION equ 0000h
-VRCON_VR_SIZE equ 0004h
-VRCON_VR_LENGTH equ 0004h
-VRCON_VR_MASK equ 000Fh
-VRCON_VRR_POSN equ 0005h
-VRCON_VRR_POSITION equ 0005h
-VRCON_VRR_SIZE equ 0001h
-VRCON_VRR_LENGTH equ 0001h
-VRCON_VRR_MASK equ 0020h
-VRCON_VROE_POSN equ 0006h
-VRCON_VROE_POSITION equ 0006h
-VRCON_VROE_SIZE equ 0001h
-VRCON_VROE_LENGTH equ 0001h
-VRCON_VROE_MASK equ 0040h
-VRCON_VREN_POSN equ 0007h
-VRCON_VREN_POSITION equ 0007h
-VRCON_VREN_SIZE equ 0001h
-VRCON_VREN_LENGTH equ 0001h
-VRCON_VREN_MASK equ 0080h
-VRCON_VR0_POSN equ 0000h
-VRCON_VR0_POSITION equ 0000h
-VRCON_VR0_SIZE equ 0001h
-VRCON_VR0_LENGTH equ 0001h
-VRCON_VR0_MASK equ 0001h
-VRCON_VR1_POSN equ 0001h
-VRCON_VR1_POSITION equ 0001h
-VRCON_VR1_SIZE equ 0001h
-VRCON_VR1_LENGTH equ 0001h
-VRCON_VR1_MASK equ 0002h
-VRCON_VR2_POSN equ 0002h
-VRCON_VR2_POSITION equ 0002h
-VRCON_VR2_SIZE equ 0001h
-VRCON_VR2_LENGTH equ 0001h
-VRCON_VR2_MASK equ 0004h
-VRCON_VR3_POSN equ 0003h
-VRCON_VR3_POSITION equ 0003h
-VRCON_VR3_SIZE equ 0001h
-VRCON_VR3_LENGTH equ 0001h
-VRCON_VR3_MASK equ 0008h
-# 1066 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.inc" 3
-psect udata_shr,class=COMMON,space=1,noexec
-psect udata,class=RAM,space=1,noexec
-psect udata_bank0,class=BANK0,space=1,noexec
-psect udata_bank1,class=BANK1,space=1,noexec
-psect udata_bank2,class=BANK2,space=1,noexec
-psect code,class=CODE,space=0,delta=2
-psect data,class=STRCODE,space=0,delta=2,noexec
-psect edata,class=EEDATA,space=3,delta=2,noexec
-# 164 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic_as_chip_select.inc" 2 3
-# 5 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic.inc" 2 3
-
-
-
-stk_offset SET 0
-auto_size SET 0
-
-
-; stack_auto defines a symbol /name/_offset which equates to the
-; stack offset of the auto object in question
-
-stack_auto MACRO name, size
-name&_offset EQU stk_offset-size
-stk_offset SET name&_offset
-auto_size SET -stk_offset
-ENDM
-
-
-; stack_param defines a symbol /name/_offset which equates to the
-; stack offset of the parameter object in question
-
-stack_param MACRO name, size
-name&_offset EQU stk_offset-size
-stk_offset SET name&_offset
-ENDM
-
-
-; alloc_stack adjusts the SP to allocate space for auto objects
-; it also links in to the btemp symbol so that can be used
-
-alloc_stack MACRO
-GLOBAL btemp
-addfsr FSR1,auto_size
-ENDM
-
-
-; restore_stack adjusts the SP to remove all auto and parameter
-; objects from the stack prior to returning from a function
-
-restore_stack MACRO
-addfsr FSR1,stk_offset
-stk_offset SET 0
-auto_size SET 0
-ENDM
-# 8 "/opt/microchip/xc8/v2.50/pic/include/xc.inc" 2 3
-# 21 "LED_blink.asm" 2
- PSECT resetVec, class=CODE, delta=2
-    resetVec: ; Start address
- PAGESEL init
- GOTO init
-
-    PSECT code
-
-
-    init:
- ; LED light code
- BANKSEL TRISB ; Assembly directive, replacing the directive with the assembly code. It will select the correct bank TRISB is in
- CLRF TRISB ; Every bit in PORTB will be output
- BANKSEL PORTB ; Select Bank 0, where PORTB is in
-
-    toggle:
- BSF PORTB, 3
- CALL delay
- BCF PORTB, 3
- CALL delay
- GOTO toggle
-
-    delay:
- MOVLW 0xFF
- MOVWF 20h
- DECFSZ 20h, F
- RETURN
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/musl_xc8.h" 1 3
+# 5 "/opt/microchip/xc8/v2.50/pic/include/c99/stdlib.h" 2 3
+
+
+
+
+
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/features.h" 1 3
+# 11 "/opt/microchip/xc8/v2.50/pic/include/c99/stdlib.h" 2 3
+# 21 "/opt/microchip/xc8/v2.50/pic/include/c99/stdlib.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 1 3
+# 24 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef long int wchar_t;
+# 128 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned size_t;
+# 174 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef __int24 int24_t;
+# 210 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef __uint24 uint24_t;
+# 22 "/opt/microchip/xc8/v2.50/pic/include/c99/stdlib.h" 2 3
+
+int atoi (const char *);
+long atol (const char *);
+
+
+
+double atof (const char *);
+
+
+float strtof (const char *restrict, char **restrict);
+double strtod (const char *restrict, char **restrict);
+long double strtold (const char *restrict, char **restrict);
+
+
+
+long strtol (const char *restrict, char **restrict, int);
+unsigned long strtoul (const char *restrict, char **restrict, int);
+
+
+
+
+
+unsigned long __strtoxl(const char * s, char ** endptr, int base, char is_signed);
+# 55 "/opt/microchip/xc8/v2.50/pic/include/c99/stdlib.h" 3
+int rand (void);
+void srand (unsigned);
+
+void *malloc (size_t);
+void *calloc (size_t, size_t);
+void *realloc (void *, size_t);
+void free (void *);
+
+          void abort (void);
+int atexit (void (*) (void));
+          void exit (int);
+          void _Exit (int);
+
+void *bsearch (const void *, const void *, size_t, size_t, int (*)(const void *, const void *));
+
+
+
+
+
+
+
+__attribute__((nonreentrant)) void qsort (void *, size_t, size_t, int (*)(const void *, const void *));
+
+int abs (int);
+long labs (long);
+
+
+
+
+typedef struct { int quot, rem; } div_t;
+typedef struct { long quot, rem; } ldiv_t;
+
+
+
+
+div_t div (int, int);
+ldiv_t ldiv (long, long);
+
+
+
+
+typedef struct { unsigned int quot, rem; } udiv_t;
+typedef struct { unsigned long quot, rem; } uldiv_t;
+udiv_t udiv (unsigned int, unsigned int);
+uldiv_t uldiv (unsigned long, unsigned long);
+# 5 "/opt/microchip/xc8/v2.50/pic/include/c99/xc8debug.h" 2 3
+
+
+
+
+
+
+
+#pragma intrinsic(__builtin_software_breakpoint)
+extern void __builtin_software_breakpoint(void);
+# 24 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 2 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/builtins.h" 1 3
+
+
+
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/stdint.h" 1 3
+# 26 "/opt/microchip/xc8/v2.50/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 1 3
+# 133 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned short uintptr_t;
+# 148 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef short intptr_t;
+# 164 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef signed char int8_t;
+
+
+
+
+typedef short int16_t;
+# 179 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef long int32_t;
+# 192 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef int32_t intmax_t;
+
+
+
+
+
+
+
+typedef unsigned char uint8_t;
+
+
+
+
+typedef unsigned short uint16_t;
+# 215 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef unsigned long uint32_t;
+# 233 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/alltypes.h" 3
+typedef uint32_t uintmax_t;
+# 27 "/opt/microchip/xc8/v2.50/pic/include/c99/stdint.h" 2 3
+
+typedef int8_t int_fast8_t;
+
+
+
+
+typedef int8_t int_least8_t;
+typedef int16_t int_least16_t;
+
+typedef int24_t int_least24_t;
+typedef int24_t int_fast24_t;
+
+typedef int32_t int_least32_t;
+
+
+
+
+typedef uint8_t uint_fast8_t;
+
+
+
+
+typedef uint8_t uint_least8_t;
+typedef uint16_t uint_least16_t;
+
+typedef uint24_t uint_least24_t;
+typedef uint24_t uint_fast24_t;
+
+typedef uint32_t uint_least32_t;
+# 148 "/opt/microchip/xc8/v2.50/pic/include/c99/stdint.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/c99/bits/stdint.h" 1 3
+typedef int16_t int_fast16_t;
+typedef int32_t int_fast32_t;
+typedef uint16_t uint_fast16_t;
+typedef uint32_t uint_fast32_t;
+# 149 "/opt/microchip/xc8/v2.50/pic/include/c99/stdint.h" 2 3
+# 5 "/opt/microchip/xc8/v2.50/pic/include/builtins.h" 2 3
+
+
+#pragma intrinsic(__nop)
+extern void __nop(void);
+# 19 "/opt/microchip/xc8/v2.50/pic/include/builtins.h" 3
+#pragma intrinsic(_delay)
+extern __attribute__((nonreentrant)) void _delay(uint32_t);
+#pragma intrinsic(_delaywdt)
+extern __attribute__((nonreentrant)) void _delaywdt(uint32_t);
+# 25 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 2 3
+
+
+
+# 1 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic.h" 1 3
+
+
+
+
+# 1 "/opt/microchip/xc8/v2.50/pic/include/htc.h" 1 3
+
+
+
+# 1 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 1 3
+# 5 "/opt/microchip/xc8/v2.50/pic/include/htc.h" 2 3
+# 6 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic.h" 2 3
+
+
+
+
+
+
+
+# 1 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic_chip_select.h" 1 3
+# 163 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic_chip_select.h" 3
+# 1 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 1 3
+# 44 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+# 1 "/opt/microchip/xc8/v2.50/pic/include/__at.h" 1 3
+# 45 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 2 3
+
+
+
+
+
+
+
+extern volatile unsigned char INDF __attribute__((address(0x000)));
+
+__asm("INDF equ 00h");
+
+
+
+
+extern volatile unsigned char TMR0 __attribute__((address(0x001)));
+
+__asm("TMR0 equ 01h");
+
+
+
+
+extern volatile unsigned char PCL __attribute__((address(0x002)));
+
+__asm("PCL equ 02h");
+
+
+
+
+extern volatile unsigned char STATUS __attribute__((address(0x003)));
+
+__asm("STATUS equ 03h");
+
+
+typedef union {
+    struct {
+        unsigned C :1;
+        unsigned DC :1;
+        unsigned Z :1;
+        unsigned nPD :1;
+        unsigned nTO :1;
+        unsigned RP :2;
+        unsigned IRP :1;
+    };
+    struct {
+        unsigned :5;
+        unsigned RP0 :1;
+        unsigned RP1 :1;
+    };
+    struct {
+        unsigned CARRY :1;
+        unsigned :1;
+        unsigned ZERO :1;
+    };
+} STATUSbits_t;
+extern volatile STATUSbits_t STATUSbits __attribute__((address(0x003)));
+# 159 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char FSR __attribute__((address(0x004)));
+
+__asm("FSR equ 04h");
+
+
+
+
+extern volatile unsigned char PORTA __attribute__((address(0x005)));
+
+__asm("PORTA equ 05h");
+
+
+typedef union {
+    struct {
+        unsigned RA0 :1;
+        unsigned RA1 :1;
+        unsigned RA2 :1;
+        unsigned RA3 :1;
+        unsigned RA4 :1;
+        unsigned RA5 :1;
+        unsigned RA6 :1;
+        unsigned RA7 :1;
+    };
+} PORTAbits_t;
+extern volatile PORTAbits_t PORTAbits __attribute__((address(0x005)));
+# 228 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char PORTB __attribute__((address(0x006)));
+
+__asm("PORTB equ 06h");
+
+
+typedef union {
+    struct {
+        unsigned RB0 :1;
+        unsigned RB1 :1;
+        unsigned RB2 :1;
+        unsigned RB3 :1;
+        unsigned RB4 :1;
+        unsigned RB5 :1;
+        unsigned RB6 :1;
+        unsigned RB7 :1;
+    };
+} PORTBbits_t;
+extern volatile PORTBbits_t PORTBbits __attribute__((address(0x006)));
+# 290 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char PCLATH __attribute__((address(0x00A)));
+
+__asm("PCLATH equ 0Ah");
+
+
+typedef union {
+    struct {
+        unsigned PCLATH :5;
+    };
+} PCLATHbits_t;
+extern volatile PCLATHbits_t PCLATHbits __attribute__((address(0x00A)));
+# 310 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char INTCON __attribute__((address(0x00B)));
+
+__asm("INTCON equ 0Bh");
+
+
+typedef union {
+    struct {
+        unsigned RBIF :1;
+        unsigned INTF :1;
+        unsigned T0IF :1;
+        unsigned RBIE :1;
+        unsigned INTE :1;
+        unsigned T0IE :1;
+        unsigned PEIE :1;
+        unsigned GIE :1;
+    };
+    struct {
+        unsigned :2;
+        unsigned TMR0IF :1;
+        unsigned :2;
+        unsigned TMR0IE :1;
+    };
+} INTCONbits_t;
+extern volatile INTCONbits_t INTCONbits __attribute__((address(0x00B)));
+# 388 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char PIR1 __attribute__((address(0x00C)));
+
+__asm("PIR1 equ 0Ch");
+
+
+typedef union {
+    struct {
+        unsigned TMR1IF :1;
+        unsigned TMR2IF :1;
+        unsigned CCP1IF :1;
+        unsigned :1;
+        unsigned TXIF :1;
+        unsigned RCIF :1;
+        unsigned CMIF :1;
+        unsigned EEIF :1;
+    };
+} PIR1bits_t;
+extern volatile PIR1bits_t PIR1bits __attribute__((address(0x00C)));
+# 445 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned short TMR1 __attribute__((address(0x00E)));
+
+__asm("TMR1 equ 0Eh");
+
+
+
+
+extern volatile unsigned char TMR1L __attribute__((address(0x00E)));
+
+__asm("TMR1L equ 0Eh");
+
+
+
+
+extern volatile unsigned char TMR1H __attribute__((address(0x00F)));
+
+__asm("TMR1H equ 0Fh");
+
+
+
+
+extern volatile unsigned char T1CON __attribute__((address(0x010)));
+
+__asm("T1CON equ 010h");
+
+
+typedef union {
+    struct {
+        unsigned TMR1ON :1;
+        unsigned TMR1CS :1;
+        unsigned nT1SYNC :1;
+        unsigned T1OSCEN :1;
+        unsigned T1CKPS :2;
+    };
+    struct {
+        unsigned :4;
+        unsigned T1CKPS0 :1;
+        unsigned T1CKPS1 :1;
+    };
+} T1CONbits_t;
+extern volatile T1CONbits_t T1CONbits __attribute__((address(0x010)));
+# 525 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char TMR2 __attribute__((address(0x011)));
+
+__asm("TMR2 equ 011h");
+
+
+
+
+extern volatile unsigned char T2CON __attribute__((address(0x012)));
+
+__asm("T2CON equ 012h");
+
+
+typedef union {
+    struct {
+        unsigned T2CKPS :2;
+        unsigned TMR2ON :1;
+        unsigned TOUTPS :4;
+    };
+    struct {
+        unsigned T2CKPS0 :1;
+        unsigned T2CKPS1 :1;
+        unsigned :1;
+        unsigned TOUTPS0 :1;
+        unsigned TOUTPS1 :1;
+        unsigned TOUTPS2 :1;
+        unsigned TOUTPS3 :1;
+    };
+} T2CONbits_t;
+extern volatile T2CONbits_t T2CONbits __attribute__((address(0x012)));
+# 603 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned short CCPR1 __attribute__((address(0x015)));
+
+__asm("CCPR1 equ 015h");
+
+
+
+
+extern volatile unsigned char CCPR1L __attribute__((address(0x015)));
+
+__asm("CCPR1L equ 015h");
+
+
+
+
+extern volatile unsigned char CCPR1H __attribute__((address(0x016)));
+
+__asm("CCPR1H equ 016h");
+
+
+
+
+extern volatile unsigned char CCP1CON __attribute__((address(0x017)));
+
+__asm("CCP1CON equ 017h");
+
+
+typedef union {
+    struct {
+        unsigned CCP1M :4;
+        unsigned CCP1Y :1;
+        unsigned CCP1X :1;
+    };
+    struct {
+        unsigned CCP1M0 :1;
+        unsigned CCP1M1 :1;
+        unsigned CCP1M2 :1;
+        unsigned CCP1M3 :1;
+    };
+} CCP1CONbits_t;
+extern volatile CCP1CONbits_t CCP1CONbits __attribute__((address(0x017)));
+# 682 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char RCSTA __attribute__((address(0x018)));
+
+__asm("RCSTA equ 018h");
+
+
+typedef union {
+    struct {
+        unsigned RX9D :1;
+        unsigned OERR :1;
+        unsigned FERR :1;
+        unsigned ADEN :1;
+        unsigned CREN :1;
+        unsigned SREN :1;
+        unsigned RX9 :1;
+        unsigned SPEN :1;
+    };
+    struct {
+        unsigned :3;
+        unsigned ADDEN :1;
+    };
+} RCSTAbits_t;
+extern volatile RCSTAbits_t RCSTAbits __attribute__((address(0x018)));
+# 753 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char TXREG __attribute__((address(0x019)));
+
+__asm("TXREG equ 019h");
+
+
+
+
+extern volatile unsigned char RCREG __attribute__((address(0x01A)));
+
+__asm("RCREG equ 01Ah");
+
+
+
+
+extern volatile unsigned char CMCON __attribute__((address(0x01F)));
+
+__asm("CMCON equ 01Fh");
+
+
+typedef union {
+    struct {
+        unsigned CM :3;
+        unsigned CIS :1;
+        unsigned C1INV :1;
+        unsigned C2INV :1;
+        unsigned C1OUT :1;
+        unsigned C2OUT :1;
+    };
+    struct {
+        unsigned CM0 :1;
+        unsigned CM1 :1;
+        unsigned CM2 :1;
+    };
+} CMCONbits_t;
+extern volatile CMCONbits_t CMCONbits __attribute__((address(0x01F)));
+# 837 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char OPTION_REG __attribute__((address(0x081)));
+
+__asm("OPTION_REG equ 081h");
+
+
+typedef union {
+    struct {
+        unsigned PS :3;
+        unsigned PSA :1;
+        unsigned T0SE :1;
+        unsigned T0CS :1;
+        unsigned INTEDG :1;
+        unsigned nRBPU :1;
+    };
+    struct {
+        unsigned PS0 :1;
+        unsigned PS1 :1;
+        unsigned PS2 :1;
+    };
+} OPTION_REGbits_t;
+extern volatile OPTION_REGbits_t OPTION_REGbits __attribute__((address(0x081)));
+# 907 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char TRISA __attribute__((address(0x085)));
+
+__asm("TRISA equ 085h");
+
+
+typedef union {
+    struct {
+        unsigned TRISA0 :1;
+        unsigned TRISA1 :1;
+        unsigned TRISA2 :1;
+        unsigned TRISA3 :1;
+        unsigned TRISA4 :1;
+        unsigned TRISA5 :1;
+        unsigned TRISA6 :1;
+        unsigned TRISA7 :1;
+    };
+} TRISAbits_t;
+extern volatile TRISAbits_t TRISAbits __attribute__((address(0x085)));
+# 969 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char TRISB __attribute__((address(0x086)));
+
+__asm("TRISB equ 086h");
+
+
+typedef union {
+    struct {
+        unsigned TRISB0 :1;
+        unsigned TRISB1 :1;
+        unsigned TRISB2 :1;
+        unsigned TRISB3 :1;
+        unsigned TRISB4 :1;
+        unsigned TRISB5 :1;
+        unsigned TRISB6 :1;
+        unsigned TRISB7 :1;
+    };
+} TRISBbits_t;
+extern volatile TRISBbits_t TRISBbits __attribute__((address(0x086)));
+# 1031 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char PIE1 __attribute__((address(0x08C)));
+
+__asm("PIE1 equ 08Ch");
+
+
+typedef union {
+    struct {
+        unsigned TMR1IE :1;
+        unsigned TMR2IE :1;
+        unsigned CCP1IE :1;
+        unsigned :1;
+        unsigned TXIE :1;
+        unsigned RCIE :1;
+        unsigned CMIE :1;
+        unsigned EEIE :1;
+    };
+} PIE1bits_t;
+extern volatile PIE1bits_t PIE1bits __attribute__((address(0x08C)));
+# 1088 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char PCON __attribute__((address(0x08E)));
+
+__asm("PCON equ 08Eh");
+
+
+typedef union {
+    struct {
+        unsigned nBOR :1;
+        unsigned nPOR :1;
+        unsigned :1;
+        unsigned OSCF :1;
+    };
+    struct {
+        unsigned nBO :1;
+    };
+    struct {
+        unsigned nBOD :1;
+    };
+} PCONbits_t;
+extern volatile PCONbits_t PCONbits __attribute__((address(0x08E)));
+# 1137 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char PR2 __attribute__((address(0x092)));
+
+__asm("PR2 equ 092h");
+
+
+
+
+extern volatile unsigned char TXSTA __attribute__((address(0x098)));
+
+__asm("TXSTA equ 098h");
+
+
+typedef union {
+    struct {
+        unsigned TX9D :1;
+        unsigned TRMT :1;
+        unsigned BRGH :1;
+        unsigned :1;
+        unsigned SYNC :1;
+        unsigned TXEN :1;
+        unsigned TX9 :1;
+        unsigned CSRC :1;
+    };
+} TXSTAbits_t;
+extern volatile TXSTAbits_t TXSTAbits __attribute__((address(0x098)));
+# 1201 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char SPBRG __attribute__((address(0x099)));
+
+__asm("SPBRG equ 099h");
+
+
+
+
+extern volatile unsigned char EEDATA __attribute__((address(0x09A)));
+
+__asm("EEDATA equ 09Ah");
+
+
+
+
+extern volatile unsigned char EEADR __attribute__((address(0x09B)));
+
+__asm("EEADR equ 09Bh");
+
+
+
+
+extern volatile unsigned char EECON1 __attribute__((address(0x09C)));
+
+__asm("EECON1 equ 09Ch");
+
+
+typedef union {
+    struct {
+        unsigned RD :1;
+        unsigned WR :1;
+        unsigned WREN :1;
+        unsigned WRERR :1;
+    };
+} EECON1bits_t;
+extern volatile EECON1bits_t EECON1bits __attribute__((address(0x09C)));
+# 1260 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile unsigned char EECON2 __attribute__((address(0x09D)));
+
+__asm("EECON2 equ 09Dh");
+
+
+
+
+extern volatile unsigned char VRCON __attribute__((address(0x09F)));
+
+__asm("VRCON equ 09Fh");
+
+
+typedef union {
+    struct {
+        unsigned VR :4;
+        unsigned :1;
+        unsigned VRR :1;
+        unsigned VROE :1;
+        unsigned VREN :1;
+    };
+    struct {
+        unsigned VR0 :1;
+        unsigned VR1 :1;
+        unsigned VR2 :1;
+        unsigned VR3 :1;
+    };
+} VRCONbits_t;
+extern volatile VRCONbits_t VRCONbits __attribute__((address(0x09F)));
+# 1342 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/proc/pic16f628a.h" 3
+extern volatile __bit ADDEN __attribute__((address(0xC3)));
+
+
+extern volatile __bit ADEN __attribute__((address(0xC3)));
+
+
+extern volatile __bit BRGH __attribute__((address(0x4C2)));
+
+
+extern volatile __bit C1INV __attribute__((address(0xFC)));
+
+
+extern volatile __bit C1OUT __attribute__((address(0xFE)));
+
+
+extern volatile __bit C2INV __attribute__((address(0xFD)));
+
+
+extern volatile __bit C2OUT __attribute__((address(0xFF)));
+
+
+extern volatile __bit CARRY __attribute__((address(0x18)));
+
+
+extern volatile __bit CCP1IE __attribute__((address(0x462)));
+
+
+extern volatile __bit CCP1IF __attribute__((address(0x62)));
+
+
+extern volatile __bit CCP1M0 __attribute__((address(0xB8)));
+
+
+extern volatile __bit CCP1M1 __attribute__((address(0xB9)));
+
+
+extern volatile __bit CCP1M2 __attribute__((address(0xBA)));
+
+
+extern volatile __bit CCP1M3 __attribute__((address(0xBB)));
+
+
+extern volatile __bit CCP1X __attribute__((address(0xBD)));
+
+
+extern volatile __bit CCP1Y __attribute__((address(0xBC)));
+
+
+extern volatile __bit CIS __attribute__((address(0xFB)));
+
+
+extern volatile __bit CM0 __attribute__((address(0xF8)));
+
+
+extern volatile __bit CM1 __attribute__((address(0xF9)));
+
+
+extern volatile __bit CM2 __attribute__((address(0xFA)));
+
+
+extern volatile __bit CMIE __attribute__((address(0x466)));
+
+
+extern volatile __bit CMIF __attribute__((address(0x66)));
+
+
+extern volatile __bit CREN __attribute__((address(0xC4)));
+
+
+extern volatile __bit CSRC __attribute__((address(0x4C7)));
+
+
+extern volatile __bit DC __attribute__((address(0x19)));
+
+
+extern volatile __bit EEIE __attribute__((address(0x467)));
+
+
+extern volatile __bit EEIF __attribute__((address(0x67)));
+
+
+extern volatile __bit FERR __attribute__((address(0xC2)));
+
+
+extern volatile __bit GIE __attribute__((address(0x5F)));
+
+
+extern volatile __bit INTE __attribute__((address(0x5C)));
+
+
+extern volatile __bit INTEDG __attribute__((address(0x40E)));
+
+
+extern volatile __bit INTF __attribute__((address(0x59)));
+
+
+extern volatile __bit IRP __attribute__((address(0x1F)));
+
+
+extern volatile __bit OERR __attribute__((address(0xC1)));
+
+
+extern volatile __bit OSCF __attribute__((address(0x473)));
+
+
+extern volatile __bit PEIE __attribute__((address(0x5E)));
+
+
+extern volatile __bit PS0 __attribute__((address(0x408)));
+
+
+extern volatile __bit PS1 __attribute__((address(0x409)));
+
+
+extern volatile __bit PS2 __attribute__((address(0x40A)));
+
+
+extern volatile __bit PSA __attribute__((address(0x40B)));
+
+
+extern volatile __bit RA0 __attribute__((address(0x28)));
+
+
+extern volatile __bit RA1 __attribute__((address(0x29)));
+
+
+extern volatile __bit RA2 __attribute__((address(0x2A)));
+
+
+extern volatile __bit RA3 __attribute__((address(0x2B)));
+
+
+extern volatile __bit RA4 __attribute__((address(0x2C)));
+
+
+extern volatile __bit RA5 __attribute__((address(0x2D)));
+
+
+extern volatile __bit RA6 __attribute__((address(0x2E)));
+
+
+extern volatile __bit RA7 __attribute__((address(0x2F)));
+
+
+extern volatile __bit RB0 __attribute__((address(0x30)));
+
+
+extern volatile __bit RB1 __attribute__((address(0x31)));
+
+
+extern volatile __bit RB2 __attribute__((address(0x32)));
+
+
+extern volatile __bit RB3 __attribute__((address(0x33)));
+
+
+extern volatile __bit RB4 __attribute__((address(0x34)));
+
+
+extern volatile __bit RB5 __attribute__((address(0x35)));
+
+
+extern volatile __bit RB6 __attribute__((address(0x36)));
+
+
+extern volatile __bit RB7 __attribute__((address(0x37)));
+
+
+extern volatile __bit RBIE __attribute__((address(0x5B)));
+
+
+extern volatile __bit RBIF __attribute__((address(0x58)));
+
+
+extern volatile __bit RCIE __attribute__((address(0x465)));
+
+
+extern volatile __bit RCIF __attribute__((address(0x65)));
+
+
+extern volatile __bit RD __attribute__((address(0x4E0)));
+
+
+extern volatile __bit RP0 __attribute__((address(0x1D)));
+
+
+extern volatile __bit RP1 __attribute__((address(0x1E)));
+
+
+extern volatile __bit RX9 __attribute__((address(0xC6)));
+
+
+extern volatile __bit RX9D __attribute__((address(0xC0)));
+
+
+extern volatile __bit SPEN __attribute__((address(0xC7)));
+
+
+extern volatile __bit SREN __attribute__((address(0xC5)));
+
+
+extern volatile __bit SYNC __attribute__((address(0x4C4)));
+
+
+extern volatile __bit T0CS __attribute__((address(0x40D)));
+
+
+extern volatile __bit T0IE __attribute__((address(0x5D)));
+
+
+extern volatile __bit T0IF __attribute__((address(0x5A)));
+
+
+extern volatile __bit T0SE __attribute__((address(0x40C)));
+
+
+extern volatile __bit T1CKPS0 __attribute__((address(0x84)));
+
+
+extern volatile __bit T1CKPS1 __attribute__((address(0x85)));
+
+
+extern volatile __bit T1OSCEN __attribute__((address(0x83)));
+
+
+extern volatile __bit T2CKPS0 __attribute__((address(0x90)));
+
+
+extern volatile __bit T2CKPS1 __attribute__((address(0x91)));
+
+
+extern volatile __bit TMR0IE __attribute__((address(0x5D)));
+
+
+extern volatile __bit TMR0IF __attribute__((address(0x5A)));
+
+
+extern volatile __bit TMR1CS __attribute__((address(0x81)));
+
+
+extern volatile __bit TMR1IE __attribute__((address(0x460)));
+
+
+extern volatile __bit TMR1IF __attribute__((address(0x60)));
+
+
+extern volatile __bit TMR1ON __attribute__((address(0x80)));
+
+
+extern volatile __bit TMR2IE __attribute__((address(0x461)));
+
+
+extern volatile __bit TMR2IF __attribute__((address(0x61)));
+
+
+extern volatile __bit TMR2ON __attribute__((address(0x92)));
+
+
+extern volatile __bit TOUTPS0 __attribute__((address(0x93)));
+
+
+extern volatile __bit TOUTPS1 __attribute__((address(0x94)));
+
+
+extern volatile __bit TOUTPS2 __attribute__((address(0x95)));
+
+
+extern volatile __bit TOUTPS3 __attribute__((address(0x96)));
+
+
+extern volatile __bit TRISA0 __attribute__((address(0x428)));
+
+
+extern volatile __bit TRISA1 __attribute__((address(0x429)));
+
+
+extern volatile __bit TRISA2 __attribute__((address(0x42A)));
+
+
+extern volatile __bit TRISA3 __attribute__((address(0x42B)));
+
+
+extern volatile __bit TRISA4 __attribute__((address(0x42C)));
+
+
+extern volatile __bit TRISA5 __attribute__((address(0x42D)));
+
+
+extern volatile __bit TRISA6 __attribute__((address(0x42E)));
+
+
+extern volatile __bit TRISA7 __attribute__((address(0x42F)));
+
+
+extern volatile __bit TRISB0 __attribute__((address(0x430)));
+
+
+extern volatile __bit TRISB1 __attribute__((address(0x431)));
+
+
+extern volatile __bit TRISB2 __attribute__((address(0x432)));
+
+
+extern volatile __bit TRISB3 __attribute__((address(0x433)));
+
+
+extern volatile __bit TRISB4 __attribute__((address(0x434)));
+
+
+extern volatile __bit TRISB5 __attribute__((address(0x435)));
+
+
+extern volatile __bit TRISB6 __attribute__((address(0x436)));
+
+
+extern volatile __bit TRISB7 __attribute__((address(0x437)));
+
+
+extern volatile __bit TRMT __attribute__((address(0x4C1)));
+
+
+extern volatile __bit TX9 __attribute__((address(0x4C6)));
+
+
+extern volatile __bit TX9D __attribute__((address(0x4C0)));
+
+
+extern volatile __bit TXEN __attribute__((address(0x4C5)));
+
+
+extern volatile __bit TXIE __attribute__((address(0x464)));
+
+
+extern volatile __bit TXIF __attribute__((address(0x64)));
+
+
+extern volatile __bit VR0 __attribute__((address(0x4F8)));
+
+
+extern volatile __bit VR1 __attribute__((address(0x4F9)));
+
+
+extern volatile __bit VR2 __attribute__((address(0x4FA)));
+
+
+extern volatile __bit VR3 __attribute__((address(0x4FB)));
+
+
+extern volatile __bit VREN __attribute__((address(0x4FF)));
+
+
+extern volatile __bit VROE __attribute__((address(0x4FE)));
+
+
+extern volatile __bit VRR __attribute__((address(0x4FD)));
+
+
+extern volatile __bit WR __attribute__((address(0x4E1)));
+
+
+extern volatile __bit WREN __attribute__((address(0x4E2)));
+
+
+extern volatile __bit WRERR __attribute__((address(0x4E3)));
+
+
+extern volatile __bit ZERO __attribute__((address(0x1A)));
+
+
+extern volatile __bit nBO __attribute__((address(0x470)));
+
+
+extern volatile __bit nBOD __attribute__((address(0x470)));
+
+
+extern volatile __bit nBOR __attribute__((address(0x470)));
+
+
+extern volatile __bit nPD __attribute__((address(0x1B)));
+
+
+extern volatile __bit nPOR __attribute__((address(0x471)));
+
+
+extern volatile __bit nRBPU __attribute__((address(0x40F)));
+
+
+extern volatile __bit nT1SYNC __attribute__((address(0x82)));
+
+
+extern volatile __bit nTO __attribute__((address(0x1C)));
+# 164 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic_chip_select.h" 2 3
+# 14 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic.h" 2 3
+# 76 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic.h" 3
+__attribute__((__unsupported__("The " "FLASH_READ" " macro function is no longer supported. Please use the MPLAB X MCC."))) unsigned char __flash_read(unsigned short addr);
+
+__attribute__((__unsupported__("The " "FLASH_WRITE" " macro function is no longer supported. Please use the MPLAB X MCC."))) void __flash_write(unsigned short addr, unsigned short data);
+
+__attribute__((__unsupported__("The " "FLASH_ERASE" " macro function is no longer supported. Please use the MPLAB X MCC."))) void __flash_erase(unsigned short addr);
+
+
+
+# 1 "/opt/microchip/xc8/v2.50/pic/include/eeprom_routines.h" 1 3
+# 114 "/opt/microchip/xc8/v2.50/pic/include/eeprom_routines.h" 3
+extern void eeprom_write(unsigned char addr, unsigned char value);
+extern unsigned char eeprom_read(unsigned char addr);
+# 84 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic.h" 2 3
+# 118 "/opt/microchip/mplabx/v6.20/packs/Microchip/PIC16Fxxx_DFP/1.6.156/xc8/pic/include/pic.h" 3
+extern __bank0 unsigned char __resetbits;
+extern __bank0 __bit __powerdown;
+extern __bank0 __bit __timeout;
+# 29 "/opt/microchip/xc8/v2.50/pic/include/xc.h" 2 3
+# 2 "LED_blink.c" 2
+
+
+#pragma config FOSC = HS
+#pragma config WDTE = OFF
+#pragma config PWRTE = OFF
+#pragma config MCLRE = OFF
+#pragma config BOREN = OFF
+#pragma config LVP = OFF
+#pragma config CPD = OFF
+#pragma config CP = OFF
+
+
+
+void main(void) {
+    TRISB = 0;
+
+    while(1) {
+        RB3 = 1;
+        _delay((unsigned long)((1000)*(20000000/4000.0)));
+
+        RB3 = 0;
+        _delay((unsigned long)((1000)*(20000000/4000.0)));
+    }
+}

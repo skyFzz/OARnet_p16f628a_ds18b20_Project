@@ -1331,3 +1331,7 @@ int read_bit() {
  _delay((unsigned long)((50)*(20000000/4000000.0)));
  return b;
 }
+
+void decode() {
+
+}
