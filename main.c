@@ -68,9 +68,12 @@ int main(void) {
 	issueCmd(READ_PAD);
 	readPad();			// read the whole scratchpad
 
+	decode_tmp();		// perform temp conversion 
+
     return 0;
 }
 
+/* Reset command */
 void reset() {
 	TRISB1 = 0;
 	__delay_us(500);
@@ -78,9 +81,10 @@ void reset() {
 	__delay_us(500);
 }
 
+/* Send arbitrary command bit by bit */
 void issueCmd(unsigned char cmd) {
 	for (int i = 0; i < 8; i++) {
-		if (cmd & (0x01 << i)) {	// start transmission with the LS bit
+		if (cmd & (1 << i)) {	// start transmission with the LS bit
 			write1();
 		} else {
 			write0();
@@ -127,6 +131,7 @@ int read_bit() {
 	return b;
 }
 
+/* Perform temperature conversion */
 void decode_tmp() {
     // Read LSB and MSB from DS18B20 scratchpad
     uint8_t lsb = pad[0];
@@ -135,7 +140,7 @@ void decode_tmp() {
     // Combine into a signed 16-bit value
     int16_t raw_temp = (msb << 8) | lsb;
 
-    // Convert raw value to Celsius
+    // Convert raw value to Celsius, each bit in decimal is 0.0625
     float tempC = raw_temp * 0.0625;
 
     // Extract integer and decimal parts
